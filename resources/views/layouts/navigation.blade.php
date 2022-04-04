@@ -20,9 +20,15 @@
                         <h6 class="overline-title text-primary-alt">Módulos</h6>
                     </li><!-- .nk-menu-item -->
                     <li class="nk-menu-item">
-                        <a href="/dashboard" class="nk-menu-link">
+                        <a href="{{ url('admin/dashboard')}}" class="nk-menu-link">
                             <span class="nk-menu-icon"><em class="icon ni ni-home-fill"></em></span>
                             <span class="nk-menu-text">Dashboard</span>
+                        </a>
+                    </li><!-- .nk-menu-item -->
+                    <li class="nk-menu-item">
+                        <a href="{{ url('admin/productos') }}" class="nk-menu-link">
+                            <span class="nk-menu-icon"><em class="icon ni ni-home-fill"></em></span>
+                            <span class="nk-menu-text">Productos</span>
                         </a>
                     </li><!-- .nk-menu-item -->
                     <li class="nk-menu-item has-sub">
@@ -32,22 +38,22 @@
                         </a>
                         <ul class="nk-menu-sub">
                             <li class="nk-menu-item">
-                                <a href="{{ url('/configuraciones/empresa') }}" class="nk-menu-link" data-original-title="" title="">
+                                <a href="{{ url('admin/configuraciones/empresa') }}" class="nk-menu-link" data-original-title="" title="">
                                     <span class="nk-menu-text">Empresa</span>
                                 </a>
                             </li>
                             <li class="nk-menu-item">
-                                <a href="{{ url('/configuraciones/categorias') }}" class="nk-menu-link" data-original-title="" title="">
+                                <a href="{{ url('admin/configuraciones/categorias') }}" class="nk-menu-link" data-original-title="" title="">
                                     <span class="nk-menu-text">Categorías</span>
                                 </a>
                             </li>
                             <li class="nk-menu-item">
-                                <a href="{{ url('/configuraciones/roles') }}" class="nk-menu-link" data-original-title="" title="">
+                                <a href="{{ url('admin/configuraciones/roles') }}" class="nk-menu-link" data-original-title="" title="">
                                     <span class="nk-menu-text">Roles</span>
                                 </a>
                             </li>
                             <li class="nk-menu-item">
-                                <a href="{{ url('/configuraciones/usuarios') }}" class="nk-menu-link" data-original-title="" title="">
+                                <a href="{{ url('admin/configuraciones/usuarios') }}" class="nk-menu-link" data-original-title="" title="">
                                     <span class="nk-menu-text">Usuarios</span>
                                 </a>
                             </li>

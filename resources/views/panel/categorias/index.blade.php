@@ -13,7 +13,7 @@
                         <div class="toggle-expand-content" data-content="pageMenu">
                             <ul class="nk-block-tools g-3">
                                 <li class="nk-block-tools-opt">
-                                    <a href="{{ url('/configuraciones/categorias/crear-categoria') }}" class="btn btn-primary">
+                                    <a href="{{ url('admin/configuraciones/categorias/crear-categoria') }}" class="btn btn-primary">
                                         <em class="icon ni ni-plus-medi-fill"></em>
                                         <span>Crear Categoría</span>
                                     </a>
@@ -24,7 +24,6 @@
                 </div><!-- .nk-block-head-content -->
             </div><!-- .nk-block-between -->
         </div>
-        @include('layouts.alerts')
         <table class="datatable-init nowrap nk-tb-list is-separate" data-auto-responsive="false">
             <thead>
                 <tr class="nk-tb-item nk-tb-head">
@@ -44,14 +43,11 @@
                         </span>
                     </td>
                     <td class="nk-tb-col tb-col-sm">
-                        <span class="tb-product">
-                            <span class="title">
-                                @if ($item->estatus == 'Activo')
-                                <span class="badge badge-success">{{$item->estatus}}</span>
-                                @else
-                                <span class="badge badge-danger">{{$item->estatus}}</span>
-                                @endif
-                        </span>
+                        @if ($item->estatus == 'Activo')
+                        <span class="badge badge-success">{{$item->estatus}}</span>
+                        @else
+                        <span class="badge badge-danger">{{$item->estatus}}</span>
+                        @endif
                     </td>
                     <td class="nk-tb-col nk-tb-col-tools">
                         <ul class="nk-tb-actions gx-1 my-n1">
@@ -60,9 +56,18 @@
                                     <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <ul class="link-list-opt no-bdr">
-                                            <li><a href="#"><em class="icon ni ni-edit"></em><span>Editar Categoría</span></a></li>
-                                            <li><a href="#"><em class="icon ni ni-eye"></em><span>Ver Categoría</span></a></li>
-                                            <li><a href="#" class="delete-record" data-id="{{ $item->id }}"><em class="icon ni ni-trash"></em><span>Eliminar Categoría</span></a></li>
+                                            <li>
+                                                <a href="{{ url('admin/configuraciones/categorias/'.$item->id.'/editar-categoria') }}" >
+                                                    <em class="icon ni ni-edit"></em>
+                                                    <span>Editar Categoría</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <button class="btn delete-record" data-id="{{ $item->id }}">
+                                                    <em class="icon ni ni-trash"></em>
+                                                    <span>Eliminar Categoría</span>
+                                                </button>
+                                            </li>
                                         </ul>
                                     </div>
                                 </div>
@@ -81,10 +86,18 @@
         (function(NioApp, $){
             'use strict';
 
+            @include('layouts.alerts')
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
             $('.datatable-init tbody').on('click', '.delete-record', function(){
                 let dataid = $(this).data('id');
-                let baseUrl = '{{ url('configuracion/antecedentes') }}/' + dataid +
-                    '/eliminar-antecedente';
+                let baseUrl = '{{ url('admin/configuraciones/categorias') }}/' + dataid +
+                    '/eliminar-categoria';
                 Swal.fire({
                     title: '¿Está Seguro de Desactivar el Registro?',
                     text: "Si tiene datos dependientes, no podrá desactivarlo!",
@@ -92,16 +105,18 @@
                     showCancelButton: true,
                     confirmButtonText: 'Si, estoy seguro!'
                 }).then((result) => {
-                    // if (result.value) {
-                    //     $.ajax({
-                    //         type: 'DELETE',
-                    //         url: baseUrl,
-                    //         dataType: 'json',
-                    //         success: function(response) {
-                    //            console.log(response);
-                    //         }
-                    //     });
-                    // }
+                    if (result.value) {
+                        $.ajax({
+                            type: 'POST',
+                            url: baseUrl,
+                            dataType: 'json',
+                            success: function(response) {
+                               console.log(response);
+                                localStorage.setItem("success", 1);
+                                location.reload();
+                            }
+                        });
+                    }
                 });
             });
         })(NioApp, jQuery);

@@ -1,31 +1,42 @@
-@if (session('success'))
-<div class="alert alert-pro alert-success alert-dismissible">
-    <div class="alert-text">
-        <h6>¡Éxito!</h6>
-        <p>{{ session('success') }}</p>
-    </div>
-    <button class="close" data-dismiss="alert"></button>
-</div>
-@endif
+            if (localStorage.getItem("success") == 1){
+                Swal.fire({
+                    position: 'top-center',
+                    icon: 'success',
+                    title: 'Registro Eliminado Exitosamente!',
+                    showConfirmButton: false,
+                    timer: 2500
+                });
+                localStorage.removeItem("success");
+            }
 
-@if (session('danger'))
-<div class="alert alert-pro alert-danger alert-dismissible">
-    <div class="alert-text">
-        <h6>¡Error!</h6>
-        <p>{{ session('danger') }}</p>
-    </div>
-    <button class="close" data-dismiss="alert"></button>
-</div>
-@endif
+            @if (session('success'))
+            Swal.fire({
+                position: 'top-center',
+                icon: 'success',
+                title: '{{ session('success') }}',
+                showConfirmButton: false,
+                timer: 2500
+            });
+            @endif
 
-@if (session('warning'))
-<div class="alert alert-pro alert-warning alert-dismissible">
-    <div class="alert-text">
-        <h6>¡Peligro!</h6>
-        <p>{{ session('warning') }}</p>
-    </div>
-    <button class="close" data-dismiss="alert"></button>
-</div>
-@endif
+            @if (session('danger'))
+            Swal.fire({
+                position: 'top-center',
+                icon: 'error',
+                title: '{{ session('danger') }}',
+                showConfirmButton: false,
+                timer: 2500
+            });
+            @endif
+
+            @if (session('warning'))
+            Swal.fire({
+                position: 'top-center',
+                icon: 'warning',
+                title: '{{ session('warning') }}',
+                showConfirmButton: false,
+                timer: 2500
+            });
+            @endif
 
 

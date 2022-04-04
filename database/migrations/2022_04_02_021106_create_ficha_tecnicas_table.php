@@ -16,14 +16,15 @@ class CreateFichaTecnicasTable extends Migration
         Schema::create('ficha_tecnicas', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('producto_id');
-            $table->string('principio_activo');
+            $table->text('principio_activo');
             $table->string('forma_farmaceutica');
-            $table->string('condiciones_almacenamiento');
+            $table->text('condiciones_almacenamiento');
             $table->string('registro_sanitario');
             $table->string('condicion_venta');
-            $table->string('indicaciones');
-            $table->string('advertencias');
-            $table->string('contraindicaciones');
+            $table->text('indicaciones');
+            $table->text('advertencias')->nullable();
+            $table->text('contraindicaciones')->nullable();
+            $table->string('estatus');
             $table->timestamps();
 
             $table->foreign('producto_id')

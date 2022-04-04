@@ -18,4 +18,12 @@ class Categoria extends Model
     protected $fillable = [
         'id', 'name', 'estatus',
     ];
+
+    /**
+     * Obtiene datos de ficha tecnica.
+     */
+    public function producto()
+    {
+        return $this->hasOne(Producto::class, 'categoria_id', 'id');
+    }
 }

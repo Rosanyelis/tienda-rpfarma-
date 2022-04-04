@@ -16,6 +16,32 @@ class Producto extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'id', 'nombre', 'apellido', 'rut', 'direccion', 'estatus',
+        'id', 'categoria_id', 'sku', 'name', 'informacion', 'foto', 'stock', 'precio_venta', 'estatus',
     ];
+
+    /**
+     * Obtiene datos de ficha tecnica.
+     */
+    public function ficha()
+    {
+        return $this->hasOne(FichaTecnica::class, 'producto_id', 'id');
+    }
+
+    /**
+     * Obtiene la categoria del producto
+     */
+    public function categoria()
+    {
+        return $this->belongsTo(Categoria::class, 'categoria_id', 'id');
+    }
+
+    /**
+     * Obtiene los comentarios del producto.
+     */
+    public function comentarios()
+    {
+        return $this->hasMany(Comentario::class, 'producto_id', 'id');
+    }
+
+
 }

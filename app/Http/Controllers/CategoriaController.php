@@ -49,7 +49,7 @@ class CategoriaController extends Controller
         $registro->estatus = 'Activo';
         $registro->save();
 
-        return redirect('/configuraciones/categorias')->with('success', 'Registro Guardado exitosamente');
+        return redirect('admin/configuraciones/categorias')->with('success', 'Registro Guardado exitosamente');
     }
 
     /**
@@ -69,9 +69,15 @@ class CategoriaController extends Controller
      * @param  \App\Models\Categoria  $categoria
      * @return \Illuminate\Http\Response
      */
-    public function edit(Categoria $categoria)
+    public function edit($id)
     {
-        //
+        $count = Categoria::where('id', $id)->count();
+        if ($count>0) {
+            $data = Categoria::where('id', $id)->first();
+            return view('panel.categorias.edit', compact('data'));
+        } else {
+            return redirect('admin/configuraciones/categorias')->with('danger', 'Problemas para Mostrar el Registro.');
+        }
     }
 
     /**
@@ -81,9 +87,27 @@ class CategoriaController extends Controller
      * @param  \App\Models\Categoria  $categoria
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Categoria $categoria)
+    public function update(Request $request, $id)
     {
-        //
+        $count = Categoria::where('id', $id)->count();
+        if ($count>0) {
+            $request->validate([
+                'name' => ['required'],
+            ],
+            [
+                'name.required' => 'El campo Nombre de Categoría es obligatorio',
+                'name.unique' => 'El valor del campo Nombre Categoría ya existe',
+            ]);
+
+            $registro = Categoria::where('id', $id)->first();
+            $registro->name = $request->name;
+            $registro->estatus = 'Activo';
+            $registro->save();
+
+            return redirect('admin/configuraciones/categorias')->with('success', 'Registro Actualizado Exitosamente');
+        } else {
+            return redirect('admin/configuraciones/categorias')->with('danger', 'Problemas para Mostrar el Registro.');
+        }
     }
 
     /**
@@ -94,6 +118,14 @@ class CategoriaController extends Controller
      */
     public function destroy($id)
     {
-
+        $count = Categoria::where('id', $id)->count();
+        if ($count>0) {
+            $record = Categoria::where('id', $id)->first();
+            $record->estatus = 'Inactivo';
+            $record->save();
+            return response()->json(200);
+        } else {
+            return response()->json(404);
+        }
     }
 }

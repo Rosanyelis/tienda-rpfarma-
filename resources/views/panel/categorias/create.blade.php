@@ -13,7 +13,7 @@
                         <div class="toggle-expand-content" data-content="pageMenu">
                             <ul class="nk-block-tools g-3">
                                 <li class="nk-block-tools-opt">
-                                    <a href="{{ url('/configuraciones/categorias') }}" class="btn btn-secondary">
+                                    <a href="{{ url('admin/configuraciones/categorias') }}" class="btn btn-secondary">
                                         <em class="icon ni ni-arrow-left"></em>
                                         <span>Regresar</span>
                                     </a>
@@ -28,14 +28,14 @@
         <div class="nk-block nk-block-lg">
             <div class="card card-bordered">
                 <div class="card-inner">
-                    <form action="{{ url('/configuraciones/categorias/guardar-categoria') }}" class="form-validate" method="POST">
+                    <form action="{{ url('admin/configuraciones/categorias/guardar-categoria') }}" class="form-validate" method="POST">
                         @csrf
                         <div class="row g-gs">
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="form-label" for="categoria">Nombre de Categoría</label>
                                     <div class="form-control-wrap">
-                                        <input type="text" class="form-control @error('password') invalid @enderror"
+                                        <input type="text" class="form-control @error('name') invalid @enderror"
                                                 id="categoria" name="name" value="{{ old('name') }}" placeholder="Ejm: Artículos Personales">
                                         @if ($errors->has('name'))
                                             <span id="fv-full-name-error" class="invalid">

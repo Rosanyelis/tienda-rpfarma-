@@ -19,6 +19,9 @@ class CreateEmpresasTable extends Migration
             $table->string('rut');
             $table->string('direccion');
             $table->string('logo');
+            $table->string('telefono');
+            $table->string('telefono_2')->nullable();
+            $table->string('email')->nullable();
             $table->timestamps();
         });
     }

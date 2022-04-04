@@ -17,7 +17,14 @@ class CreateComentariosTable extends Migration
             $table->uuid('id')->primary();
             $table->uuid('producto_id');
             $table->text('mensaje');
+            $table->string('estatus');
             $table->timestamps();
+
+            $table->foreign('producto_id')
+                    ->references('id')
+                    ->on('productos')
+                    ->onUpdate('cascade')
+                    ->onDelete('cascade');
         });
     }
 

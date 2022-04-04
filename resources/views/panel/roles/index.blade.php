@@ -13,7 +13,7 @@
                         <div class="toggle-expand-content" data-content="pageMenu">
                             <ul class="nk-block-tools g-3">
                                 <li class="nk-block-tools-opt">
-                                    <a href="{{ url('/configuraciones/roles/crear-rol') }}" class="btn btn-primary">
+                                    <a href="{{ url('admin/configuraciones/roles/crear-rol') }}" class="btn btn-primary">
                                         <em class="icon ni ni-plus-medi-fill"></em>
                                         <span>Crear Rol</span>
                                     </a>
@@ -24,7 +24,7 @@
                 </div><!-- .nk-block-head-content -->
             </div><!-- .nk-block-between -->
         </div>
-        @include('layouts.alerts')
+
         <table class="datatable-init nowrap nk-tb-list is-separate" data-auto-responsive="false">
             <thead>
                 <tr class="nk-tb-item nk-tb-head">
@@ -75,4 +75,45 @@
         </table><!-- .nk-tb-list -->
     </div>
 </div>
+@endsection
+@section('scripts')
+    <script>
+        (function(NioApp, $){
+            'use strict';
+
+            @include('layouts.alerts')
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $('.datatable-init tbody').on('click', '.delete-record', function(){
+                let dataid = $(this).data('id');
+                let baseUrl = '{{ url('admin/configuraciones/roles') }}/' + dataid +
+                    '/eliminar-rol';
+                Swal.fire({
+                    title: '¿Está Seguro de Desactivar el Registro?',
+                    text: "Si tiene datos dependientes, no podrá desactivarlo!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Si, estoy seguro!'
+                }).then((result) => {
+                    if (result.value) {
+                        $.ajax({
+                            type: 'POST',
+                            url: baseUrl,
+                            dataType: 'json',
+                            success: function(response) {
+                               console.log(response);
+                                localStorage.setItem("success", 1);
+                                location.reload();
+                            }
+                        });
+                    }
+                });
+            });
+        })(NioApp, jQuery);
+    </script>
 @endsection

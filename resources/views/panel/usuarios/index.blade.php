@@ -13,7 +13,7 @@
                         <div class="toggle-expand-content" data-content="pageMenu">
                             <ul class="nk-block-tools g-3">
                                 <li class="nk-block-tools-opt">
-                                    <a href="{{ url('/configuraciones/usuarios/crear-usuario') }}" class="btn btn-primary">
+                                    <a href="{{ url('admin/configuraciones/usuarios/crear-usuario') }}" class="btn btn-primary">
                                         <em class="icon ni ni-plus-medi-fill"></em>
                                         <span>Crear Usuario</span>
                                     </a>

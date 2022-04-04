@@ -15,7 +15,8 @@ class CreateProductosTable extends Migration
     {
         Schema::create('productos', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('codigo');
+            $table->uuid('categoria_id');
+            $table->string('sku');
             $table->string('name');
             $table->string('informacion');
             $table->string('foto');
@@ -23,6 +24,12 @@ class CreateProductosTable extends Migration
             $table->decimal('precio_venta', 12, 2);
             $table->string('estatus');
             $table->timestamps();
+
+            $table->foreign('categoria_id')
+                    ->references('id')
+                    ->on('categorias')
+                    ->onUpdate('cascade')
+                    ->onDelete('cascade');
         });
     }
 
