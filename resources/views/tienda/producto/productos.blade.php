@@ -195,7 +195,7 @@
                                                 </div>
                                             </div>
                                             <div class="product-card__actions">
-                                                <div class="product-card__prices">$ {{ $item->precio_venta }}</div>
+                                                <div class="product-card__prices">$ {{ number_format($item->precio_venta, 0, ",", "."); }}</div>
                                                 <div class="product-card__buttons">
                                                     <button class="btn btn-primary product-card__addtocart" type="button">
                                                         Añadir al Carrito

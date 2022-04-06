@@ -71,7 +71,7 @@
                                     <span class="text-danger">No Disponible</span>
                                 @endif
                             </div>
-                            <div class="product__prices">$ {{ $producto->precio_venta }}</div>
+                            <div class="product__prices">$ {{ number_format($producto->precio_venta, 0, ",", "."); }}</div>
                             <!-- .product__options -->
                             <form class="product__options">
                                 <div class="form-group product__option">
