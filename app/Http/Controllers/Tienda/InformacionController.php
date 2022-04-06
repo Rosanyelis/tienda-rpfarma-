@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Categoria;
 
-class ContactenosController extends Controller
+class InformacionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,7 @@ class ContactenosController extends Controller
     public function index()
     {
         $categorias = Categoria::all();
-        return view('tienda.contactanos.index', compact('categorias'));
+        return view('tienda.informacion.terminosycondiciones', compact('categorias'));
     }
 
     /**
@@ -26,18 +26,8 @@ class ContactenosController extends Controller
      */
     public function create()
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+        $categorias = Categoria::all();
+        return view('tienda.reclamos.index', compact('categorias'));
     }
 
     /**
@@ -46,9 +36,10 @@ class ContactenosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        //
+        $categorias = Categoria::all();
+        return view('tienda.informacion.politicasprivacidad', compact('categorias'));
     }
 
     /**

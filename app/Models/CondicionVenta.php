@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\UuidModel;
 
-class Categoria extends Model
+class CondicionVenta extends Model
 {
     use HasFactory, UuidModel;
 
@@ -16,22 +16,14 @@ class Categoria extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'id', 'name', 'estatus',
+        'id', 'name', 'descripcion', 'estatus',
     ];
 
-    /**
+     /**
      * Obtiene datos de ficha tecnica.
      */
-    public function producto()
+    public function ficha()
     {
-        return $this->hasOne(Producto::class, 'categoria_id', 'id');
-    }
-
-    /**
-     * Obtener subcategorias.
-     */
-    public function subcategorias()
-    {
-        return $this->hasMany(Subcategoria::class, 'categoria_id', 'id');
+        return $this->hasOne(FichaTecnica::class, 'condicion_venta_id', 'id');
     }
 }

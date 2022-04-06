@@ -36,52 +36,45 @@
                     <div class="contact-us__container">
                         <div class="row">
                             <div class="col-12 col-lg-6 pb-4 pb-lg-0">
-                                <h4 class="contact-us__header card-title">Our Address</h4>
+                                <h4 class="contact-us__header card-title">Nuestra Dirección</h4>
                                 <div class="contact-us__address">
                                     <p>
-                                        715 Fake Ave, Apt. 34, New York, NY 10021 USA<br />Email:
-                                        stroyka@example.com<br />Phone Number: +1 754
-                                        000-00-00
+                                        Av. Recoleta 3646, Recoleta<br />Correo:
+                                        ventasweb@recetariorpfarma.com<br />Teléfono: (800) 060-0730, (800) 060-0730
                                     </p>
-                                    <p>
+                                    {{-- <p>
                                         <strong>Opening Hours</strong><br />Monday to Friday:
                                         8am-8pm<br />Saturday: 8am-6pm<br />Sunday: 10am-4pm
-                                    </p>
-                                    <p>
-                                        <strong>Comment</strong><br />Lorem ipsum dolor sit
-                                        amet, consectetur adipiscing elit. Curabitur suscipit
-                                        suscipit mi, non tempor nulla finibus eget. Lorem
-                                        ipsum dolor sit amet, consectetur adipiscing elit.
-                                    </p>
+                                    </p> --}}
                                 </div>
                             </div>
                             <div class="col-12 col-lg-6">
                                 <h4 class="contact-us__header card-title">
-                                    Leave us a Message
+                                    Déjanos un Mensaje
                                 </h4>
                                 <form>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
-                                            <label for="form-name">Your Name</label>
+                                            <label for="form-name">Nombre y Apellido</label>
                                             <input type="text" id="form-name" class="form-control"
-                                                placeholder="Your Name" />
+                                                placeholder="Nombre y Apellido" />
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <label for="form-email">Email</label>
+                                            <label for="form-email">Correo</label>
                                             <input type="email" id="form-email" class="form-control"
-                                                placeholder="Email Address" />
+                                                placeholder="example@example.com" />
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="form-subject">Subject</label>
-                                        <input type="text" id="form-subject" class="form-control" placeholder="Subject" />
+                                        <label for="form-subject">Asunto</label>
+                                        <input type="text" id="form-subject" class="form-control" placeholder="Asunto" />
                                     </div>
                                     <div class="form-group">
-                                        <label for="form-message">Message</label>
+                                        <label for="form-message">Mensaje</label>
                                         <textarea id="form-message" class="form-control" rows="4"></textarea>
                                     </div>
                                     <button type="submit" class="btn btn-primary">
-                                        Send Message
+                                        Enviar Mensaje
                                     </button>
                                 </form>
                             </div>

@@ -6,10 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\UuidModel;
 
-class Comentario extends Model
+class TipoAdministracion extends Model
 {
     use HasFactory, UuidModel;
-
 
     /**
      * The attributes that are mass assignable.
@@ -17,15 +16,14 @@ class Comentario extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'id', 'producto_id', 'mensaje', 'estatus',
+        'id', 'name', 'estatus',
     ];
 
-     /**
-     * Obtiene el producto
+    /**
+     * Obtiene datos de ficha tecnica.
      */
-    public function producto()
+    public function ficha()
     {
-        return $this->belongsTo(Producto::class, 'producto_id', 'id');
+        return $this->hasOne(FichaTecnica::class, 'tipo_administracion_id', 'id');
     }
-
 }

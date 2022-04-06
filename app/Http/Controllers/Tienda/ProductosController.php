@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Tienda;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Producto;
+use App\Models\Categoria;
 
 class ProductosController extends Controller
 {
@@ -15,8 +16,9 @@ class ProductosController extends Controller
      */
     public function index()
     {
+        $categorias = Categoria::all();
         $data = Producto::all();
-        return view('tienda.producto.productos', compact('data'));
+        return view('tienda.producto.productos', compact('data', 'categorias'));
     }
 
     /**

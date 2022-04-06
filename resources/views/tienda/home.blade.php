@@ -8,45 +8,27 @@
                         <div class="owl-carousel">
                             <a class="block-slideshow__slide" href="#">
                                 <div class="block-slideshow__slide-image block-slideshow__slide-image--desktop"
-                                    style="background-image: url('{{asset('dist/images/slides/slide-1-full.jpg')}}')"></div>
+                                    style="background-image: url('{{asset('dist/images/slides/Banner-3.jpg')}}');width: auto; "></div>
                                 <div class="block-slideshow__slide-image block-slideshow__slide-image--mobile"
                                     style="background-image: url('{{asset('images/slides/slide-1-mobile.jpg')}}')"></div>
-                                <div class="block-slideshow__slide-content">
-                                    <div class="block-slideshow__slide-title">Big choice of<br>Plumbing products</div>
-                                    <div class="block-slideshow__slide-text">Lorem ipsum dolor sit amet, consectetur
-                                        adipiscing elit.<br>Etiam pharetra laoreet dui quis molestie.</div>
-                                    <div class="block-slideshow__slide-button">
-                                        <span class="btn btn-primary btn-lg">Comprar Ahora</span>
-                                    </div>
-                                </div>
                             </a>
                             <a class="block-slideshow__slide" href="#">
                                 <div class="block-slideshow__slide-image block-slideshow__slide-image--desktop"
-                                    style="background-image: url('{{asset('dist/images/slides/slide-2-full.jpg')}}')"></div>
+                                    style="background-image: url('{{asset('dist/images/slides/Banner-2.jpg')}}')"></div>
                                 <div class="block-slideshow__slide-image block-slideshow__slide-image--mobile"
                                     style="background-image: url('{{asset('dist/images/slides/slide-2-mobile.jpg')}}')"></div>
-                                <div class="block-slideshow__slide-content">
-                                    <div class="block-slideshow__slide-title">Screwdrivers<br>Professional Tools</div>
-                                    <div class="block-slideshow__slide-text">Lorem ipsum dolor sit amet, consectetur
-                                        adipiscing elit.<br>Etiam pharetra laoreet dui quis molestie.</div>
-                                    <div class="block-slideshow__slide-button">
-                                        <span class="btn btn-primary btn-lg">Comprar Ahora</span>
-                                    </div>
-                                </div>
                             </a>
                             <a class="block-slideshow__slide" href="#">
                                 <div class="block-slideshow__slide-image block-slideshow__slide-image--desktop"
-                                    style="background-image: url('{{asset('dist/images/slides/slide-3-full.jpg')}}')"></div>
+                                    style="background-image: url('{{asset('dist/images/slides/Banner-1.jpg')}}')"></div>
                                 <div class="block-slideshow__slide-image block-slideshow__slide-image--mobile"
                                     style="background-image: url('{{asset('dist/images/slides/slide-3-mobile.jpg')}}')"></div>
-                                <div class="block-slideshow__slide-content">
-                                    <div class="block-slideshow__slide-title">One more<br>Unique header</div>
-                                    <div class="block-slideshow__slide-text">Lorem ipsum dolor sit amet, consectetur
-                                        adipiscing elit.<br>Etiam pharetra laoreet dui quis molestie.</div>
-                                    <div class="block-slideshow__slide-button">
-                                        <span class="btn btn-primary btn-lg">Compra Ahora</span>
-                                        </div>
-                                </div>
+                            </a>
+                            <a class="block-slideshow__slide" href="#">
+                                <div class="block-slideshow__slide-image block-slideshow__slide-image--desktop"
+                                    style="background-image: url('{{asset('dist/images/slides/Banner-4.jpg')}}')"></div>
+                                <div class="block-slideshow__slide-image block-slideshow__slide-image--mobile"
+                                    style="background-image: url('{{asset('dist/images/slides/slide-3-mobile.jpg')}}')"></div>
                             </a>
                         </div>
                     </div>
@@ -134,11 +116,49 @@
                         <div class="block-products-carousel__cell">
                             <div class="product-card">
                                 <div class="product-card__badges-list">
-                                    @if ($item->ficha->condicion_venta == 'Requiere Receta' )
-                                    <div class="product-card__badge product-card__badge--sale">{{ $item->ficha->condicion_venta }}</div>
-                                    @else
-                                    <div class="product-card__badge product-card__badge--new">{{ $item->ficha->condicion_venta }}</div>
-                                    @endif
+                                    @switch($item->ficha->condicionventa->name)
+                                        @case($item->ficha->condicionventa->name == 'Receta')
+                                        <div class="product-card__badge product-card__badge--sale">
+                                            {{ $item->ficha->condicionventa->name }}
+                                        </div>
+                                        @break
+                                        @case($item->ficha->condicionventa->name == 'Receta Retenida')
+                                        <div class="product-card__badge product-card__badge--sale">
+                                            {{ $item->ficha->condicionventa->name }}
+                                        </div>
+                                        @break
+                                        @case($item->ficha->condicionventa->name == 'Receta Retenida y Control de Stock')
+                                        <div class="product-card__badge product-card__badge--sale">
+                                            {{ $item->ficha->condicionventa->name }}
+                                        </div>
+                                        @break
+                                        @case($item->ficha->condicionventa->name == 'Receta Cheque')
+                                        <div class="product-card__badge product-card__badge--sale">
+                                            {{ $item->ficha->condicionventa->name }}
+                                        </div>
+                                        @break
+                                        @case($item->ficha->condicionventa->name == 'Venta Libre')
+                                        <div class="product-card__badge product-card__badge--new">
+                                            {{ $item->ficha->condicionventa->name }}
+                                        </div>
+                                        @break
+                                        @case($item->ficha->condicionventa->name == 'Sin Receta')
+                                        <div class="product-card__badge product-card__badge--hot">
+                                            {{ $item->ficha->condicionventa->name }}
+                                        </div>
+                                        @break
+                                        @case($item->ficha->condicionventa->name == 'Sin Información')
+                                        <div class="product-card__badge product-card__badge--hot">
+                                            {{ $item->ficha->condicionventa->name }}
+                                        </div>
+                                        @break
+                                        @default
+                                        @case($item->ficha->condicionventa->name == 'Sin Información')
+                                        <div class="product-card__badge product-card__badge--hot">
+                                            {{ $item->ficha->condicionventa->name }}
+                                        </div>
+                                        @break
+                                    @endswitch
                                 </div>
                                 <div class="product-card__image">
                                     <a href="product.html">

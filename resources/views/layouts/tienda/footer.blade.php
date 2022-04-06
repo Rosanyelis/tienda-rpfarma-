@@ -5,30 +5,27 @@
                 <div class="row">
                     <div class="col-12 col-md-6 col-lg-4">
                         <div class="site-footer__widget footer-contacts">
-                            <h5 class="footer-contacts__title">Contactanos</h5>
-                            <div class="footer-contacts__text">Lorem ipsum dolor sit amet, consectetur adipiscing
-                                elit. Integer in feugiat lorem. Pellentque ac placerat tellus.</div>
+                            <h5 class="footer-contacts__title">Contáctanos</h5>
+                            <a href="{{ url('/') }}">
+                                <img src="{{ asset('images/logo-RpFARMA.png') }}"  width="220px"  alt="Logo RPFarma">
+                            </a>
                             <ul class="footer-contacts__contacts">
                                 <li>
                                     <i class="footer-contacts__icon fas fa-globe-americas"></i>
-                                    715 Fake Street, New York 10021 USA
+                                    Av. Recoleta 3646, Recoleta
                                 </li>
                                 <li>
                                     <i class="footer-contacts__icon far fa-envelope"></i>
-                                    stroyka@example.com
+                                    ventasweb@recetariorpfarma.com
                                 </li>
                                 <li>
                                     <i class="footer-contacts__icon fas fa-mobile-alt"></i>
                                     (800) 060-0730, (800) 060-0730
                                 </li>
-                                <li>
-                                    <i class="footer-contacts__icon far fa-clock"></i>
-                                    Mon-Sat 10:00pm - 7:00pm
-                                </li>
                             </ul>
                         </div>
                     </div>
-                    <div class="col-6 col-md-3 col-lg-2">
+                    <div class="col-12 col-md-6 col-lg-4">
                         <div class="site-footer__widget footer-links">
                             <h5 class="footer-links__title">Informacion</h5>
                             <ul class="footer-links__list">
@@ -36,54 +33,30 @@
                                     <a href="#" class="footer-links__link">Acerca de nosotros</a>
                                 </li>
                                 <li class="footer-links__item">
-                                    <a href="#" class="footer-links__link">Delivery Information</a>
+                                    <a href="#" class="footer-links__link">Información Reglamentaria</a>
                                 </li>
                                 <li class="footer-links__item">
-                                    <a href="#" class="footer-links__link">Politicas de seguridad</a>
+                                    <a href="#" class="footer-links__link">Procedimiento de Devoluciones</a>
                                 </li>
                                 <li class="footer-links__item">
-                                    <a href="#" class="footer-links__link">Contactanos</a>
+                                    <a href="#" class="footer-links__link">Carta de Desabastecimiento</a>
                                 </li>
                                 <li class="footer-links__item">
-                                    <a href="#" class="footer-links__link">Ubicacion</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-6 col-md-3 col-lg-2">
-                        <div class="site-footer__widget footer-links">
-                            <h5 class="footer-links__title">My Account</h5>
-                            <ul class="footer-links__list">
-
-                                <li class="footer-links__item">
-                                    <a href="#" class="footer-links__link">Historial de Ordenes</a></li>
-                                <li class="footer-links__item">
-                                    <a href="#" class="footer-links__link">Correo</a>
+                                    <a href="{{ url('/terminos-y-condiciones') }}" class="footer-links__link">Términos y Condiciones</a>
                                 </li>
                                 <li class="footer-links__item">
-                                    <a href="#" class="footer-links__link">Comentarios</a>
+                                    <a href="{{ url('/libro-electronico-de-reclamos-y-sugerencias') }}" class="footer-links__link">Libro Electrónico de Reclamos y Sugerencias</a>
                                 </li>
                                 <li class="footer-links__item">
-                                    <a href="#" class="footer-links__link">Ofertas especiales</a>
+                                    <a href="{{ url('/politicas-de-privacidad-y-proteccion-de-datos') }}" class="footer-links__link">Politicas de Privacidad y Protección de Datos</a>
                                 </li>
-                                <li class="footer-links__item">
-                                    <a href="#" class="footer-links__link">Certificados</a>
-                                </li>
-
                             </ul>
                         </div>
                     </div>
                     <div class="col-12 col-md-12 col-lg-4">
                         <div class="site-footer__widget footer-newsletter">
-                            <h5 class="footer-newsletter__title">Correo</h5>
-                            <div class="footer-newsletter__text">Praesent pellentesque volutpat ex, vitae auctor
-                                lorem pulvinar mollis felis at lacinia.</div>
-                            <form action="#" class="footer-newsletter__form"><label class="sr-only"
-                                    for="footer-newsletter-address">Direccion de correo</label> <input type="text"
-                                    class="footer-newsletter__form-input form-control"
-                                    id="footer-newsletter-address" placeholder="Email Address..."> <button
-                                    class="footer-newsletter__form-button btn btn-primary">Subscribe</button>
-                            </form>
+                            <h5 class="footer-newsletter__title">Pagos Seguros con</h5>
+                            <img src="{{asset('dist/images/webpay-plus.png')}}" width="80%" alt="">
                             <div class="footer-newsletter__text footer-newsletter__text--social">Nuestras Redes
                                 Sociales</div>
                             <ul class="footer-newsletter__social-links">
@@ -91,12 +64,6 @@
                                     class="footer-newsletter__social-link footer-newsletter__social-link--facebook">
                                     <a href="#" target="_blank"><i
                                             class="fab fa-facebook-f"></i></a></li>
-                                <li class="footer-newsletter__social-link footer-newsletter__social-link--twitter">
-                                    <a href="#" target="_blank"><i
-                                            class="fab fa-twitter"></i></a></li>
-                                <li class="footer-newsletter__social-link footer-newsletter__social-link--youtube">
-                                    <a href="#" target="_blank"><i
-                                            class="fab fa-youtube"></i></a></li>
                                 <li
                                     class="footer-newsletter__social-link footer-newsletter__social-link--instagram">
                                     <a href="#" target="_blank"><i
@@ -108,10 +75,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="site-footer__bottom">
-
-                <div class="site-footer__payments"><img src="{{asset('dist/images/payments.png')}}" alt=""></div>
             </div>
         </div>
     </div>

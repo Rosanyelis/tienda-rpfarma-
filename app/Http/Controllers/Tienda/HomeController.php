@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Tienda;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Producto;
+use App\Models\Categoria;
 
 class HomeController extends Controller
 {
@@ -15,8 +16,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $productos = Producto::all();
-        return view('tienda.home', compact('productos'));
+        $data = Categoria::where('name', 'Cuidado Personal')->first();
+        $categorias = Categoria::all();
+        $productos = Producto::where('categoria_id', $data->id)->get();
+        return view('tienda.home', compact('productos', 'categorias'));
     }
 
     /**
@@ -49,8 +52,9 @@ class HomeController extends Controller
      */
     public function show($id)
     {
+        $categorias = Categoria::all();
         $producto = Producto::where('id', $id)->first();
-        return view('tienda.producto.fichaproducto', compact('producto'));
+        return view('tienda.producto.fichaproducto', compact('producto', 'categorias'));
     }
 
     /**

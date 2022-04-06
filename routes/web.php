@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Tienda\HomeController;
 use App\Http\Controllers\Tienda\ProductosController;
 use App\Http\Controllers\Tienda\ContactenosController;
+use App\Http\Controllers\Tienda\InformacionController;
+use App\Http\Controllers\Tienda\ReclamoController;
 
 
 /*
@@ -30,10 +32,14 @@ Route::get('/productos/{id}/detalles-producto', [HomeController::class, 'show'])
 
 // COntactanos
 Route::get('/contactenos', [ContactenosController::class, 'index']);
-// Route::get('/', function () {
-//     return view('tienda.home');
-// });
-;
+
+
+Route::get('/terminos-y-condiciones', [InformacionController::class, 'index']);
+Route::get('/politicas-de-privacidad-y-proteccion-de-datos', [InformacionController::class, 'show']);
+
+
+Route::get('/libro-electronico-de-reclamos-y-sugerencias', [ReclamoController::class, 'index']);
+
 
 
 

@@ -16,17 +16,17 @@ class CategoriaSeeder extends Seeder
     {
         \App\Models\Categoria::create([
             'id' => Str::uuid(),
-            'name' => 'Anticonceptivos',
-            'estatus' => 'Activo',
-        ]);
-        \App\Models\Categoria::create([
-            'id' => Str::uuid(),
             'name' => 'Medicamentos',
             'estatus' => 'Activo',
         ]);
         \App\Models\Categoria::create([
             'id' => Str::uuid(),
-            'name' => 'Belleza',
+            'name' => 'Anticonceptivos y Sexualidad',
+            'estatus' => 'Activo',
+        ]);
+        \App\Models\Categoria::create([
+            'id' => Str::uuid(),
+            'name' => 'Belleza Natural',
             'estatus' => 'Activo',
         ]);
         \App\Models\Categoria::create([
@@ -36,7 +36,12 @@ class CategoriaSeeder extends Seeder
         ]);
         \App\Models\Categoria::create([
             'id' => Str::uuid(),
-            'name' => 'Vitaminas y Suplementos',
+            'name' => 'Vitaminas',
+            'estatus' => 'Activo',
+        ]);
+        \App\Models\Categoria::create([
+            'id' => Str::uuid(),
+            'name' => 'Suplementos',
             'estatus' => 'Activo',
         ]);
         \App\Models\Categoria::create([
@@ -44,10 +49,25 @@ class CategoriaSeeder extends Seeder
             'name' => 'Veterinaria',
             'estatus' => 'Activo',
         ]);
+
         \App\Models\Categoria::create([
             'id' => Str::uuid(),
-            'name' => 'Productos Naturales',
+            'name' => 'Bebé e Infantil',
             'estatus' => 'Activo',
         ]);
+
+        \App\Models\Categoria::create([
+            'id' => Str::uuid(),
+            'name' => 'Anilina',
+            'estatus' => 'Activo',
+        ]);
+
+        \App\Models\Categoria::create([
+            'id' => Str::uuid(),
+            'name' => 'Insumos Médicos',
+            'estatus' => 'Activo',
+        ]);
+
+
     }
 }

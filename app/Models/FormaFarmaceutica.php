@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\UuidModel;
 
-class Categoria extends Model
+class FormaFarmaceutica extends Model
 {
     use HasFactory, UuidModel;
 
@@ -19,19 +19,11 @@ class Categoria extends Model
         'id', 'name', 'estatus',
     ];
 
-    /**
+     /**
      * Obtiene datos de ficha tecnica.
      */
-    public function producto()
+    public function ficha()
     {
-        return $this->hasOne(Producto::class, 'categoria_id', 'id');
-    }
-
-    /**
-     * Obtener subcategorias.
-     */
-    public function subcategorias()
-    {
-        return $this->hasMany(Subcategoria::class, 'categoria_id', 'id');
+        return $this->hasOne(FichaTecnica::class, 'forma_farmaceutica_id', 'id');
     }
 }

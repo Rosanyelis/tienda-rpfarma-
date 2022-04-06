@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Categoria;
 
-class ContactenosController extends Controller
+class ReclamoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,7 @@ class ContactenosController extends Controller
     public function index()
     {
         $categorias = Categoria::all();
-        return view('tienda.contactanos.index', compact('categorias'));
+        return view('tienda.reclamos.index', compact('categorias'));
     }
 
     /**

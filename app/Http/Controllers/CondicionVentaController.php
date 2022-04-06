@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Tienda;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use App\Models\CondicionVenta;
 use Illuminate\Http\Request;
-use App\Models\Categoria;
 
-class ContactenosController extends Controller
+class CondicionVentaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +14,7 @@ class ContactenosController extends Controller
      */
     public function index()
     {
-        $categorias = Categoria::all();
-        return view('tienda.contactanos.index', compact('categorias'));
+        //
     }
 
     /**
@@ -43,10 +41,10 @@ class ContactenosController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\CondicionVenta  $condicionVenta
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(CondicionVenta $condicionVenta)
     {
         //
     }
@@ -54,10 +52,10 @@ class ContactenosController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\CondicionVenta  $condicionVenta
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(CondicionVenta $condicionVenta)
     {
         //
     }
@@ -66,10 +64,10 @@ class ContactenosController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\CondicionVenta  $condicionVenta
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, CondicionVenta $condicionVenta)
     {
         //
     }
@@ -77,10 +75,10 @@ class ContactenosController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\CondicionVenta  $condicionVenta
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(CondicionVenta $condicionVenta)
     {
         //
     }

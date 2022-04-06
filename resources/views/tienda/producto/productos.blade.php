@@ -44,59 +44,31 @@
                                                 <div class="filter__container">
                                                     <div class="filter-categories">
                                                         <ul class="filter-categories__list">
-                                                            <li class="filter-categories__item filter-categories__item--parent">
-                                                                <svg class="filter-categories__arrow" width="6px" height="9px">
-                                                                    <use xlink:href="{{ asset('dist/images/sprite.svg#arrow-rounded-left-6x9')}}"></use>
-                                                                </svg>
-                                                                <a href="#">Construction & Repair</a>
-                                                                <div class="filter-categories__counter"> 254 </div>
-                                                            </li>
-                                                            <li class="filter-categories__item filter-categories__item--parent">
-                                                                <svg class="filter-categories__arrow" width="6px" height="9px">
-                                                                    <use xlink:href="{{asset('dist/images/sprite.svg#arrow-rounded-left-6x9')}}"></use>
-                                                                </svg>
-                                                                <a href="#">Instruments</a>
-                                                                <div class="filter-categories__counter"> 75 </div>
-                                                            </li>
-                                                            <li
-                                                                class="filter-categories__item filter-categories__item--current">
-                                                                <a href="#">Power Tools</a>
-                                                                <div class="filter-categories__counter"> 21 </div>
-                                                            </li>
-                                                            <li class="filter-categories__item filter-categories__item--child">
-                                                                <a href="#">Drills & Mixers</a>
-                                                                <div class="filter-categories__counter"> 15 </div>
-                                                            </li>
-                                                            <li class="filter-categories__item filter-categories__item--child">
+                                                            @foreach ($categorias as $item)
+                                                                <li class="filter-categories__item filter-categories__item--child">
+                                                                    <a href="#">{{ $item->name }}</a>
+                                                                    <div class="filter-categories__counter"> 21 </div>
+                                                                </li>
+                                                                {{-- @if (count($item->subcategorias) > 0)
+                                                                    @foreach ($item->subcategorias as $item)
+                                                                    <li class="filter-categories__item filter-categories__item--child">
+                                                                        <a href="#">{{$item->name }}</a>
+                                                                        <div class="filter-categories__counter"> 15 </div>
+                                                                    </li>
+                                                                    @endforeach
+                                                                @endif --}}
+                                                            @endforeach
+
+
+                                                            {{-- <li class="filter-categories__item filter-categories__item--child">
                                                                 <a href="#">Cordless Screwdrivers</a>
                                                                 <div class="filter-categories__counter"> 2 </div>
                                                             </li>
                                                             <li class="filter-categories__item filter-categories__item--child">
                                                                 <a href="#">Screwdrivers</a>
                                                                 <div class="filter-categories__counter"> 30</div>
-                                                            </li>
+                                                            </li> --}}
                                                         </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="widget-filters__item">
-                                        <div class="filter filter--opened" data-collapse-item>
-                                            <button type="button" class="filter__title" data-collapse-trigger>
-                                                Price
-                                                <svg class="filter__arrow" width="12px" height="7px">
-                                                    <use xlink:href="{{('dist/images/sprite.svg#arrow-rounded-down-12x7')}}"></use>
-                                                </svg>
-                                            </button>
-                                            <div class="filter__body" data-collapse-content>
-                                                <div class="filter__container">
-                                                    <div class="filter-price" data-min="500" data-max="1500" data-from="590" data-to="1130">
-                                                        <div class="filter-price__slider"></div>
-                                                        <div class="filter-price__title">
-                                                            Price: $<span class="filter-price__min-value"></span>
-                                                            – $<span class="filter-price__max-value"></span>
-                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -168,11 +140,49 @@
                                     <div class="products-list__item">
                                         <div class="product-card">
                                             <div class="product-card__badges-list">
-                                                @if ($item->ficha->condicion_venta == 'Requiere Receta' )
-                                                <div class="product-card__badge product-card__badge--sale">{{ $item->ficha->condicion_venta }}</div>
-                                                @else
-                                                <div class="product-card__badge product-card__badge--new">{{ $item->ficha->condicion_venta }}</div>
-                                                @endif
+                                                @switch($item->ficha->condicionventa->name)
+                                                    @case($item->ficha->condicionventa->name == 'Receta')
+                                                    <div class="product-card__badge product-card__badge--sale">
+                                                        {{ $item->ficha->condicionventa->name }}
+                                                    </div>
+                                                    @break
+                                                    @case($item->ficha->condicionventa->name == 'Receta Retenida')
+                                                    <div class="product-card__badge product-card__badge--sale">
+                                                        {{ $item->ficha->condicionventa->name }}
+                                                    </div>
+                                                    @break
+                                                    @case($item->ficha->condicionventa->name == 'Receta Retenida y Control de Stock')
+                                                    <div class="product-card__badge product-card__badge--sale">
+                                                        {{ $item->ficha->condicionventa->name }}
+                                                    </div>
+                                                    @break
+                                                    @case($item->ficha->condicionventa->name == 'Receta Cheque')
+                                                    <div class="product-card__badge product-card__badge--sale">
+                                                        {{ $item->ficha->condicionventa->name }}
+                                                    </div>
+                                                    @break
+                                                    @case($item->ficha->condicionventa->name == 'Venta Libre')
+                                                    <div class="product-card__badge product-card__badge--new">
+                                                        {{ $item->ficha->condicionventa->name }}
+                                                    </div>
+                                                    @break
+                                                    @case($item->ficha->condicionventa->name == 'Sin Receta')
+                                                    <div class="product-card__badge product-card__badge--hot">
+                                                        {{ $item->ficha->condicionventa->name }}
+                                                    </div>
+                                                    @break
+                                                    @case($item->ficha->condicionventa->name == 'Sin Información')
+                                                    <div class="product-card__badge product-card__badge--hot">
+                                                        {{ $item->ficha->condicionventa->name }}
+                                                    </div>
+                                                    @break
+                                                    @default
+                                                    @case($item->ficha->condicionventa->name == 'Sin Información')
+                                                    <div class="product-card__badge product-card__badge--hot">
+                                                        {{ $item->ficha->condicionventa->name }}
+                                                    </div>
+                                                    @break
+                                                @endswitch
                                             </div>
                                             <div class="product-card__image">
                                                 <a href="{{ url('/productos/'.$item->id.'/detalles-producto') }}">
