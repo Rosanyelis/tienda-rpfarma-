@@ -19,8 +19,8 @@
                                     ventasweb@recetariorpfarma.com
                                 </li>
                                 <li>
-                                    <i class="footer-contacts__icon fas fa-mobile-alt"></i>
-                                    (800) 060-0730, (800) 060-0730
+                                    {{-- <i class="footer-contacts__icon fas fa-mobile-alt"></i> --}}
+                                    {{-- (800) 060-0730, (800) 060-0730 --}}
                                 </li>
                             </ul>
                         </div>

@@ -47,8 +47,8 @@
                         </svg>
                     </div>
                     <div class="block-features__content">
-                        <div class="block-features__title">Envio Gratis</div>
-                        <div class="block-features__subtitle">Llamanos en todo momento</div>
+                        <div class="block-features__title">Envíos a Domicilio</div>
+                        <div class="block-features__subtitle">Indique su dirección y estaremos a su orden</div>
                     </div>
                 </div>
                 <div class="block-features__divider"></div>
@@ -59,7 +59,7 @@
                         </svg>
                     </div>
                     <div class="block-features__content">
-                        <div class="block-features__title">Soporte 24/7</div>
+                        <div class="block-features__title">Soporte</div>
                         <div class="block-features__subtitle">Llamanos en todo momento</div>
                     </div>
                 </div>
@@ -80,7 +80,7 @@
                         </svg></div>
                     <div class="block-features__content">
                         <div class="block-features__title">Ofertas</div>
-                        <div class="block-features__subtitle">Descuentos hasta un 90%</div>
+                        <div class="block-features__subtitle">Descuentos</div>
                     </div>
                 </div>
             </div>

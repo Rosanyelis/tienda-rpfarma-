@@ -93,7 +93,8 @@
                 <div class="dropcart">
                     <div class="dropcart__products-list">
                         <div class="dropcart__product">
-                            <div class="dropcart__product-image">
+                            <p>No ha Agregado nada al carrito</p>
+                            {{-- <div class="dropcart__product-image">
                                 <a href="product.html">
                                     <img src="{{ asset('dist/images/products/product-1.jpg')}}" alt="">
                                 </a>
@@ -110,7 +111,7 @@
                                     <span class="dropcart__product-quantity">2</span> x
                                     <span class="dropcart__product-price">$699.00</span>
                                 </div>
-                            </div>
+                            </div> --}}
                             <button type="button" class="dropcart__product-remove btn btn-light btn-sm btn-svg-icon">
                                 <svg width="10px" height="10px">
                                     <use xlink:href="{{ asset('dist/images/sprite.svg#cross-10')}}"></use>
@@ -122,25 +123,17 @@
                         <table>
                             <tr>
                                 <th>Subtotal</th>
-                                <td>$5,877.00</td>
-                            </tr>
-                            <tr>
-                                <th>Shipping</th>
-                                <td>$25.00</td>
-                            </tr>
-                            <tr>
-                                <th>Tax</th>
-                                <td>$0.00</td>
+                                <td>$0</td>
                             </tr>
                             <tr>
                                 <th>Total</th>
-                                <td>$5,902.00</td>
+                                <td>$0</td>
                             </tr>
                         </table>
                     </div>
                     <div class="dropcart__buttons">
-                        <a class="btn btn-secondary" href="cart.html">View Cart</a>
-                        <a class="btn btn-primary" href="checkout.html">Checkout</a>
+                        <a class="btn btn-secondary" href="#">Ver carrito</a>
+                        <a class="btn btn-primary" href="#">Comprar</a>
                     </div>
                 </div>
                 <!-- .dropcart / end -->
