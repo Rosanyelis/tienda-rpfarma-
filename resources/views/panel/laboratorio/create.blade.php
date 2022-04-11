@@ -5,7 +5,7 @@
         <div class="nk-block-head nk-block-head-sm">
             <div class="nk-block-between">
                 <div class="nk-block-head-content">
-                    <h3 class="nk-block-title page-title">Editar tipos de administracion</h3>
+                    <h3 class="nk-block-title page-title">Crear Laboratorio</h3>
                 </div><!-- .nk-block-head-content -->
                 <div class="nk-block-head-content">
                     <div class="toggle-wrap nk-block-tools-toggle">
@@ -13,7 +13,7 @@
                         <div class="toggle-expand-content" data-content="pageMenu">
                             <ul class="nk-block-tools g-3">
                                 <li class="nk-block-tools-opt">
-                                    <a href="{{ url('admin/configuraciones/tipos-administracion') }}" class="btn btn-secondary">
+                                    <a href="{{ url('admin/configuraciones/laboratorio') }}" class="btn btn-secondary">
                                         <em class="icon ni ni-arrow-left"></em>
                                         <span>Regresar</span>
                                     </a>
@@ -28,16 +28,15 @@
         <div class="nk-block nk-block-lg">
             <div class="card card-bordered">
                 <div class="card-inner">
-                    <form action="{{ url('admin/configuraciones/tipos-administracion/'.$data->id.'/actualizar-tipos-administracion') }}" class="form-validate" method="POST">
+                    <form action="{{ url('admin/configuraciones/laboratorio/guardar-laboratorio') }}" class="form-validate" method="POST">
                         @csrf
-                        @method('PUT')
                         <div class="row g-gs">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label class="form-label" for="categoria">Nombre de Categoría</label>
+                                    <label class="form-label" for="categoria">Nombre de Laboratorio</label>
                                     <div class="form-control-wrap">
                                         <input type="text" class="form-control @error('name') invalid @enderror"
-                                                id="categoria" name="name" value="{{ $data->name }}" placeholder="Ejm: Artículos Personales">
+                                                id="categoria" name="name" value="{{ old('name') }}" placeholder="Ejm: Artículos Personales">
                                         @if ($errors->has('name'))
                                             <span id="fv-full-name-error" class="invalid">
                                                 {{ $errors->first('name') }}

@@ -28,7 +28,7 @@
         <div class="nk-block nk-block-lg">
             <div class="card card-bordered">
                 <div class="card-inner">
-                    <form action="{{ url('/configuraciones/roles/guardar-rol') }}" class="form-validate" method="POST">
+                    <form action="{{ url('admin/configuraciones/roles/guardar-rol') }}" class="form-validate" method="POST">
                         @csrf
                         <div class="row g-gs">
                             <div class="col-md-12">

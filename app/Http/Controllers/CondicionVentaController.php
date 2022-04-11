@@ -14,7 +14,8 @@ class CondicionVentaController extends Controller
      */
     public function index()
     {
-        //
+        $data = CondicionVenta::all();
+        return view('panel.condicionesventa.index', compact('data'));
     }
 
     /**
@@ -24,7 +25,7 @@ class CondicionVentaController extends Controller
      */
     public function create()
     {
-        //
+        return view('panel.condicionesventa.create');
     }
 
     /**
@@ -35,7 +36,23 @@ class CondicionVentaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'unique:categorias'],
+            'descripcion' => ['required'],
+        ],
+        [
+            'name.required' => 'El campo Nombre de Condiciones de venta es obligatorio',
+            'name.unique' => 'El valor del campo Nombre Condiciones de venta  ya existe',
+            'descripcion.required' => 'El campo Descripciones de Condición de Venta es obligatorio',
+        ]);
+
+        $registro = new CondicionVenta();
+        $registro->name = $request->name;
+        $registro->descripcion = $request->descripcion;
+        $registro->estatus = 'Activo';
+        $registro->save();
+
+        return redirect('admin/configuraciones/condiciones-venta')->with('success', 'Registro Guardado exitosamente');
     }
 
     /**
@@ -55,9 +72,17 @@ class CondicionVentaController extends Controller
      * @param  \App\Models\CondicionVenta  $condicionVenta
      * @return \Illuminate\Http\Response
      */
-    public function edit(CondicionVenta $condicionVenta)
+    public function edit($id)
     {
-        //
+        {
+            $count = CondicionVenta::where('id', $id)->count();
+            if ($count>0) {
+                $data = CondicionVenta::where('id', $id)->first();
+                return view('panel.condicionesventa.edit', compact('data'));
+            } else {
+                return redirect('admin/configuraciones/condiciones-venta')->with('danger', 'Problemas para Mostrar el Registro.');
+            }
+        }
     }
 
     /**
@@ -67,9 +92,30 @@ class CondicionVentaController extends Controller
      * @param  \App\Models\CondicionVenta  $condicionVenta
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, CondicionVenta $condicionVenta)
+    public function update(Request $request,$id)
     {
-        //
+        $count = CondicionVenta::where('id', $id)->count();
+        if ($count>0) {
+            $request->validate([
+                'name' => ['required', 'unique:categorias'],
+                'descripcion' => ['required'],
+            ],
+            [
+                'name.required' => 'El campo Nombre de Condiciones de venta es obligatorio',
+                'name.unique' => 'El valor del campo Nombre Condiciones de venta  ya existe',
+                'descripcion.required' => 'El campo Descripciones de Condición de Venta es obligatorio',
+            ]);
+
+            $registro = CondicionVenta::where('id', $id)->first();
+            $registro->name = $request->name;
+            $registro->descripcion = $request->descripcion;
+            $registro->estatus = 'Activo';
+            $registro->save();
+
+            return redirect('admin/configuraciones/condiciones-venta')->with('success', 'Registro Actualizado Exitosamente');
+        } else {
+            return redirect('admin/configuraciones/condiciones-venta')->with('danger', 'Problemas para Mostrar el Registro.');
+        }
     }
 
     /**
@@ -78,8 +124,16 @@ class CondicionVentaController extends Controller
      * @param  \App\Models\CondicionVenta  $condicionVenta
      * @return \Illuminate\Http\Response
      */
-    public function destroy(CondicionVenta $condicionVenta)
+    public function destroy($id)
     {
-        //
+        $count = CondicionVenta::where('id', $id)->count();
+        if ($count>0) {
+            $record = CondicionVenta::where('id', $id)->first();
+            $record->estatus = 'Inactivo';
+            $record->save();
+            return response()->json(200);
+        } else {
+            return response()->json(404);
+        }
     }
 }

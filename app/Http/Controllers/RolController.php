@@ -52,7 +52,7 @@ class RolController extends Controller
         $registro->estatus = 'Activo';
         $registro->save();
 
-        return redirect('/configuraciones/roles')->with('success', 'Registro Guardado exitosamente');
+        return redirect('admin/configuraciones/roles')->with('success', 'Registro Guardado exitosamente');
     }
 
     /**
@@ -72,9 +72,15 @@ class RolController extends Controller
      * @param  \App\Models\Rol  $rol
      * @return \Illuminate\Http\Response
      */
-    public function edit(Rol $rol)
+    public function edit($id)
     {
-        //
+        $count = Rol::where('id', $id)->count();
+        if ($count>0) {
+            $data = Rol::where('id', $id)->first();
+            return view('panel.roles.edit', compact('data'));
+        } else {
+            return redirect('admin/configuraciones/roles')->with('danger', 'Problemas para Mostrar el Registro.');
+        }
     }
 
     /**
@@ -84,9 +90,27 @@ class RolController extends Controller
      * @param  \App\Models\Rol  $rol
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Rol $rol)
+    public function update(Request $request, $id)
     {
-        //
+        $count = Rol::where('id', $id)->count();
+        if ($count>0) {
+            $request->validate([
+                'name' => ['required'],
+            ],
+            [
+                'name.required' => 'El campo Nombre de Rol es obligatorio',
+                'name.unique' => 'El valor del campo Nombre Rol ya existe',
+            ]);
+
+            $registro = Rol::where('id', $id)->first();
+            $registro->name = $request->name;
+            $registro->estatus = 'Activo';
+            $registro->save();
+
+            return redirect('admin/configuraciones/roles')->with('success', 'Registro Actualizado Exitosamente');
+        } else {
+            return redirect('admin/configuraciones/roles')->with('danger', 'Problemas para Mostrar el Registro.');
+        }
     }
 
     /**
@@ -95,8 +119,16 @@ class RolController extends Controller
      * @param  \App\Models\Rol  $rol
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Rol $rol)
+    public function destroy($id)
     {
-        //
+        $count = Rol::where('id', $id)->count();
+        if ($count>0) {
+            $record = Rol::where('id', $id)->first();
+            $record->estatus = 'Inactivo';
+            $record->save();
+            return response()->json(200);
+        } else {
+            return response()->json(404);
+        }
     }
 }

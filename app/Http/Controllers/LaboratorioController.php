@@ -14,7 +14,8 @@ class LaboratorioController extends Controller
      */
     public function index()
     {
-        //
+        $data = Laboratorio::all();
+        return view('panel.laboratorio.index', compact('data'));
     }
 
     /**
@@ -24,7 +25,7 @@ class LaboratorioController extends Controller
      */
     public function create()
     {
-        //
+        return view('panel.laboratorio.create');
     }
 
     /**
@@ -35,7 +36,20 @@ class LaboratorioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'unique:categorias'],
+        ],
+        [
+            'name.required' => 'El campo Nombre de Laboratorio es obligatorio',
+            'name.unique' => 'El valor del campo Nombre Laboratorio ya existe',
+        ]);
+
+        $registro = new Laboratorio();
+        $registro->name = $request->name;
+        $registro->estatus = 'Activo';
+        $registro->save();
+
+        return redirect('admin/configuraciones/laboratorio')->with('success', 'Registro Guardado exitosamente');
     }
 
     /**
@@ -55,9 +69,15 @@ class LaboratorioController extends Controller
      * @param  \App\Models\Laboratorio  $laboratorio
      * @return \Illuminate\Http\Response
      */
-    public function edit(Laboratorio $laboratorio)
+    public function edit($id)
     {
-        //
+        $count = Laboratorio::where('id', $id)->count();
+        if ($count>0) {
+            $data = Laboratorio::where('id', $id)->first();
+            return view('panel.laboratorio.edit', compact('data'));
+        } else {
+            return redirect('admin/configuraciones/laboratorio')->with('danger', 'Problemas para Mostrar el Registro.');
+        }
     }
 
     /**
@@ -67,9 +87,27 @@ class LaboratorioController extends Controller
      * @param  \App\Models\Laboratorio  $laboratorio
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Laboratorio $laboratorio)
+    public function update(Request $request, $id)
     {
-        //
+        $count = Laboratorio::where('id', $id)->count();
+        if ($count>0) {
+            $request->validate([
+                'name' => ['required'],
+            ],
+            [
+                'name.required' => 'El campo Nombre de Categoría es obligatorio',
+                'name.unique' => 'El valor del campo Nombre Categoría ya existe',
+            ]);
+
+            $registro = Laboratorio::where('id', $id)->first();
+            $registro->name = $request->name;
+            $registro->estatus = 'Activo';
+            $registro->save();
+
+            return redirect('admin/configuraciones/laboratorio')->with('success', 'Registro Actualizado Exitosamente');
+        } else {
+            return redirect('admin/configuraciones/laboratorio')->with('danger', 'Problemas para Mostrar el Registro.');
+        }
     }
 
     /**
@@ -78,8 +116,17 @@ class LaboratorioController extends Controller
      * @param  \App\Models\Laboratorio  $laboratorio
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Laboratorio $laboratorio)
+    public function destroy($id)
     {
-        //
+       
+        $count = Laboratorio::where('id', $id)->count();
+        if ($count>0) {
+            $record = Laboratorio::where('id', $id)->first();
+            $record->estatus = 'Inactivo';
+            $record->save();
+            return response()->json(200);
+        } else {
+            return response()->json(404);
+        }
     }
 }

@@ -6,6 +6,10 @@ use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\RolController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\LaboratorioController;
+use App\Http\Controllers\FormaFarmaceuticaController;
+use App\Http\Controllers\CondicionVentaController;
+use App\Http\Controllers\TipoAdministracionController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -44,7 +48,7 @@ Route::post('admin/configuraciones/empresa/guardar-categoria', [EmpresaControlle
 Route::get('admin/configuraciones/empresa/{id}/ver-categoria', [EmpresaController::class, 'show'])->name('empresa.show');
 Route::get('admin/configuraciones/empresa/{id}/editar-categoria', [EmpresaController::class, 'edit'])->name('empresa.edit');
 Route::put('admin/configuraciones/empresa/{id}/actualizar-categoria', [EmpresaController::class, 'update'])->name('empresa.update');
-Route::delete('admin/configuraciones/empresa/{id}/eliminar-categoria', [EmpresaController::class, 'destroy'])->name('empresa.destroy');
+Route::post('admin/configuraciones/empresa/{id}/eliminar-categoria', [EmpresaController::class, 'destroy'])->name('empresa.destroy');
 
 # Roles
 Route::get('admin/configuraciones/roles', [RolController::class, 'index'])->name('rol.index');
@@ -53,7 +57,7 @@ Route::post('admin/configuraciones/roles/guardar-rol', [RolController::class, 's
 Route::get('admin/configuraciones/roles/{id}/ver-rol', [RolController::class, 'show'])->name('rol.show');
 Route::get('admin/configuraciones/roles/{id}/editar-rol', [RolController::class, 'edit'])->name('rol.edit');
 Route::put('admin/configuraciones/roles/{id}/actualizar-rol', [RolController::class, 'update'])->name('rol.update');
-Route::delete('admin/configuraciones/roles/{id}/eliminar-rol', [RolController::class, 'destroy'])->name('rol.destroy');
+Route::post('admin/configuraciones/roles/{id}/eliminar-rol', [RolController::class, 'destroy'])->name('rol.destroy');
 
 # Productos
 Route::get('admin/productos', [ProductoController::class, 'index'])->name('producto.index');
@@ -62,7 +66,7 @@ Route::post('admin/productos/guardar-producto', [ProductoController::class, 'sto
 Route::get('admin/productos/{id}/ver-producto', [ProductoController::class, 'show'])->name('producto.show');
 Route::get('admin/productos/{id}/editar-producto', [ProductoController::class, 'edit'])->name('producto.edit');
 Route::put('admin/productos/{id}/actualizar-producto', [ProductoController::class, 'update'])->name('producto.update');
-Route::delete('admin/productos/{id}/eliminar-producto', [ProductoController::class, 'destroy'])->name('producto.destroy');
+Route::post('admin/productos/{id}/eliminar-producto', [ProductoController::class, 'destroy'])->name('producto.destroy');
 
 # Usuarios
 Route::get('admin/configuraciones/usuarios', [UsuarioController::class, 'index'])->name('usuario.index');
@@ -71,4 +75,43 @@ Route::post('admin/configuraciones/usuarios/guardar-usuario', [UsuarioController
 Route::get('admin/configuraciones/usuarios/{id}/ver-usuario', [UsuarioController::class, 'show'])->name('usuario.show');
 Route::get('admin/configuraciones/usuarios/{id}/editar-usuario', [UsuarioController::class, 'edit'])->name('usuario.edit');
 Route::put('admin/configuraciones/usuarios/{id}/actualizar-usuario', [UsuarioController::class, 'update'])->name('usuario.update');
-Route::delete('admin/configuraciones/usuarios/{id}/eliminar-usuario', [UsuarioController::class, 'destroy'])->name('usuario.destroy');
+Route::post('admin/configuraciones/usuarios/{id}/eliminar-usuario', [UsuarioController::class, 'destroy'])->name('usuario.destroy');
+
+# Laboratorio
+Route::get('admin/configuraciones/laboratorio', [LaboratorioController::class, 'index'])->name('laboratorio.index');
+Route::get('admin/configuraciones/laboratorio/crear-laboratorio', [LaboratorioController::class, 'create'])->name('laboratorio.create');
+Route::post('admin/configuraciones/laboratorio/guardar-laboratorio', [LaboratorioController::class, 'store'])->name('laboratorio.store');
+Route::get('admin/configuraciones/laboratorio/{id}/ver-laboratorio', [Laboratorio::class, 'show'])->name('laboratorio.show');
+Route::get('admin/configuraciones/laboratorio/{id}/editar-laboratorio', [LaboratorioController::class, 'edit'])->name('laboratorio.edit');
+Route::put('admin/configuraciones/laboratorio/{id}/actualizar-laboratorio', [LaboratorioController::class, 'update'])->name('laboratorio.update');
+Route::post('admin/configuraciones/laboratorio/{id}/eliminar-laboratorio', [LaboratorioController::class, 'destroy'])->name('laboratorio.destroy');
+
+# Formas Farmaceuas
+Route::get('admin/configuraciones/formas-farmaceuticas', [FormaFarmaceuticaController::class, 'index'])->name('formasfarmaceuticas.index');
+Route::get('admin/configuraciones/formas-farmaceuticas/crear-formas-farmaceuticas', [FormaFarmaceuticaController::class, 'create'])->name('formasfarmaceuticas.create');
+Route::post('admin/configuraciones/formas-farmaceuticas/guardar-formas-farmaceuticas', [FormaFarmaceuticaController::class, 'store'])->name('formasfarmaceuticas.store');
+Route::get('admin/configuraciones/formas-farmaceuticas/{id}/ver-formas-farmaceuticas', [FormaFarmaceutica::class, 'show'])->name('formasfarmaceuticas.show');
+Route::get('admin/configuraciones/formas-farmaceuticas/{id}/editar-formas-farmaceuticas', [FormaFarmaceuticaController::class, 'edit'])->name('formasfarmaceuticas.edit');
+Route::put('admin/configuraciones/formas-farmaceuticas/{id}/actualizar-formas-farmaceuticas', [FormaFarmaceuticaController::class, 'update'])->name('formasfarmaceuticas.update');
+Route::post('admin/configuraciones/formas-farmaceuticas/{id}/eliminar-formas-farmaceuticas', [FormaFarmaceuticaController::class, 'destroy'])->name('formasfarmaceuticas.destroy');
+
+# Condiciones de ventas
+Route::get('admin/configuraciones/condiciones-venta', [CondicionVentaController::class, 'index'])->name('condicionesventa.index');
+Route::get('admin/configuraciones/condiciones-venta/crear-condiciones-venta', [CondicionVentaController::class, 'create'])->name('condicionesventa.create');
+Route::post('admin/configuraciones/condiciones-venta/guardar-condiciones-venta', [CondicionVentaController::class, 'store'])->name('condicionesventa.store');
+Route::get('admin/configuraciones/condiciones-venta/{id}/ver-condiciones-venta', [CondicionVentaController::class, 'show'])->name('condicionesventa.show');
+Route::get('admin/configuraciones/condiciones-venta/{id}/editar-condiciones-venta', [CondicionVentaController::class, 'edit'])->name('condicionesventa.edit');
+Route::put('admin/configuraciones/condiciones-venta/{id}/actualizar-condiciones-venta', [CondicionVentaController::class, 'update'])->name('condicionesventa.update');
+Route::post('admin/configuraciones/condiciones-venta/{id}/eliminar-condiciones-venta', [CondicionVentaController::class, 'destroy'])->name('condicionesventa.destroy');
+
+
+# Tipo de administracion 
+
+Route::get('admin/configuraciones/tipos-administracion', [TipoAdministracionController::class, 'index'])->name('tiposadministracion.index');
+Route::get('admin/configuraciones/tipos-administracion/crear-tipos-administracion', [TipoAdministracionController::class, 'create'])->name('tiposadministracion.create');
+Route::post('admin/configuraciones/tipos-administracion/guardar-tipos-administracion', [TipoAdministracionController::class, 'store'])->name('tiposadministracion.store');
+Route::get('admin/configuraciones/tipos-administracion/{id}/ver-tipos-administracion', [TipoAdministracionController::class, 'show'])->name('tiposadministracion.show');
+Route::get('admin/configuraciones/tipos-administracion/{id}/editar-tipos-administracion', [TipoAdministracionController::class, 'edit'])->name('tiposadministracion.edit');
+Route::put('admin/configuraciones/tipos-administracion/{id}/actualizar-tipos-administracion', [TipoAdministracionController::class, 'update'])->name('tiposadministracion.update');
+Route::post('admin/configuraciones/tipos-administracion/{id}/eliminar-tipos-administracion', [TipoAdministracionController::class, 'destroy'])->name('tiposadministracion.destroy');
+

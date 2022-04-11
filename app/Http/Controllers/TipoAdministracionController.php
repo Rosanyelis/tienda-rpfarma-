@@ -14,7 +14,8 @@ class TipoAdministracionController extends Controller
      */
     public function index()
     {
-        //
+        $data = TipoAdministracion::all();
+        return view('panel.tiposadministracion.index', compact('data'));
     }
 
     /**
@@ -24,7 +25,7 @@ class TipoAdministracionController extends Controller
      */
     public function create()
     {
-        //
+        return view('panel.tiposadministracion.create');
     }
 
     /**
@@ -35,7 +36,20 @@ class TipoAdministracionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'unique:categorias'],
+        ],
+        [
+            'name.required' => 'El campo Nombre de Categoría es obligatorio',
+            'name.unique' => 'El valor del campo Nombre Categoría ya existe',
+        ]);
+
+        $registro = new TipoAdministracion();
+        $registro->name = $request->name;
+        $registro->estatus = 'Activo';
+        $registro->save();
+
+        return redirect('admin/configuraciones/tipos-administracion')->with('success', 'Registro Guardado exitosamente');
     }
 
     /**
@@ -55,9 +69,15 @@ class TipoAdministracionController extends Controller
      * @param  \App\Models\TipoAdministracion  $tipoAdministracion
      * @return \Illuminate\Http\Response
      */
-    public function edit(TipoAdministracion $tipoAdministracion)
+    public function edit($id)
     {
-        //
+        $count = TipoAdministracion::where('id', $id)->count();
+        if ($count>0) {
+            $data = TipoAdministracion::where('id', $id)->first();
+            return view('panel.tiposadministracion.edit', compact('data'));
+        } else {
+            return redirect('admin/configuraciones/tipos-administracion')->with('danger', 'Problemas para Mostrar el Registro.');
+        }
     }
 
     /**
@@ -67,9 +87,28 @@ class TipoAdministracionController extends Controller
      * @param  \App\Models\TipoAdministracion  $tipoAdministracion
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, TipoAdministracion $tipoAdministracion)
+    public function update(Request $request, $id)
     {
-        //
+       
+        $count = TipoAdministracion::where('id', $id)->count();
+        if ($count>0) {
+            $request->validate([
+                'name' => ['required'],
+            ],
+            [
+                'name.required' => 'El campo Nombre del tipo de administracion es obligatorio',
+                'name.unique' => 'El valor del campo Nombre del tipo de aministracion ya existe',
+            ]);
+
+            $registro = TipoAdministracion::where('id', $id)->first();
+            $registro->name = $request->name;
+            $registro->estatus = 'Activo';
+            $registro->save();
+
+            return redirect('admin/configuraciones/tipos-administracion')->with('success', 'Registro Actualizado Exitosamente');
+        } else {
+            return redirect('admin/configuraciones/tipos-administracion')->with('danger', 'Problemas para Mostrar el Registro.');
+        }
     }
 
     /**
@@ -78,8 +117,16 @@ class TipoAdministracionController extends Controller
      * @param  \App\Models\TipoAdministracion  $tipoAdministracion
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TipoAdministracion $tipoAdministracion)
+    public function destroy($id)
     {
-        //
+        $count = TipoAdministracion::where('id', $id)->count();
+        if ($count>0) {
+            $record = TipoAdministracion::where('id', $id)->first();
+            $record->estatus = 'Inactivo';
+            $record->save();
+            return response()->json(200);
+        } else {
+            return response()->json(404);
+        }
     }
 }

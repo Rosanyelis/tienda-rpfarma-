@@ -57,6 +57,26 @@
                                     <span class="nk-menu-text">Usuarios</span>
                                 </a>
                             </li>
+                            <li class="nk-menu-item">
+                                <a href="{{ url('admin/configuraciones/laboratorio') }}" class="nk-menu-link" data-original-title="" title="">
+                                    <span class="nk-menu-text">Laboratorio</span>
+                                </a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a href="{{ url('admin/configuraciones/formas-farmaceuticas') }}" class="nk-menu-link" data-original-title="" title="">
+                                    <span class="nk-menu-text">Formas Farmaceuticas</span>
+                                </a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a href="{{ url('admin/configuraciones/condiciones-venta') }}" class="nk-menu-link" data-original-title="" title="">
+                                    <span class="nk-menu-text">Condiciones de venta</span>
+                                </a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a href="{{ url('admin/configuraciones/tipos-administracion') }}" class="nk-menu-link" data-original-title="" title="">
+                                    <span class="nk-menu-text">Tipos de administracion</span>
+                                </a>
+                            </li>
                         </ul><!-- .nk-menu-sub -->
                     </li>
                 </ul><!-- .nk-menu -->
