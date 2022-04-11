@@ -27,8 +27,15 @@ Route::get('/', [HomeController::class, 'index'])->name('tienda.index');
 
 //Productos Tienda
 Route::get('/productos', [ProductosController::class, 'index']);
-Route::get('/productos/{id}/detalles-producto', [HomeController::class, 'show'])->name('tienda.show');
+Route::get('/productos/{id}/buscar-producto', [ProductosController::class, 'buscar']);
 
+// Route::post('/productos/carrito-de-compra', [ProductosController::class, 'store']);
+Route::post('/productos/carrito-de-compra', [ProductosController::class, 'addCarrito']);
+Route::get('/productos/carrito-de-compra/{id}/checkout', [ProductosController::class, 'show']);
+
+
+//home
+Route::get('/productos/{id}/detalles-producto', [HomeController::class, 'show'])->name('tienda.show');
 
 // COntactanos
 Route::get('/contactenos', [ContactenosController::class, 'index']);

@@ -161,22 +161,19 @@
                                     @endswitch
                                 </div>
                                 <div class="product-card__image">
-                                    <a href="product.html">
+                                    <a href="{{ url('/productos/'.$item->id.'/detalles-producto') }}">
                                         <img src="{{ $item->foto }}" alt="{{ $item->name }}">
-                                        </a>
+                                    </a>
                                 </div>
                                 <div class="product-card__info">
                                     <div class="product-card__name">
-                                        <a href="{{ url('/productos/'.$item->id.'/detalles-producto') }}">{{ $item->name }}</a>
+                                        <a data-name="{{ $item->name }}" href="{{ url('/productos/'.$item->id.'/detalles-producto') }}">{{ $item->name }}</a>
                                     </div>
                                 </div>
                                 <div class="product-card__actions">
-                                    <div class="product-card__availability">Availability:
-                                        <span class="text-success">In Stock</span>
-                                    </div>
                                     <div class="product-card__prices">$ {{ number_format($item->precio_venta, 0, ",", "."); }}</div>
                                     <div class="product-card__buttons">
-                                        <button class="btn btn-primary product-card__addtocart" type="button">Añadir al Carrito</button>
+                                        <button type="button" class="btn btn-primary product-card__addtocart" data-id="{{ $item->id }}">Añadir al Carrito</button>
                                     </div>
                                 </div>
                             </div>

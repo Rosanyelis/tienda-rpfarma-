@@ -85,56 +85,23 @@
                     <svg width="20px" height="20px">
                         <use xlink:href="{{ asset('dist/images/sprite.svg#cart-20')}}"></use>
                     </svg>
-                    <span class="indicator__value">3</span>
+                    <span class="indicator__value"></span>
                 </span>
             </a>
             <div class="indicator__dropdown">
                 <!-- .dropcart -->
                 <div class="dropcart">
-                    <div class="dropcart__products-list">
-                        <div class="dropcart__product">
-                            <p>No ha Agregado nada al carrito</p>
-                            {{-- <div class="dropcart__product-image">
-                                <a href="product.html">
-                                    <img src="{{ asset('dist/images/products/product-1.jpg')}}" alt="">
-                                </a>
-                            </div>
-                            <div class="dropcart__product-info">
-                                <div class="dropcart__product-name">
-                                    <a href="product.html">Electric Planer Brandix KL370090G 300 Watts</a>
-                                </div>
-                                <ul class="dropcart__product-options">
-                                    <li>Color: Yellow</li>
-                                    <li>Material: Aluminium</li>
-                                </ul>
-                                <div class="dropcart__product-meta">
-                                    <span class="dropcart__product-quantity">2</span> x
-                                    <span class="dropcart__product-price">$699.00</span>
-                                </div>
-                            </div> --}}
-                            <button type="button" class="dropcart__product-remove btn btn-light btn-sm btn-svg-icon">
-                                <svg width="10px" height="10px">
-                                    <use xlink:href="{{ asset('dist/images/sprite.svg#cross-10')}}"></use>
-                                </svg>
-                            </button>
+                    <form id="carritoForm" action="{{ url('/productos/carrito-de-compra') }}" method="POST">
+                        @csrf
+                        <input id="datos" type="hidden" name="productos" value="">
+                        <div class="dropcart__products-list">
+
                         </div>
-                    </div>
-                    <div class="dropcart__totals">
-                        <table>
-                            <tr>
-                                <th>Subtotal</th>
-                                <td>$0</td>
-                            </tr>
-                            <tr>
-                                <th>Total</th>
-                                <td>$0</td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="dropcart__buttons">
-                        <a class="btn btn-secondary" href="#">Ver carrito</a>
-                        <a class="btn btn-primary" href="#">Comprar</a>
-                    </div>
+                        <div class="dropcart__buttons">
+                            <button type="button" class="btn btn-secondary delete-product-car">Limpiar</button>
+                            <button type="button" class="btn btn-primary verificar-car">Verificar</button>
+                        </div>
+                    </form>
                 </div>
                 <!-- .dropcart / end -->
             </div>
