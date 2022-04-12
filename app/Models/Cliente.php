@@ -18,4 +18,12 @@ class Cliente extends Model
     protected $fillable = [
         'id', 'nombre', 'apellido', 'rut', 'direccion', 'estatus',
     ];
+
+    /**
+     * Obtiene las ordenes de compra.
+     */
+    public function ordenes()
+    {
+        return $this->hasMany(OrdenCliente::class, 'cliente_id', 'id');
+    }
 }

@@ -16,10 +16,11 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $carritoItems = \Cart::getContent();
         $data = Categoria::where('name', 'Cuidado Personal')->first();
         $categorias = Categoria::all();
         $productos = Producto::where('categoria_id', $data->id)->get();
-        return view('tienda.home', compact('productos', 'categorias'));
+        return view('tienda.home', compact('productos', 'categorias', 'carritoItems'));
     }
 
     /**

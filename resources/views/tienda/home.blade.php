@@ -173,7 +173,12 @@
                                 <div class="product-card__actions">
                                     <div class="product-card__prices">$ {{ number_format($item->precio_venta, 0, ",", "."); }}</div>
                                     <div class="product-card__buttons">
-                                        <button type="button" class="btn btn-primary product-card__addtocart" data-id="{{ $item->id }}">Añadir al Carrito</button>
+                                        <form action="{{ url('/productos/anadir-producto-al-carrito') }}" method="POST" >
+                                            @csrf
+                                            <input type="hidden" value="{{ $item->id }}" name="id">
+                                            <input type="hidden" value="/" name="url">
+                                            <button type="submit" class="btn btn-primary product-card__addtocart">Añadir al Carrito</button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
