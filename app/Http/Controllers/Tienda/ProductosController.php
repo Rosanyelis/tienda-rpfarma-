@@ -21,7 +21,8 @@ class ProductosController extends Controller
     {
         $categorias = Categoria::all();
         $data = Producto::all();
-        return view('tienda.producto.productos', compact('data', 'categorias'));
+        $carritoItems = \Cart::getContent();
+        return view('tienda.producto.productos', compact('data', 'categorias','carritoItems'));
     }
 
     /**
@@ -114,16 +115,4 @@ class ProductosController extends Controller
         //
     }
 
-     /**
-     * Buscar data de producto.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function buscar($id)
-    {
-        $data = Producto::where('id', $id)->first();
-        $data['forma'] = FichaTecnica::where('producto_id', $id)->with('condicionventa')->first();
-        return response()->json($data);
-    }
 }

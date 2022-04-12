@@ -126,72 +126,17 @@
                     toast.addEventListener('mouseleave', Swal.resumeTimer)
                 }
             });
-            var productosCar = [];
-            var count = 0;
 
-            $('body .indicator__button > .indicator__value').text(count);
-
-            $('.product-card__addtocart').on('click', function() {
-                let idproducto = $(this).data('id');
-                let formaf = $('.product-card__badge').val();
-                let baseUrl = '{{ url('productos') }}/' + idproducto + '/buscar-producto';
-                $.ajax({
-                    type: 'GET',
-                    url: baseUrl,
-                    dataType: 'json',
-                    success: function(response) {
-                        console.log(response.forma.condicionventa.name);
-                        let idp = response.id;
-                        let namep = response.name;
-                        let preciop = response.precio_venta;
-                        let fotop = response.foto;
-                        let condicionventa = response.forma.condicionventa.name;
-                        let urlShow = '{{ url('productos') }}/'+ idp +'/detalles-producto';
-                        let producto = '<div class="dropcart__product"><div class="dropcart__product-image"><a href="'+ urlShow +'"><img src="'+fotop+'" alt=""></a></div><div class="dropcart__product-info"><div class="dropcart__product-name"><a href="'+ urlShow +'">'+namep+'</a></div><div class="dropcart__product-meta"><span class="dropcart__product-price">$ '+preciop+'</span></div></div><button type="button" class="dropcart__product-remove btn btn-light btn-sm btn-svg-icon"><svg width="10px" height="10px"><use xlink:href="{{ asset('dist/images/sprite.svg#cross-10')}}"></use></svg></button></div>';
-                        $('.dropcart__products-list').append(producto);
-
-                        var datosFila = {};
-                        datosFila.idp = idp;
-                        datosFila.namep = namep;
-                        datosFila.preciop = preciop;
-                        datosFila.fotop = fotop;
-                        datosFila.urlShow = urlShow;
-                        datosFila.cantidad = '1';
-                        datosFila.condicionventa = condicionventa;
-
-                        productosCar.push(datosFila);
-                        Toast.fire({
-                            icon: 'success',
-                            title: 'Producto Agregado Exitosamente!'
-                        });
-                        count = productosCar.length;
-
-                    },error: function(response) {
-                        Toast.fire({
-                            icon: 'error',
-                            title: 'Error al Agregar Producto!'
-                        });
-                    }
-                });
+            @if (session('success'))
+            Toast.fire({
+                icon: 'success',
+                title: '{{ session('success') }}'
             });
+            @endif
 
-            $("body .delete-product-car").click(function() {
-                $(".dropcart__product").remove();
-                Toast.fire({
-                    icon: 'error',
-                    title: 'Produtos Eliminados del Carrito!'
-                });
-            });
-
-            $('.verificar-car').click(function(event) {
-                event.preventDefault();
-                window.history.back();
-                $('#datos').val(JSON.stringify(productosCar));
-                $('#carritoForm').submit();
-                $('#datos').val('');
-            });
 
         })(jQuery);
     </script>
+    @yield('scripts')
 </body>
 </html>

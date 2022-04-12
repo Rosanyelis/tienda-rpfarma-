@@ -17,9 +17,6 @@
                         </ol>
                     </nav>
                 </div>
-                {{-- <div class="page-header__title">
-                    <h1>Productos</h1>
-                </div> --}}
             </div>
         </div>
         <div class="container">
@@ -197,12 +194,18 @@
                                             <div class="product-card__actions">
                                                 <div class="product-card__prices">$ {{ number_format($item->precio_venta, 0, ",", "."); }}</div>
                                                 <div class="product-card__buttons">
-                                                    <button class="btn btn-primary product-card__addtocart" type="button">
-                                                        Añadir al Carrito
-                                                    </button>
-                                                    <button class="btn btn-secondary product-card__addtocart product-card__addtocart--list" type="button">
-                                                        Añadir al Carrito
-                                                    </button>
+                                                    <form action="{{ url('/productos/anadir-producto-al-carrito') }}" method="POST" >
+                                                        @csrf
+                                                        <input type="hidden" value="{{ $item->id }}" name="id">
+                                                        <input type="hidden" value="/productos" name="url">
+                                                        <button type="submit" class="btn btn-primary product-card__addtocart">Añadir al Carrito</button>
+                                                    </form>
+                                                    <form action="{{ url('/productos/anadir-producto-al-carrito') }}" method="POST" >
+                                                        @csrf
+                                                        <input type="hidden" value="{{ $item->id }}" name="id">
+                                                        <input type="hidden" value="/productos" name="url">
+                                                        <button type="submit" class="btn btn-secondary product-card__addtocart product-card__addtocart--list">Añadir al Carrito</button>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
