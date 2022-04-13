@@ -99,7 +99,7 @@ class ProductoController extends Controller
             $uuid = Str::uuid(4);
             $fileName = $uuid . '.' . $extension;
             $file->move($uploadPath, $fileName);
-            $url = asset('/storage/Productos/'.$fileName);
+            $url = '/storage/Productos/'.$fileName;
             $registro->foto = $url;
         }
         $registro->stock = $request->stock;

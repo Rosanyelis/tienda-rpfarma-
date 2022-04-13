@@ -183,7 +183,7 @@
                                             </div>
                                             <div class="product-card__image">
                                                 <a href="{{ url('/productos/'.$item->id.'/detalles-producto') }}">
-                                                    <img src="{{ $item->foto }}" alt="{{ $item->name }}" />
+                                                    <img src="{{ asset($item->foto) }}" alt="{{ $item->name }}" />
                                                 </a>
                                             </div>
                                             <div class="product-card__info">

@@ -35,7 +35,7 @@
                             <div class="product-gallery">
                                 <div class="product-gallery__featured">
                                     <div class="owl-carousel" id="product-image">
-                                        <div><img src="{{ $producto->foto }}" alt="{{ $producto->name }}"></div>
+                                        <div><img src="{{ asset($producto->foto) }}" alt="{{ $producto->name }}"></div>
                                     </div>
                                 </div>
                             </div>

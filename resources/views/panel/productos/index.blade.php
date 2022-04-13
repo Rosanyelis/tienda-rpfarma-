@@ -42,7 +42,7 @@
                     <td class="nk-tb-col">{{ $loop->iteration }}</td>
                     <td class="nk-tb-col tb-col-sm">
                         <span class="tb-product">
-                            <img src="{{ $item->foto }}" alt="" class="thumb">
+                            <img src="{{ asset($item->foto) }}" alt="{{ $item->name }}" class="thumb">
                             <span class="title">{{ $item->name }}</span>
                         </span>
                     </td>

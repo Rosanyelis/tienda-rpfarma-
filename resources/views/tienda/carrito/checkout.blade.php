@@ -25,53 +25,83 @@
     <div class="checkout block">
         <div class="container">
             {{-- <div > --}}
-                <form class="row" action="{{ url('/productos/completar-compra') }}" method="POST">
-                    @csrf
-                    <div class="col-12 col-lg-6 col-xl-7">
-                        <div class="card mb-lg-0">
-                            <div class="card-body">
-                                <h3 class="card-title">Detalles de Pago</h3>
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <label for="checkout-first-name">Nombre</label>
-                                        <input type="text" class="form-control" name="nombre" id="checkout-first-name"
-                                            placeholder="Ejemplo: Angel" />
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label for="checkout-last-name">Apellido</label>
-                                        <input type="text" class="form-control" name="apellido" id="checkout-last-name"
-                                            placeholder="Doe" />
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label for="checkout-last-name">Rut</label>
-                                        <input type="text" class="form-control" name="rut" id="checkout-last-name"
-                                            placeholder="Doe" />
-                                    </div>
+            <form class="row" action="{{ url('/productos/completar-compra') }}" method="POST">
+                @csrf
+                <div class="col-12 col-lg-6 col-xl-7">
+                    <div class="card mb-lg-0">
+                        <div class="card-body">
+                            <h3 class="card-title">Detalles de Pago</h3>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="checkout-first-name">Nombre</label>
+                                    <input type="text" class="form-control @error('nombre') invalid @enderror" name="nombre"
+                                        id="checkout-first-name" placeholder="Ejemplo: Angel" />
+                                    @if ($errors->has('nombre'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('nombre') }}
+                                        </div>
+                                    @endif
                                 </div>
-
-                                <div class="form-group">
-                                    <label for="checkout-street-address">Dirección</label>
-                                    <input type="text" class="form-control" name="direccion" id="checkout-street-address"
-                                        placeholder="Direccion" />
+                                <div class="form-group col-md-6">
+                                    <label for="checkout-last-name">Apellido</label>
+                                    <input type="text" class="form-control @error('apellido') invalid @enderror" name="apellido" id="checkout-last-name"
+                                        placeholder="Doe" />
+                                    @if ($errors->has('apellido'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('apellido') }}
+                                        </div>
+                                    @endif
                                 </div>
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <label for="checkout-email">Correo Electrónico</label>
-                                        <input type="email" class="form-control" name="correo" id="checkout-email"
-                                            placeholder="Ejemplo: Example@example.com" />
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label for="checkout-phone">Teléfono</label>
-                                        <input type="text" class="form-control" name="telefono" id="checkout-phone"
-                                            placeholder="Telefono" />
-                                    </div>
+                                <div class="form-group col-md-6">
+                                    <label for="checkout-last-name">Rut</label>
+                                    <input type="text" class="form-control @error('rut') invalid @enderror" name="rut" id="checkout-last-name"
+                                        placeholder="Doe" />
+                                    @if ($errors->has('rut'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('rut') }}
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
-                            <div class="card-divider"></div>
-                            <div class="card-body">
-                                {{-- <h3 class="card-title">Detalles de Envío</h3> --}}
-                                <div class="form-group">
-                                    {{-- <div class="form-check">
+
+                            <div class="form-group">
+                                <label for="checkout-street-address">Dirección</label>
+                                <input type="text" class="form-control @error('direccion') invalid @enderror" name="direccion" id="checkout-street-address"
+                                    placeholder="Direccion" />
+                                @if ($errors->has('direccion'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('direccion') }}
+                                    </div>
+                                @endif
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="checkout-email">Correo Electrónico</label>
+                                    <input type="email" class="form-control @error('correo') invalid @enderror" name="correo" id="checkout-email"
+                                        placeholder="Ejemplo: Example@example.com" />
+                                    @if ($errors->has('correo'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('correo') }}
+                                        </div>
+                                    @endif
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="checkout-phone">Teléfono</label>
+                                    <input type="text" class="form-control @error('telefono') invalid @enderror" name="telefono" id="checkout-phone"
+                                        placeholder="Telefono" />
+                                    @if ($errors->has('telefono'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('telefono') }}
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-divider"></div>
+                        <div class="card-body">
+                            {{-- <h3 class="card-title">Detalles de Envío</h3> --}}
+                            <div class="form-group">
+                                {{-- <div class="form-check">
                                         <span class="form-check-input input-check">
                                             <span class="input-check__body">
                                                 <input class="input-check__input" type="checkbox" id="checkout-different-address" />
@@ -83,51 +113,53 @@
                                         </span>
                                         <label class="form-check-label" for="checkout-different-address">Envia a una direccion diferente?</label>
                                     </div> --}}
-                                </div>
-                                {{-- <div class="form-group">
+                            </div>
+                            {{-- <div class="form-group">
                                     <label for="checkout-comment">Pedido
                                         <span class="text-muted">(Opcional)</span>
                                     </label>
                                     <textarea id="checkout-comment" class="form-control" rows="4"></textarea>
                                 </div> --}}
-                            </div>
                         </div>
                     </div>
-                    <div class="col-12 col-lg-6 col-xl-5 mt-4 mt-lg-0">
-                        <div class="card mb-0">
-                            <div class="card-body">
-                                <h3 class="card-title">Tu Orden</h3>
-                                <table class="checkout__totals">
-                                    <thead class="checkout__totals-header">
-                                        <tr>
-                                            <th>Producto</th>
-                                            <th>Total</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="checkout__totals-products">
-                                        @foreach ($carritoItems as $item)
+                </div>
+                <div class="col-12 col-lg-6 col-xl-5 mt-4 mt-lg-0">
+                    <div class="card mb-0">
+                        <div class="card-body">
+                            <h3 class="card-title">Tu Orden</h3>
+                            <table class="checkout__totals">
+                                <thead class="checkout__totals-header">
+                                    <tr>
+                                        <th>Producto</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="checkout__totals-products">
+                                    @foreach ($carritoItems as $item)
                                         <tr>
                                             <td>
-                                                {{ $item->name}} × {{ $item->quantity }}
+                                                {{ $item->name }} × {{ $item->quantity }}
                                             </td>
-                                            <td class="suma"><span>$</span> <span class="cant">{{ $item->price * $item->quantity}}</span></td>
+                                            <td class="suma"><span>$</span> <span
+                                                    class="cant">{{ $item->price * $item->quantity }}</span>
+                                            </td>
                                         </tr>
-                                        @endforeach
-                                    </tbody>
-                                    <tbody class="checkout__totals-subtotals">
-                                        <tr>
-                                            <th>Subtotal</th>
-                                            <td class="subtotal"></td>
-                                        </tr>
-                                    </tbody>
-                                    <tfoot class="checkout__totals-footer">
-                                        <tr>
-                                            <th>Total</th>
-                                            <td class="total"></td>
-                                        </tr>
-                                    </tfoot>
-                                </table>
-                                {{-- <div class="payment-methods">
+                                    @endforeach
+                                </tbody>
+                                <tbody class="checkout__totals-subtotals">
+                                    <tr>
+                                        <th>Subtotal</th>
+                                        <td class="subtotal"></td>
+                                    </tr>
+                                </tbody>
+                                <tfoot class="checkout__totals-footer">
+                                    <tr>
+                                        <th>Total</th>
+                                        <td class="total"></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                            {{-- <div class="payment-methods">
                                     <ul class="payment-methods__list">
                                         <li class="payment-methods__item payment-methods__item--active">
                                             <label class="payment-methods__item-header"><span
@@ -163,45 +195,46 @@
                                         </li>
                                     </ul>
                                 </div> --}}
-                                <div class="checkout__agree form-group">
-                                    <div class="form-check">
-                                        <span class="form-check-input input-check"><span
-                                                class="input-check__body"><input class="input-check__input"
-                                                    type="checkbox" id="checkout-terms" />
-                                                <span class="input-check__box"></span>
-                                                <svg class="input-check__icon" width="9px" height="7px">
-                                                    <use xlink:href="{{asset('dist/images/sprite.svg#check-9x7')}}"></use>
-                                                </svg> </span></span><label class="form-check-label"
-                                            for="checkout-terms">He leído y acepto los
-                                            <a target="_blank" href="terms-and-conditions.html">términos y
-                                                condiciones</a>del sitio web*</label>
-                                    </div>
+                            <div class="checkout__agree form-group">
+                                <div class="form-check">
+                                    <span class="form-check-input input-check"><span class="input-check__body"><input
+                                                class="input-check__input" type="checkbox" id="checkout-terms" />
+                                            <span class="input-check__box"></span>
+                                            <svg class="input-check__icon" width="9px" height="7px">
+                                                <use xlink:href="{{ asset('dist/images/sprite.svg#check-9x7') }}"></use>
+                                            </svg> </span></span><label class="form-check-label" for="checkout-terms">He
+                                        leído y acepto los
+                                        <a target="_blank" href="terms-and-conditions.html">términos y
+                                            condiciones</a>del sitio web*</label>
                                 </div>
-                                <input class="monto" type="hidden" name="monto" value="">
-                                <button type="submit" class="btn btn-primary btn-xl btn-block">
-                                    Completar Orden
-                                </button>
                             </div>
+                            <input class="monto" type="hidden" name="monto" value="">
+                            <button type="submit" class="btn btn-primary btn-xl btn-block">
+                                Completar Orden
+                            </button>
                         </div>
                     </div>
-                </form>
+                </div>
+            </form>
             {{-- </div> --}}
         </div>
     </div>
 @endsection
 @section('scripts')
-<script>
-    (function ($) {
-        "use strict";
+    <script>
+        (function($) {
+            "use strict";
 
-         var sum = 0;
-        $(".suma .cant").each(function(){
-            sum += parseFloat($(this).text());
-        });
+            var sum = 0;
+            $(".suma .cant").each(function() {
+                sum += parseFloat($(this).text());
+            });
 
-        $('.subtotal').text('$'+sum);
-        $('.monto').val(sum);
-        $('.total').text('$'+sum);
-    })(jQuery);
-</script>
+            $('.subtotal').text('@endsection +
+                sum);
+            $('.monto').val(sum);
+            $('.total').text('@endsection +
+                sum);
+        })(jQuery);
+    </script>
 @endsection
