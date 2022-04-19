@@ -140,8 +140,9 @@
                                             <td>
                                                 {{ $item->name }} × {{ $item->quantity }}
                                             </td>
-                                            <td class="suma"><span>$</span> <span
-                                                    class="cant">{{ $item->price * $item->quantity }}</span>
+                                            <td class="suma">
+                                                <span>$</span>
+                                                <span class="cant">{{ $item->price * $item->quantity }}</span>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -230,10 +231,10 @@
                 sum += parseFloat($(this).text());
             });
 
-            $('.subtotal').text('@endsection +
+            $('.subtotal').text('$ +
                 sum);
             $('.monto').val(sum);
-            $('.total').text('@endsection +
+            $('.total').text('$ +
                 sum);
         })(jQuery);
     </script>

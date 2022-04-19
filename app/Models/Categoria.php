@@ -32,6 +32,6 @@ class Categoria extends Model
      */
     public function subcategorias()
     {
-        return $this->hasMany(Subcategoria::class, 'categoria_id', 'id');
+        return $this->hasMany(Subcategoria::class, 'categoria_id', 'id')->orderBy('name');
     }
 }

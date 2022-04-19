@@ -15,8 +15,8 @@ class InformacionController extends Controller
      */
     public function index()
     {
-        $categorias = Categoria::all();
-        return view('tienda.informacion.terminosycondiciones', compact('categorias'));
+        $carritoItems = \Cart::getContent();
+        return view('tienda.informacion.terminosycondiciones', compact('carritoItems'));
     }
 
     /**
@@ -26,8 +26,8 @@ class InformacionController extends Controller
      */
     public function create()
     {
-        $categorias = Categoria::all();
-        return view('tienda.reclamos.index', compact('categorias'));
+        $carritoItems = \Cart::getContent();
+        return view('tienda.reclamos.index', compact('carritoItems'));
     }
 
     /**
@@ -38,8 +38,8 @@ class InformacionController extends Controller
      */
     public function show()
     {
-        $categorias = Categoria::all();
-        return view('tienda.informacion.politicasprivacidad', compact('categorias'));
+        $carritoItems = \Cart::getContent();
+        return view('tienda.informacion.politicasprivacidad', compact('carritoItems'));
     }
 
     /**

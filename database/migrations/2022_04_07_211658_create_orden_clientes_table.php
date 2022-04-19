@@ -16,6 +16,7 @@ class CreateOrdenClientesTable extends Migration
         Schema::create('orden_clientes', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('cliente_id');
+            $table->char('nro_orden');
             $table->integer('monto');
             $table->string('dirección_compras');
             $table->string('dirección_pedido');

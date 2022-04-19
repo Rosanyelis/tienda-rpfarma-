@@ -19,15 +19,13 @@ class CarritoController extends Controller
     public function cartList()
     {
         $carritoItems = \Cart::getContent();
-        $categorias = Categoria::all();
-        return view('tienda.carrito.carritocompra', compact('carritoItems', 'categorias'));
+        return view('tienda.carrito.carritocompra', compact('carritoItems'));
     }
 
     public function addToCart(Request $request)
     {
 
         $producto = Producto::where('id', $request->id)->first();
-
         $precio = number_format($producto->precio_venta, 2, ",", "");
 
         \Cart::add(array(
@@ -47,10 +45,10 @@ class CarritoController extends Controller
 
     public function updateCart(Request $request)
     {
-        foreach ($request->producto as $key => $valueId) {
-        $producto = Producto::where('id', $valueId)->first();
-        $precio = number_format($producto->precio_venta, 0, ",", "");
-           foreach ($request->quantity as $item => $cant) {
+        foreach ($request->quantity as $item => $cant) {
+            foreach ($request->producto as $key => $valueId) {
+            $producto = Producto::where('id', $valueId)->first();
+            $precio = number_format($producto->precio_venta, 0, ",", "");
 
             \Cart::update($valueId, array(
                 'price' => $precio,
@@ -72,8 +70,7 @@ class CarritoController extends Controller
     public function checkout(){
 
         $carritoItems = \Cart::getContent();
-        $categorias = Categoria::all();
-        return view('tienda.carrito.checkout', compact('carritoItems', 'categorias'));
+        return view('tienda.carrito.checkout', compact('carritoItems'));
     }
 
     public function removeCart(Request $request)

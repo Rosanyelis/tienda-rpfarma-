@@ -18,9 +18,8 @@ class HomeController extends Controller
     {
         $carritoItems = \Cart::getContent();
         $data = Categoria::where('name', 'Cuidado Personal')->first();
-        $categorias = Categoria::all();
         $productos = Producto::where('categoria_id', $data->id)->get();
-        return view('tienda.home', compact('productos', 'categorias', 'carritoItems'));
+        return view('tienda.home', compact('productos', 'carritoItems'));
     }
 
     /**
@@ -53,9 +52,9 @@ class HomeController extends Controller
      */
     public function show($id)
     {
-        $categorias = Categoria::all();
+        $carritoItems = \Cart::getContent();
         $producto = Producto::where('id', $id)->first();
-        return view('tienda.producto.fichaproducto', compact('producto', 'categorias'));
+        return view('tienda.producto.fichaproducto', compact('producto', 'carritoItems'));
     }
 
     /**

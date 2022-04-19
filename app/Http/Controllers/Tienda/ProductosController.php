@@ -5,9 +5,6 @@ namespace App\Http\Controllers\Tienda;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Producto;
-use App\Models\Categoria;
-use App\Models\Carrito;
-use App\Models\FichaTecnica;
 use Illuminate\Support\Str;
 
 class ProductosController extends Controller
@@ -19,10 +16,9 @@ class ProductosController extends Controller
      */
     public function index()
     {
-        $categorias = Categoria::all();
         $data = Producto::all();
         $carritoItems = \Cart::getContent();
-        return view('tienda.producto.productos', compact('data', 'categorias','carritoItems'));
+        return view('tienda.producto.productos', compact('data', 'carritoItems'));
     }
 
     /**
@@ -47,9 +43,8 @@ class ProductosController extends Controller
             $registro->precio = $item['preciop'];
             $registro->save();
         }
-        $categorias = Categoria::all();
         $data = Carrito::where('codigo', $codigo)->get();
-        return view('tienda.carrito.carritocompra', compact('data', 'categorias', 'codigo'));
+        return view('tienda.carrito.carritocompra', compact('data', 'codigo'));
 
     }
 
@@ -62,10 +57,9 @@ class ProductosController extends Controller
     public function store(Request $request)
     {
         // $data = $lotesProductos;
-        $categorias = Categoria::all();
         $data = json_decode($request->productos);
         $productos = json_encode($data);
-        return view('tienda.carrito.carritocompra', compact('productos', 'categorias'));
+        return view('tienda.carrito.carritocompra', compact('productos'));
     }
 
     /**
@@ -76,9 +70,8 @@ class ProductosController extends Controller
      */
     public function show($id)
     {
-        $categorias = Categoria::all();
         $data = Carrito::where('codigo', $id)->get();
-        return view('tienda.carrito.checkout', compact('data', 'categorias'));
+        return view('tienda.carrito.checkout', compact('data'));
     }
 
     /**

@@ -35,4 +35,12 @@ class OrdenCliente extends Model
     {
         return $this->hasMany(DetallesOrden::class, 'orden_id', 'id');
     }
+
+    /**
+     * Obtiene las recetas adjuntadas al detalle de la compra
+     */
+    public function detallesCompraRecetas()
+    {
+        return $this->hasMany(OrdenReceta::class, 'orden_id', 'id');
+    }
 }

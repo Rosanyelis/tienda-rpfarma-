@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Tienda;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Categoria;
 
 class ReclamoController extends Controller
 {
@@ -15,8 +14,8 @@ class ReclamoController extends Controller
      */
     public function index()
     {
-        $categorias = Categoria::all();
-        return view('tienda.reclamos.index', compact('categorias'));
+        $carritoItems = \Cart::getContent();
+        return view('tienda.reclamos.index', compact('carritoItems'));
     }
 
     /**

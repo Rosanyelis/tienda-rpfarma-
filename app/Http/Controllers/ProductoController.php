@@ -34,12 +34,12 @@ class ProductoController extends Controller
      */
     public function create()
     {
-        $categorias = Categoria::all();
-        $laboratorios = Laboratorio::all();
-        $subcategorias = Subcategoria::all();
-        $tipoadministracion = TipoAdministracion::all();
-        $forma_farmaceutica = FormaFarmaceutica::all();
-        $condicion_venta = CondicionVenta::all();
+        $categorias = Categoria::orderBy('name', 'asc')->get();
+        $laboratorios = Laboratorio::orderBy('name', 'asc')->get();
+        $subcategorias = Subcategoria::orderBy('name', 'asc')->get();
+        $tipoadministracion = TipoAdministracion::orderBy('name', 'asc')->get();
+        $forma_farmaceutica = FormaFarmaceutica::orderBy('name', 'asc')->get();
+        $condicion_venta = CondicionVenta::orderBy('name', 'asc')->get();
         return view('panel.productos.create',
             compact('categorias', 'laboratorios', 'subcategorias',
             'tipoadministracion', 'forma_farmaceutica', 'condicion_venta'));
@@ -58,32 +58,40 @@ class ProductoController extends Controller
             'name' => ['required'],
             'sku' => ['required'],
             'informacion' => ['required'],
-            'foto' => ['required'],
+            // 'foto' => ['required'],
             'stock' => ['required'],
             'precio_venta' => ['required'],
+            'registro_sanitario' => ['required'],
             'categoria_id' => ['required', 'uuid'],
             'principio_activo' => ['required'],
             'forma_farmaceutica_id' => ['required', 'uuid'],
-            'condiciones_almacenamiento' => ['required'],
+            'laboratorio_id' => ['required', 'uuid'],
+            'tipo_administracion_id' => ['required', 'uuid'],
+            // 'condiciones_almacenamiento' => ['required'],
             'condicion_venta_id' => ['required', 'uuid'],
-            'indicaciones' => ['required'],
+            // 'indicaciones' => ['required'],
         ],
         [
             'name.required' => 'El campo Nombre de Producto es obligatorio',
             'sku.required' => 'El campo Código SKU es obligatorio',
             'informacion.required' => 'El campo Información de Producto es obligatorio',
-            'foto.required' => 'El campo Foto del Producto es obligatorio',
+            // 'foto.required' => 'El campo Foto del Producto es obligatorio',
             'stock.required' => 'El campo Stock es obligatorio',
             'precio_venta.required' => 'El campo Precio de Venta es obligatorio',
+            'registro_sanitario.required' => 'El campo Registro Sanitario es obligatorio',
             'categoria_id.required' => 'El campo Categoría es obligatorio',
             'categoria_id.uuid' => 'El campo Categoría es obligatorio',
             'forma_farmaceutica_id.required' => 'El campo Forma Farmaceútica es obligatorio',
             'forma_farmaceutica_id.uuid' => 'El campo Forma Farmaceútica es obligatorio',
+            'laboratorio_id.required' => 'El campo Laboratorio es obligatorio',
+            'laboratorio_id.uuid' => 'El campo Laboratorio es obligatorio',
+            'Tipo de Administración.required' => 'El campo Tipo de Administración es obligatorio',
+            'Tipo de Administración.uuid' => 'El campo Tipo de Administración es obligatorio',
             'principio_activo.required' => 'El campo Principio Activo es obligatorio',
-            'condiciones_almacenamiento.required' => 'El campo Condiciones de Almacenamiento es obligatorio',
+            // 'condiciones_almacenamiento.required' => 'El campo Condiciones de Almacenamiento es obligatorio',
             'condicion_venta_id.required' => 'El campo Condición de Venta es obligatorio',
             'condicion_venta_id.uuid' => 'El campo Condición de Venta es obligatorio',
-            'indicaciones.required' => 'El campo Indicaciones es obligatorio',
+            // 'indicaciones.required' => 'El campo Indicaciones es obligatorio',
 
         ]);
 
@@ -117,7 +125,10 @@ class ProductoController extends Controller
         $record->laboratorio_id = $request->laboratorio_id;
         $record->dosis_farmaceutica = $request->dosis_farmaceutica;
         $record->principio_activo = $request->principio_activo;
+        $record->excipiente = $request->excipiente;
         $record->condiciones_almacenamiento = $request->condiciones_almacenamiento;
+        $record->sobredosis = $request->sobredosis;
+        $record->interacciones = $request->interacciones;
         $record->contenido = $request->contenido;
         $record->precio_fraccionario = $request->precio_fraccionario;
         $record->posologia = $request->posologia;

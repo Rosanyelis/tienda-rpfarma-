@@ -8,7 +8,7 @@
                         <div class="owl-carousel">
                             <a class="block-slideshow__slide" href="#">
                                 <div class="block-slideshow__slide-image block-slideshow__slide-image--desktop"
-                                    style="background-image: url('{{asset('dist/images/slides/Banner-3.jpg')}}');width: auto; "></div>
+                                    style="background-image: url('{{asset('dist/images/slides/Banner-3.jpg')}}'); "></div>
                                 <div class="block-slideshow__slide-image block-slideshow__slide-image--mobile"
                                     style="background-image: url('{{asset('images/slides/slide-1-mobile.jpg')}}')"></div>
                             </a>

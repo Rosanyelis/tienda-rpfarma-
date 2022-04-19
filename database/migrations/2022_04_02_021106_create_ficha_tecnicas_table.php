@@ -21,15 +21,17 @@ class CreateFichaTecnicasTable extends Migration
             $table->uuid('tipo_administracion_id')->nullable();
             $table->uuid('laboratorio_id')->nullable();
             $table->text('principio_activo')->nullable();
-            $table->string('dosis_farmaceutica')->nullable();
-            $table->string('contenido')->nullable();
-            $table->text('condiciones_almacenamiento');
+            $table->text('excipiente')->nullable();
+            $table->text('dosis_farmaceutica')->nullable();
+            $table->text('condiciones_almacenamiento')->nullable();
             $table->string('registro_sanitario')->nullable();
             $table->string('precio_fraccionario')->nullable();
             $table->text('posologia')->nullable();
             $table->text('indicaciones')->nullable();
+            $table->text('sobredosis')->nullable();
             $table->text('advertencias')->nullable();
             $table->text('contraindicaciones')->nullable();
+            $table->text('interacciones')->nullable();
             $table->string('estatus');
             $table->timestamps();
 

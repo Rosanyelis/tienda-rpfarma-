@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\UuidModel;
 
-class Carrito extends Model
+class OrdenReceta extends Model
 {
     use HasFactory, UuidModel;
 
@@ -16,7 +16,14 @@ class Carrito extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'id', 'codigo', 'producto_id', 'producto_name', 'producto_foto', 'urlshow',
-        'producto_tipoventa', 'cantidad', 'precio',
+        'id', 'orden_id', 'url_receta',
     ];
+
+    /**
+     * la orden de compra
+     */
+    public function orden()
+    {
+        return $this->belongsTo(OrdenCliente::class, 'orden_id', 'id');
+    }
 }

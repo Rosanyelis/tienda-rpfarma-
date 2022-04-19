@@ -73,21 +73,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label class="form-label" for="informacion">Información del Producto</label>
-                                    <div class="form-control-wrap">
-                                        <textarea type="text" class="form-control @error('informacion') error @enderror"
-                                                id="informacion" name="informacion" placeholder="Ejm: Artículos Personales">{{ old('informacion') }}</textarea>
-                                        @if ($errors->has('informacion'))
-                                            <span id="fv-full-name-error" class="invalid">
-                                                {{ $errors->first('informacion') }}
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="form-label" for="categoria">Foto de Producto</label>
@@ -121,37 +106,9 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label class="form-label" for="dosis_farmaceutica">Dósis Farmaceutica</label>
-                                    <div class="form-control-wrap">
-                                        <input type="text" class="form-control @error('dosis_farmaceutica') error @enderror"
-                                                id="dosis_farmaceutica" name="dosis_farmaceutica" value="{{ old('dosis_farmaceutica') }}" placeholder="Ejm: Artículos Personales">
-                                        @if ($errors->has('dosis_farmaceutica'))
-                                            <span id="fv-full-name-error" class="invalid">
-                                                {{ $errors->first('dosis_farmaceutica') }}
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label class="form-label" for="contenido">Contenido</label>
-                                    <div class="form-control-wrap">
-                                        <input type="text" class="form-control @error('contenido') error @enderror"
-                                                id="contenido" name="contenido" value="{{ old('contenido') }}" placeholder="Ejm: Artículos Personales">
-                                        @if ($errors->has('contenido'))
-                                            <span id="fv-full-name-error" class="invalid">
-                                                {{ $errors->first('contenido') }}
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
                                     <label class="form-label" for="forma_farmaceutica_id">Forma Farmaceútica</label>
                                     <div class="form-control-wrap">
-                                        <select class="form-select @error('forma_farmaceutica_id') error @enderror" name="forma_farmaceutica_id" data-placeholder="Seleccione una opción">
+                                        <select class="form-control form-select @error('forma_farmaceutica_id') error @enderror" name="forma_farmaceutica_id" data-placeholder="Seleccione una opción">
                                             <option label="empty" value=""></option>
                                             @foreach ($forma_farmaceutica as $item)
                                             <option value="{{ $item->id }}" @if ( $item->id == old('forma_farmaceutica_id')) selected @endif>{{ $item->name }}</option>
@@ -165,12 +122,11 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="form-label" for="tipo_administracion_id">Tipo de Administración</label>
                                     <div class="form-control-wrap">
-                                        <select class="form-select @error('tipo_administracion_id') error @enderror" name="tipo_administracion_id" data-placeholder="Seleccione una opción">
+                                        <select class="form-control form-select @error('tipo_administracion_id') error @enderror" name="tipo_administracion_id" data-placeholder="Seleccione una opción">
                                             <option label="empty" value=""></option>
                                             @foreach ($tipoadministracion as $item)
                                             <option value="{{ $item->id }}" @if ( $item->id == old('tipo_administracion_id')) selected @endif>{{ $item->name }}</option>
@@ -188,7 +144,7 @@
                                 <div class="form-group">
                                     <label class="form-label" for="laboratorio_id">Laboratorio</label>
                                     <div class="form-control-wrap">
-                                        <select class="form-select @error('laboratorio_id') error @enderror" name="laboratorio_id" data-placeholder="Seleccione una opción">
+                                        <select class="form-control form-select @error('laboratorio_id') error @enderror" name="laboratorio_id" data-placeholder="Seleccione una opción">
                                             <option label="empty" value=""></option>
                                             @foreach ($laboratorios as $item)
                                             <option value="{{ $item->id }}" @if ( $item->id == old('laboratorio_id')) selected @endif>{{ $item->name }}</option>
@@ -218,38 +174,6 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label class="form-label" for="precio_fraccionado">Precio Fraccionado</label>
-                                    <div class="form-control-wrap">
-                                        <input type="text" class="form-control @error('precio_fraccionado') error @enderror"
-                                                id="precio_fraccionado" name="precio_fraccionado" value="{{ old('precio_fraccionado') }}" placeholder="Ejm: Artículos Personales">
-                                        @if ($errors->has('precio_fraccionado'))
-                                            <span id="fv-full-name-error" class="invalid">
-                                                {{ $errors->first('precio_fraccionado') }}
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label class="form-label" for="condicion_venta_id">Condición de Venta</label>
-                                    <div class="form-control-wrap">
-                                        <select class="form-select @error('condicion_venta_id') error @enderror" name="condicion_venta_id" data-placeholder="Seleccione una opción">
-                                            <option label="empty" value=""></option>
-                                            @foreach ($condicion_venta as $item)
-                                            <option value="{{ $item->id }}" @if ( $item->id == old('condicion_venta_id')) selected @endif>{{ $item->name }}</option>
-                                            @endforeach
-                                        </select>
-                                        @if ($errors->has('condicion_venta_id'))
-                                            <span id="fv-full-name-error" class="invalid">
-                                                {{ $errors->first('condicion_venta_id') }}
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
                                     <label class="form-label" for="categoria_id">Categoría</label>
                                     <div class="form-control-wrap">
                                         <select class="form-control form-select @error('categoria_id') error @enderror" name="categoria_id" data-placeholder="Seleccione una opción">
@@ -266,6 +190,25 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label" for="condicion_venta_id">Condición de Venta</label>
+                                    <div class="form-control-wrap">
+                                        <select class="form-control form-select @error('condicion_venta_id') error @enderror" name="condicion_venta_id" data-placeholder="Seleccione una opción">
+                                            <option label="empty" value=""></option>
+                                            @foreach ($condicion_venta as $item)
+                                            <option value="{{ $item->id }}" @if ( $item->id == old('condicion_venta_id')) selected @endif>{{ $item->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @if ($errors->has('condicion_venta_id'))
+                                            <span id="fv-full-name-error" class="invalid">
+                                                {{ $errors->first('condicion_venta_id') }}
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="form-label" for="subcategoria_id">Subcategorías</label>
@@ -285,6 +228,20 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
+                                    <label class="form-label" for="informacion">Información del Producto</label>
+                                    <div class="form-control-wrap">
+                                        <textarea type="text" class="form-control @error('informacion') error @enderror"
+                                                id="informacion" name="informacion" placeholder="Ejm: Artículos Personales">{{ old('informacion') }}</textarea>
+                                        @if ($errors->has('informacion'))
+                                            <span id="fv-full-name-error" class="invalid">
+                                                {{ $errors->first('informacion') }}
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
                                     <label class="form-label" for="principio_activo">Principio Activo del Producto</label>
                                     <div class="form-control-wrap">
                                         <textarea type="text" class="form-control @error('principio_activo') error @enderror"
@@ -297,6 +254,51 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-label" for="principio_activo">Excipiente del Producto</label>
+                                    <div class="form-control-wrap">
+                                        <textarea type="text" class="form-control @error('excipiente') error @enderror"
+                                                id="excipiente" name="excipiente" placeholder="Ejm: Artículos Personales">{{ old('excipiente') }}</textarea>
+                                        @if ($errors->has('excipiente'))
+                                            <span id="fv-full-name-error" class="invalid">
+                                                {{ $errors->first('excipiente') }}
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-label" for="dosis_farmaceutica">Dósis Farmaceutica</label>
+                                    <div class="form-control-wrap">
+                                        <textarea type="text" class="form-control @error('dosis_farmaceutica') error @enderror"
+                                                id="dosis_farmaceutica" name="dosis_farmaceutica" placeholder="Ejm: Artículos Personales">{{ old('dosis_farmaceutica') }}</textarea>
+                                        @if ($errors->has('dosis_farmaceutica'))
+                                            <span id="fv-full-name-error" class="invalid">
+                                                {{ $errors->first('dosis_farmaceutica') }}
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-label" for="precio_fraccionado">Precio Fraccionado</label>
+                                    <div class="form-control-wrap">
+                                        <textarea type="text" class="form-control @error('precio_fraccionado') error @enderror"
+                                                id="precio_fraccionado" name="precio_fraccionado" placeholder="Ejm: Artículos Personales">{{ old('precio_fraccionado') }}</textarea>
+                                        @if ($errors->has('precio_fraccionado'))
+                                            <span id="fv-full-name-error" class="invalid">
+                                                {{ $errors->first('precio_fraccionado') }}
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+
+
 
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -345,6 +347,21 @@
 
                             <div class="col-md-12">
                                 <div class="form-group">
+                                    <label class="form-label" for="sobredosis">Sobredósis</label>
+                                    <div class="form-control-wrap">
+                                        <textarea type="text" class="form-control @error('sobredosis') error @enderror"
+                                                id="sobredosis" name="sobredosis" placeholder="Ejm: Artículos Personales">{{ old('sobredosis') }}</textarea>
+                                        @if ($errors->has('sobredosis'))
+                                            <span id="fv-full-name-error" class="invalid">
+                                                {{ $errors->first('sobredosis') }}
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
                                     <label class="form-label" for="advertencias">Advertencias del Producto</label>
                                     <div class="form-control-wrap">
                                         <textarea type="text" class="form-control @error('advertencias') error @enderror"
@@ -352,6 +369,20 @@
                                         @if ($errors->has('advertencias'))
                                             <span id="fv-full-name-error" class="invalid">
                                                 {{ $errors->first('advertencias') }}
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-label" for="interacciones">Interacciones del Producto</label>
+                                    <div class="form-control-wrap">
+                                        <textarea type="text" class="form-control @error('interacciones') error @enderror"
+                                                id="interacciones" name="interacciones" placeholder="Ejm: Artículos Personales">{{ old('interacciones') }}</textarea>
+                                        @if ($errors->has('interacciones'))
+                                            <span id="fv-full-name-error" class="invalid">
+                                                {{ $errors->first('interacciones') }}
                                             </span>
                                         @endif
                                     </div>

@@ -26,12 +26,14 @@ class FichaTecnica extends Model
         'condiciones_almacenamiento',
         'registro_sanitario',
         'dosis_farmaceutica',
-        'contenido',
+        'excipiente',
+        'sobredosis',
         'precio_fraccionario',
         'posologia',
         'indicaciones',
         'advertencias',
         'contraindicaciones',
+        'interacciones',
         'estatus',
     ];
 

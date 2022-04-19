@@ -21,22 +21,22 @@ class LaboratorioSeeder extends Seeder
         ]);
         \App\Models\Laboratorio::create([
             'id' => Str::uuid(),
-            'name' => 'Eurofarma',
+            'name' => 'Laboratorio Eurofarma',
             'estatus' => 'Activo',
         ]);
         \App\Models\Laboratorio::create([
             'id' => Str::uuid(),
-            'name' => 'Gador',
+            'name' => 'Laboratorio Gador',
             'estatus' => 'Activo',
         ]);
         \App\Models\Laboratorio::create([
             'id' => Str::uuid(),
-            'name' => 'Sanitas',
+            'name' => 'Laboratorio Sanitas',
             'estatus' => 'Activo',
         ]);
         \App\Models\Laboratorio::create([
             'id' => Str::uuid(),
-            'name' => 'Bayer',
+            'name' => 'Laboratorio Bayer',
             'estatus' => 'Activo',
         ]);
         \App\Models\Laboratorio::create([
@@ -46,12 +46,12 @@ class LaboratorioSeeder extends Seeder
         ]);
         \App\Models\Laboratorio::create([
             'id' => Str::uuid(),
-            'name' => 'Pasteur',
+            'name' => 'Laboratorio Pasteur',
             'estatus' => 'Activo',
         ]);
         \App\Models\Laboratorio::create([
             'id' => Str::uuid(),
-            'name' => 'Silesia',
+            'name' => 'Laboratorio Silesia',
             'estatus' => 'Activo',
         ]);
         \App\Models\Laboratorio::create([
@@ -61,7 +61,7 @@ class LaboratorioSeeder extends Seeder
         ]);
         \App\Models\Laboratorio::create([
             'id' => Str::uuid(),
-            'name' => 'Laboratorios Kampar S.A',
+            'name' => 'Laboratorio Kampar S.A',
             'estatus' => 'Activo',
         ]);
         \App\Models\Laboratorio::create([
@@ -72,6 +72,111 @@ class LaboratorioSeeder extends Seeder
         \App\Models\Laboratorio::create([
             'id' => Str::uuid(),
             'name' => 'Laboratorio D&M Pharma',
+            'estatus' => 'Activo',
+        ]);
+        \App\Models\Laboratorio::create([
+            'id' => Str::uuid(),
+            'name' => 'Laboratorio Abbot',
+            'estatus' => 'Activo',
+        ]);
+        \App\Models\Laboratorio::create([
+            'id' => Str::uuid(),
+            'name' => 'Laboratorio Ascend',
+            'estatus' => 'Activo',
+        ]);
+        \App\Models\Laboratorio::create([
+            'id' => Str::uuid(),
+            'name' => 'Laboratorio Andromaco',
+            'estatus' => 'Activo',
+        ]);
+        \App\Models\Laboratorio::create([
+            'id' => Str::uuid(),
+            'name' => 'Laboratorio Bago',
+            'estatus' => 'Activo',
+        ]);
+        \App\Models\Laboratorio::create([
+            'id' => Str::uuid(),
+            'name' => 'Laboratorio Biosano',
+            'estatus' => 'Activo',
+        ]);
+        \App\Models\Laboratorio::create([
+            'id' => Str::uuid(),
+            'name' => 'Laboratorio Boehringer',
+            'estatus' => 'Activo',
+        ]);
+        \App\Models\Laboratorio::create([
+            'id' => Str::uuid(),
+            'name' => 'Laboratorio Droguería Hofmann',
+            'estatus' => 'Activo',
+        ]);
+        \App\Models\Laboratorio::create([
+            'id' => Str::uuid(),
+            'name' => 'Laboratorio Farmoquímica',
+            'estatus' => 'Activo',
+        ]);
+        \App\Models\Laboratorio::create([
+            'id' => Str::uuid(),
+            'name' => 'Laboratorio Galenicum',
+            'estatus' => 'Activo',
+        ]);
+        \App\Models\Laboratorio::create([
+            'id' => Str::uuid(),
+            'name' => 'Laboratorio Maver',
+            'estatus' => 'Activo',
+        ]);
+        \App\Models\Laboratorio::create([
+            'id' => Str::uuid(),
+            'name' => 'Laboratorio Labomed',
+            'estatus' => 'Activo',
+        ]);
+        \App\Models\Laboratorio::create([
+            'id' => Str::uuid(),
+            'name' => 'Laboratorio MINTLAB',
+            'estatus' => 'Activo',
+        ]);
+        \App\Models\Laboratorio::create([
+            'id' => Str::uuid(),
+            'name' => 'Laboratorio OPKO',
+            'estatus' => 'Activo',
+        ]);
+        \App\Models\Laboratorio::create([
+            'id' => Str::uuid(),
+            'name' => 'Laboratorio Pzifer',
+            'estatus' => 'Activo',
+        ]);
+        \App\Models\Laboratorio::create([
+            'id' => Str::uuid(),
+            'name' => 'Laboratorio Pharmatrade',
+            'estatus' => 'Activo',
+        ]);
+        \App\Models\Laboratorio::create([
+            'id' => Str::uuid(),
+            'name' => 'Laboratorio Pharma Investi',
+            'estatus' => 'Activo',
+        ]);
+        \App\Models\Laboratorio::create([
+            'id' => Str::uuid(),
+            'name' => 'Laboratorio Prater',
+            'estatus' => 'Activo',
+        ]);
+        \App\Models\Laboratorio::create([
+            'id' => Str::uuid(),
+            'name' => 'Laboratorio Rider',
+            'estatus' => 'Activo',
+        ]);
+        \App\Models\Laboratorio::create([
+            'id' => Str::uuid(),
+            'name' => 'Laboratorio Sanofi',
+            'estatus' => 'Activo',
+        ]);
+        \App\Models\Laboratorio::create([
+            'id' => Str::uuid(),
+            'name' => 'Laboratorio Saval',
+            'estatus' => 'Activo',
+        ]);
+        \App\Models\Laboratorio::create([
+            'id' => Str::uuid(),
+            'name' => 'Laboratorio Tecnofarma',
             'estatus' => 'Activo',
         ]);
     }
