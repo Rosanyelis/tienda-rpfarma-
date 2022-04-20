@@ -13,7 +13,7 @@
                         <div class="toggle-expand-content" data-content="pageMenu">
                             <ul class="nk-block-tools g-3">
                                 <li class="nk-block-tools-opt">
-                                    <a href="{{ url('admin/configuraciones/productos') }}" class="btn btn-secondary">
+                                    <a href="{{ url('admin/productos') }}" class="btn btn-secondary">
                                         <em class="icon ni ni-arrow-left"></em>
                                         <span>Regresar</span>
                                     </a>

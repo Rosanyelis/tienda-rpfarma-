@@ -9,6 +9,7 @@ use App\Models\Producto;
 use App\Models\Cliente;
 use App\Models\OrdenCliente;
 use App\Models\DetallesOrden;
+use App\Models\OrdenReceta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -36,7 +37,6 @@ class CarritoController extends Controller
             'attributes' => array(
                 'foto' => $producto->foto,
                 'tipo' => $producto->ficha->condicionventa->name,
-                'receta' => null,
             )
         ));
 
@@ -45,22 +45,29 @@ class CarritoController extends Controller
 
     public function updateCart(Request $request)
     {
-        foreach ($request->quantity as $item => $cant) {
-            foreach ($request->producto as $key => $valueId) {
-            $producto = Producto::where('id', $valueId)->first();
+        $data = json_decode($request->productos, True);
+
+        foreach ($data as $item) {
+            $id = $item['id'];
+            $cant = $item['quantity'];
+
+            $producto = Producto::where('id', $id)->first();
             $precio = number_format($producto->precio_venta, 0, ",", "");
 
-            \Cart::update($valueId, array(
+            \Cart::remove($id);
+
+            \Cart::add(array(
+                'id' => $producto->id,
                 'price' => $precio,
                 'quantity' => $cant,
                 'name' => $producto->name,
                 'attributes' => array(
                     'foto' => $producto->foto,
                     'tipo' => $producto->ficha->condicionventa->name,
-                    'receta' => null,
                 )
-                ));
-           }
+            ));
+
+
         }
 
 
@@ -105,12 +112,14 @@ class CarritoController extends Controller
         ],
         [
             'nombre.required' => 'El campo Nombre es obligatorio',
-            'apellido.required' => 'El campo Nombre es obligatorio',
-            'rut.required' => 'El campo Nombre es obligatorio',
+            'apellido.required' => 'El campo Apellido es obligatorio',
+            'rut.required' => 'El campo Rut es obligatorio',
             'direccion.required' => 'El campo Direccion es obligatorio',
             'correo.required' => 'El campo Correo es obligatorio',
             'telefono.required' => 'El campo Teléfono es obligatorio',
         ]);
+
+        $nro_orden = rand(5, 15);
 
         $registro = new Cliente();
         $registro->nombre = $request->nombre;
@@ -125,6 +134,7 @@ class CarritoController extends Controller
 
         $record = new OrdenCliente();
         $record->cliente_id = $idCliente;
+        $record->nro_orden = $nro_orden;
         $record->monto = $request->monto;
         $record->direccion_compras = $request->direccion;
         $record->direccion_pedido = $request->direccion;
@@ -145,6 +155,21 @@ class CarritoController extends Controller
             $data->cantidad = $item->quantity;
             $data->precio = $item->price;
             $data->url_receta = null;
+            $data->save();
+        }
+
+        foreach ($request->recetas as $item => $val) {
+            $data = new OrdenReceta();
+            $data->orden_id = $idOrden;
+            if (isset($val)) {
+                $uploadPath = public_path('/storage/Recetas/');
+                $extension = $val->getClientOriginalExtension();
+                $uuid = Str::uuid(4);
+                $fileName = $uuid . '.' . $extension;
+                $val->move($uploadPath, $fileName);
+                $url = '/storage/Recetas/'.$fileName;
+                $data->url_receta = $url;
+            }
             $data->save();
         }
 

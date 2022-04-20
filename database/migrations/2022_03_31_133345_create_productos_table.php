@@ -19,7 +19,7 @@ class CreateProductosTable extends Migration
             $table->string('sku');
             $table->string('name');
             $table->text('informacion');
-            $table->text('foto');
+            $table->text('foto')->nullable();
             $table->string('stock');
             $table->integer('precio_venta');
             $table->string('estatus');

@@ -129,7 +129,6 @@ class ProductoController extends Controller
         $record->condiciones_almacenamiento = $request->condiciones_almacenamiento;
         $record->sobredosis = $request->sobredosis;
         $record->interacciones = $request->interacciones;
-        $record->contenido = $request->contenido;
         $record->precio_fraccionario = $request->precio_fraccionario;
         $record->posologia = $request->posologia;
         $record->registro_sanitario = $request->registro_sanitario;

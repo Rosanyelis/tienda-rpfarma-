@@ -18,8 +18,8 @@ class CreateOrdenClientesTable extends Migration
             $table->uuid('cliente_id');
             $table->char('nro_orden');
             $table->integer('monto');
-            $table->string('dirección_compras');
-            $table->string('dirección_pedido');
+            $table->string('direccion_compras');
+            $table->string('direccion_pedido');
             $table->string('estatus');
             $table->timestamps();
 

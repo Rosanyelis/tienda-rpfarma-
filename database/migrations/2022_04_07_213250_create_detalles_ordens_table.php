@@ -16,7 +16,7 @@ class CreateDetallesOrdensTable extends Migration
         Schema::create('detalles_ordens', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('orden_id');
-            $table->uuid('productor_id');
+            $table->uuid('producto_id');
             $table->string('sku');
             $table->integer('cantidad');
             $table->integer('precio');

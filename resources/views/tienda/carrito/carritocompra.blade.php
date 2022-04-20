@@ -24,7 +24,7 @@
     </div>
     <div class="cart block">
         <div class="container">
-            <form action="{{ url('/productos/actualizar-carrito') }}" method="POST" enctype="multipart/form-data">
+            <form class="formProductos" action="{{ url('/productos/actualizar-carrito') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <table class="cart__table cart-table">
                     <thead class="cart-table__head">
@@ -50,8 +50,7 @@
                     <tbody class="cart-table__body">
                         @foreach ($carritoItems as $item)
                         <tr class="cart-table__row">
-                            <input type="hidden" name="producto[]" value="{{ $item->id }}">
-                            <td class="cart-table__column cart-table__column--image">
+                            <td class="cart-table__column cart-table__column--image" data-id="{{ $item->id }}">
                                 <a href="{{ url('/productos/'.$item->id.'/detalles-producto') }}">
                                     <img src="{{ $item->attributes->foto }}" alt="{{ $item->name }}" />
                                 </a>
@@ -67,7 +66,7 @@
                             </td>
                             <td class="cart-table__column cart-table__column--quantity" data-title="Quantity">
                                 <div class="input-number">
-                                    <input class="form-control input-number__input" type="number" name="quantity[]" min="1" value="{{ $item->quantity }}" />
+                                    <input class="form-control input-number__input" type="number" name="quantity" min="1" value="{{ $item->quantity }}" />
                                     <div class="input-number__add"></div>
                                     <div class="input-number__sub"></div>
                                 </div>
@@ -76,21 +75,27 @@
                                 $ {{ number_format($item->price, 0, ",", "."); }}
                             </td>
                             <td class="cart-table__column cart-table__column--remove">
-                                <button type="button" class="btn btn-light btn-sm btn-svg-icon">
-                                    <svg width="12px" height="12px">
-                                        <use xlink:href="{{ asset('dist/images/sprite.svg#cross-12') }}"></use>
-                                    </svg>
-                                </button>
+                                <form action="{{ url('/productos/remover-producto-del-carrito') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" value="{{ $item->id }}" name="id">
+                                    <input type="hidden" value="/productos/ver-carrito-de-compras" name="url">
+                                    <button type="submit" class="btn btn-light btn-sm btn-svg-icon">
+                                        <svg width="12px" height="12px">
+                                            <use xlink:href="{{ asset('dist/images/sprite.svg#cross-12') }}"></use>
+                                        </svg>
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
+                <input class="productosCart" type="hidden" name="productos" value="">
                 <div class="cart__actions mb-5">
                     <div class="cart__coupon-form"></div>
                     <div class="cart__buttons">
                         <a href="{{ url('/productos') }}" class="btn btn-light">Continuar Comprando</a>
-                        <button type="submit" class="btn btn-primary">Checkout</button>
+                        <button type="button" class="checkout btn btn-primary">Checkout</button>
                     </div>
                 </div>
             </form>
@@ -101,9 +106,30 @@
 <script>
     (function($) {
         "use strict";
-        $(".suma .cant").each(function() {
-            sum += parseFloat($(this).text());
+
+        var Productos = [];
+
+        $('.checkout').click(function() {
+            $(".cart-table tbody tr").each(function(){
+
+                let id = $(this).find('td').eq(0).data('id');
+                let quantity = $(this).find('td').eq(3).find('input[name="quantity"]').val()
+
+                var datosFila = {};
+
+                datosFila.id = id;
+                datosFila.quantity = quantity;
+
+                Productos.push(datosFila);
+
+                console.log(datosFila);
+            });
+            console.log(Productos);
+            let data = JSON.stringify(Productos);
+            $('.productosCart').val(data);
+            $('.formProductos').submit();
         });
+
 
     })(jQuery);
     </script>
