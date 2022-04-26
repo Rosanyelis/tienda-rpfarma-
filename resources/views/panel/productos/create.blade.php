@@ -77,7 +77,14 @@
                                 <div class="form-group">
                                     <label class="form-label" for="categoria">Foto de Producto</label>
                                     <div class="form-control-wrap">
-                                        <div class="custom-file">
+                                        <input type="text" class="form-control @error('foto') error @enderror"
+                                        id="foto" name="foto" value="{{ old('foto') }}" placeholder="Ejm: /storage/Productos/nombre de foto.jpg">
+                                        @if ($errors->has('foto'))
+                                            <span id="fv-full-name-error" class="invalid">
+                                                {{ $errors->first('foto') }}
+                                            </span>
+                                        @endif
+                                        {{-- <div class="custom-file">
                                             <input type="file" name="foto" class="custom-file-input @error('foto') error @enderror" id="customFile">
                                             <label  class="custom-file-label" for="customFile">Seleccione una Foto</label>
                                             @if ($errors->has('foto'))
@@ -85,7 +92,7 @@
                                                     {{ $errors->first('foto') }}
                                                 </span>
                                             @endif
-                                        </div>
+                                        </div> --}}
 
                                     </div>
                                 </div>

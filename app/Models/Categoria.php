@@ -22,9 +22,9 @@ class Categoria extends Model
     /**
      * Obtiene datos de ficha tecnica.
      */
-    public function producto()
+    public function productos()
     {
-        return $this->hasOne(Producto::class, 'categoria_id', 'id');
+        return $this->hasMany(Producto::class, 'categoria_id', 'id');
     }
 
     /**

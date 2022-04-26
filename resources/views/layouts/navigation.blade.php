@@ -31,6 +31,12 @@
                             <span class="nk-menu-text">Productos</span>
                         </a>
                     </li><!-- .nk-menu-item -->
+                    <li class="nk-menu-item">
+                        <a href="{{ url('admin/links') }}" class="nk-menu-link">
+                            <span class="nk-menu-icon"><em class="icon ni ni-home-fill"></em></span>
+                            <span class="nk-menu-text">Links de la Web</span>
+                        </a>
+                    </li><!-- .nk-menu-item -->
                     <li class="nk-menu-item has-sub">
                         <a href="#" class="nk-menu-link nk-menu-toggle" data-original-title="" title="">
                             <span class="nk-menu-icon"><em class="icon ni ni-setting-fill"></em></span>

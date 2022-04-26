@@ -24,7 +24,7 @@
             {{-- <div > --}}
             <form class="row" action="{{ url('/productos/completar-compra') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                <div class="col-12 col-lg-5 col-xl-6">
+                <div class="col-12 col-lg-6 col-xl-6">
                     <div class="card mb-lg-0">
                         <div class="card-body">
                             <h3 class="card-title">Detalles de Cliente</h3>
@@ -32,7 +32,7 @@
                                 <div class="form-group col-md-6">
                                     <label for="checkout-first-name">Nombre</label>
                                     <input type="text" class="form-control @error('nombre') is-invalid @enderror" name="nombre"
-                                        id="checkout-first-name" placeholder="Ejemplo: Angel" />
+                                        id="checkout-first-name" placeholder="Ejemplo: Angel" value="{{ old('nombre') }}" />
                                     @if ($errors->has('nombre'))
                                         <div class="invalid-feedback">
                                             {{ $errors->first('nombre') }}
@@ -42,7 +42,7 @@
                                 <div class="form-group col-md-6">
                                     <label for="checkout-last-name">Apellido</label>
                                     <input type="text" class="form-control @error('apellido') is-invalid @enderror"
-                                        name="apellido" id="checkout-last-name" placeholder="Doe" />
+                                        name="apellido" id="checkout-last-name" placeholder="Doe" value="{{ old('apellido') }}" />
                                     @if ($errors->has('apellido'))
                                         <div class="invalid-feedback">
                                             {{ $errors->first('apellido') }}
@@ -51,8 +51,9 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="checkout-last-name">Rut</label>
-                                    <input type="text" class="form-control @error('rut') is-invalid @enderror" name="rut"
-                                        id="checkout-last-name" placeholder="Doe" />
+                                    <input type="text" oninput="checkRut(this)" class="form-control @error('rut') is-invalid @enderror" name="rut"
+                                        id="checkout-last-name" placeholder="Doe" value="{{ old('rut') }}"/>
+                                        <div class="invalid-feedback rut"></div>
                                     @if ($errors->has('rut'))
                                         <div class="invalid-feedback">
                                             {{ $errors->first('rut') }}
@@ -62,7 +63,7 @@
                                 <div class="form-group col-md-6">
                                     <label for="checkout-phone">Teléfono</label>
                                     <input type="text" class="form-control @error('telefono') is-invalid @enderror"
-                                        name="telefono" id="checkout-phone" placeholder="Telefono" />
+                                        name="telefono" id="checkout-phone" placeholder="Telefono" value="{{ old('telefono') }}"/>
                                     @if ($errors->has('telefono'))
                                         <div class="invalid-feedback">
                                             {{ $errors->first('telefono') }}
@@ -74,7 +75,7 @@
                             <div class="form-group">
                                 <label for="checkout-street-address">Dirección</label>
                                 <input type="text" class="form-control @error('direccion') is-invalid @enderror"
-                                    name="direccion" id="checkout-street-address" placeholder="Direccion" />
+                                    name="direccion" id="checkout-street-address" placeholder="Direccion" value="{{ old('direccion') }}"/>
                                 @if ($errors->has('direccion'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('direccion') }}
@@ -85,7 +86,7 @@
                                 <div class="form-group col-md-12">
                                     <label for="checkout-email">Correo Electrónico</label>
                                     <input type="email" class="form-control @error('correo') is-invalid @enderror"
-                                        name="correo" id="checkout-email" placeholder="Ejemplo: Example@example.com" />
+                                        name="correo" id="checkout-email" placeholder="Ejemplo: Example@example.com" value="{{ old('correo') }}" />
                                     @if ($errors->has('correo'))
                                         <div class="invalid-feedback">
                                             {{ $errors->first('correo') }}
@@ -95,26 +96,9 @@
 
                             </div>
                         </div>
-                        <div class="card-divider"></div>
-                        <div class="card-body">
-                            <h3 class="card-title">Adjunto de Recetas</h3>
-                            <div class="form-row">
-                                <div class="form-group col-md-9">
-                                    <input type="file" class="form-control" name="recetas[]" />
-                                </div>
-                                <div class="form-group col-md-3">
-                                    <button class="btn btn-primary btnAgg">Agregar</button>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-12">
-                                    <strong><p><em>En caso de haber medicamentos que requieran recetas y no sean adjuntadas, su compra será rechazada al pasar por el proceso de verificación.</em></p></strong>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
-                <div class="col-12 col-lg-7 col-xl-6 mt-4 mt-lg-0">
+                <div class="col-12 col-lg-6 col-xl-6 mt-4 mt-lg-0">
                     <div class="card mb-0">
                         <div class="card-body">
                             <h3 class="card-title">Tu Orden</h3>
@@ -193,7 +177,7 @@
                                 <div class="form-check">
                                     <span class="form-check-input input-check">
                                         <span class="input-check__body">
-                                            <input class="input-check__input" type="checkbox" id="checkout-terms" />
+                                            <input class="input-check__input" type="checkbox" id="checkout-terms" name="terminos" required />
                                             <span class="input-check__box"></span>
                                             <svg class="input-check__icon" width="9px" height="7px">
                                                 <use xlink:href="{{ asset('dist/images/sprite.svg#check-9x7') }}"></use>
@@ -221,15 +205,59 @@
 @section('scripts')
     <script>
         (function($) {
-                "use strict";
+            "use strict";
 
-                var sum = 0;
-                $(".suma .cant").each(function() {
-                    sum += parseFloat($(this).text());
-                });
+            // $('#rut').on('change', function(){
+            //     var validate = VerificaRut( $(this).val());
+            //     console.log(validate);
+            //     if(!validate){
+            //         $(this).addClass('is-invalid');
+            //         $(".rut").empty();
+            //         $('.rut').append(
+            //                 'El Rut ingresado no es valido!');
+            //     }else{
+            //         $(this).removeClass('is-invalid');
+            //         $(".rut").empty();
+            //     }
+            // });
 
-                $('.subtotal').text('$' + sum);
-                    $('.monto').val(sum); $('.total').text('$' + sum);
-                })(jQuery);
+            var sum = 0;
+            $(".suma .cant").each(function() {
+                sum += parseFloat($(this).text());
+            });
+
+            $('.subtotal').text('$' + sum);
+            $('.monto').val(sum); $('.total').text('$' + sum);
+        })(jQuery);
+        function checkRut(rut) {
+            // Despejar Puntos
+            var valor = rut.value.replace('.','');
+            // Despejar Guión
+            valor = valor.replace('-','');
+            // Aislar Cuerpo y Dígito Verificador
+            cuerpo = valor.slice(0,-1);
+            dv = valor.slice(-1).toUpperCase();
+            // Formatear RUN
+            rut.value = cuerpo + '-'+ dv
+            // Si no cumple con el mínimo ej. (n.nnn.nnn)
+            // if(cuerpo.length < 7) { rut.setCustomValidity("RUT Incompleto"); return false;}
+            // Calcular Dígito Verificador
+            suma = 0;
+            multiplo = 2;
+            // Para cada dígito del Cuerpo
+            for(i=1;i<=cuerpo.length;i++) {
+                // Obtener su Producto con el Múltiplo Correspondiente
+                index = multiplo * valor.charAt(cuerpo.length - i);
+                // Sumar al Contador General
+                suma = suma + index;
+                // Consolidar Múltiplo dentro del rango [2,7]
+                if(multiplo < 7) { multiplo = multiplo + 1; } else { multiplo = 2; }
+            }
+            // Calcular Dígito Verificador en base al Módulo 11
+            dvEsperado = 11 - (suma % 11);
+            // Casos Especiales (0 y K)
+            dv = (dv == 'K')?10:dv;
+            dv = (dv == 0)?11:dv;
+        }
     </script>
 @endsection

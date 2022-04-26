@@ -36,11 +36,11 @@ class Producto extends Model
     }
 
     /**
-     * Obtiene los comentarios del producto.
+     * Obtiene los subcategorias del producto.
      */
-    public function comentarios()
+    public function subcategorias()
     {
-        return $this->hasMany(Comentario::class, 'producto_id', 'id');
+        return $this->hasMany(ProductoSubcategoria::class, 'producto_id', 'id');
     }
 
 

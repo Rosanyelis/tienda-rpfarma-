@@ -18,11 +18,11 @@
                                 autocomplete="off"> <button
                                 class="mobile-header__search-button mobile-header__search-button--submit"
                                 type="submit"><svg width="20px" height="20px">
-                                    <use xlink:href="images/sprite.svg#search-20"></use>
+                                    <use xlink:href="{{ asset('dist/images/sprite.svg#search-20')}}"></use>
                                 </svg></button> <button
                                 class="mobile-header__search-button mobile-header__search-button--close"
                                 type="button"><svg width="20px" height="20px">
-                                    <use xlink:href="images/sprite.svg#cross-20"></use>
+                                    <use xlink:href="{{ asset('dist/images/sprite.svg#cross-20')}}"></use>
                                 </svg></button>
                             <div class="mobile-header__search-body"></div>
                         </form>

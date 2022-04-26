@@ -12,7 +12,8 @@ use App\Models\DetallesOrden;
 use App\Models\OrdenReceta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-
+use Illuminate\Http\File;
+use Illuminate\Support\Facades\Storage;
 
 class CarritoController extends Controller
 {
@@ -25,14 +26,18 @@ class CarritoController extends Controller
 
     public function addToCart(Request $request)
     {
-
+        if ($request->quantity) {
+            $cantidad = $request->quantity;
+        }else{
+            $cantidad = 1;
+        }
         $producto = Producto::where('id', $request->id)->first();
         $precio = number_format($producto->precio_venta, 2, ",", "");
 
         \Cart::add(array(
             'id' => $producto->id,
             'price' => $precio,
-            'quantity' => 1,
+            'quantity' => $cantidad,
             'name' => $producto->name,
             'attributes' => array(
                 'foto' => $producto->foto,
@@ -50,6 +55,25 @@ class CarritoController extends Controller
         foreach ($data as $item) {
             $id = $item['id'];
             $cant = $item['quantity'];
+            // $receta = $item['receta'];
+            // if ($receta !== 'No lleva receta' || $receta !== null) {
+            //     $file = $receta;
+            //     // Decodificamos la imagen
+            //     list($type, $receta) = explode(';', $receta);
+            //     list(, $receta) = explode(',', $receta);
+            //     if ($type == 'data:application/pdf') {
+            //         list(, $type) = explode('data:application/', $type);
+            //     }else{
+            //         list(, $type) = explode('data:image/', $type);
+            //     }
+            //     $uploadPath = public_path('/storage/CarritoRecetas/');
+            //     $uuid = Str::uuid(4);
+            //     $fileName = $uuid . '.' . $type;
+            //     file_put_contents($uploadPath.$fileName, base64_decode($receta));
+            //     $urlreceta = '/storage/CarritoRecetas/'.$fileName;
+            // }else{
+            //     $urlreceta = null;
+            // }
 
             $producto = Producto::where('id', $id)->first();
             $precio = number_format($producto->precio_venta, 0, ",", "");
@@ -64,6 +88,7 @@ class CarritoController extends Controller
                 'attributes' => array(
                     'foto' => $producto->foto,
                     'tipo' => $producto->ficha->condicionventa->name,
+                    // 'receta' => $urlreceta,
                 )
             ));
 
@@ -108,7 +133,7 @@ class CarritoController extends Controller
             'rut' => ['required'],
             'direccion' => ['required'],
             'correo' => ['required'],
-            'telefono' => ['required'],
+            'telefono' => ['required', 'numeric'],
         ],
         [
             'nombre.required' => 'El campo Nombre es obligatorio',
@@ -117,6 +142,7 @@ class CarritoController extends Controller
             'direccion.required' => 'El campo Direccion es obligatorio',
             'correo.required' => 'El campo Correo es obligatorio',
             'telefono.required' => 'El campo Teléfono es obligatorio',
+            'telefono.numeric' => 'El campo Teléfono debe ser sólo números, sin símbolos',
         ]);
 
         $nro_orden = rand(5, 15);
@@ -154,24 +180,26 @@ class CarritoController extends Controller
             $data->sku = $productos->sku;
             $data->cantidad = $item->quantity;
             $data->precio = $item->price;
-            $data->url_receta = null;
             $data->save();
         }
 
-        foreach ($request->recetas as $item => $val) {
-            $data = new OrdenReceta();
-            $data->orden_id = $idOrden;
-            if (isset($val)) {
-                $uploadPath = public_path('/storage/Recetas/');
-                $extension = $val->getClientOriginalExtension();
-                $uuid = Str::uuid(4);
-                $fileName = $uuid . '.' . $extension;
-                $val->move($uploadPath, $fileName);
-                $url = '/storage/Recetas/'.$fileName;
-                $data->url_receta = $url;
+        if ($request->recetas) {
+            foreach ($request->recetas as $item => $val) {
+                $data = new OrdenReceta();
+                $data->orden_id = $idOrden;
+                if (isset($val)) {
+                    $uploadPath = public_path('/storage/Recetas/');
+                    $extension = $val->getClientOriginalExtension();
+                    $uuid = Str::uuid(4);
+                    $fileName = $uuid . '.' . $extension;
+                    $val->move($uploadPath, $fileName);
+                    $url = '/storage/Recetas/'.$fileName;
+                    $data->url_receta = $url;
+                }
+                $data->save();
             }
-            $data->save();
         }
+
 
         \Cart::clear();
 

@@ -14,7 +14,7 @@ class CategoriaController extends Controller
      */
     public function index()
     {
-        $data = Categoria::all();
+        $data = Categoria::orderBy('name', 'asc')->get();
         return view('panel.categorias.index', compact('data'));
     }
 

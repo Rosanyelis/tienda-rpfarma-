@@ -21,7 +21,12 @@ class CategoriaSeeder extends Seeder
         ]);
         \App\Models\Categoria::create([
             'id' => Str::uuid(),
-            'name' => 'Anticonceptivos y Sexualidad',
+            'name' => 'AnticonceptivosSexualidad',
+            'estatus' => 'Activo',
+        ]);
+        \App\Models\Categoria::create([
+            'id' => Str::uuid(),
+            'name' => 'Sexualidad',
             'estatus' => 'Activo',
         ]);
         \App\Models\Categoria::create([
@@ -58,15 +63,10 @@ class CategoriaSeeder extends Seeder
 
         \App\Models\Categoria::create([
             'id' => Str::uuid(),
-            'name' => 'Anilina',
-            'estatus' => 'Activo',
-        ]);
-
-        \App\Models\Categoria::create([
-            'id' => Str::uuid(),
             'name' => 'Insumos Médicos',
             'estatus' => 'Activo',
         ]);
+
 
 
     }

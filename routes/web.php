@@ -29,7 +29,9 @@ Route::get('/', [HomeController::class, 'index'])->name('tienda.index');
 
 //Productos Tienda
 Route::get('/productos', [ProductosController::class, 'index'])->name('tienda.productos');
+Route::get('/productos/{id}/categoria', [ProductosController::class, 'filtrocategoria'])->name('tienda.productoscategoria');
 Route::get('/productos/{id}/detalles-producto', [HomeController::class, 'show'])->name('tienda.show');
+
 
 
 // Carrito de Compras
@@ -48,13 +50,16 @@ Route::get('/contactenos', [ContactenosController::class, 'index']);
 
 
 // Informacion Estatica
+Route::get('/quienes-somos', [InformacionController::class, 'quienes']);
 Route::get('/terminos-y-condiciones', [InformacionController::class, 'index']);
 Route::get('/politicas-de-privacidad-y-proteccion-de-datos', [InformacionController::class, 'show']);
+Route::get('/informacion-reglamentaria', [InformacionController::class, 'inforeglam']);
+Route::get('/peritorio-minimo-y-carta-de-desabastecimiento', [InformacionController::class, 'peritocart']);
+Route::get('/procedimiento-de-devoluciones', [InformacionController::class, 'devoluciones']);
+
 
 
 // Reclamos
 Route::get('/libro-electronico-de-reclamos-y-sugerencias', [ReclamoController::class, 'index']);
-
-
 
 

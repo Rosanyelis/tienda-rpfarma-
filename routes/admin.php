@@ -10,6 +10,7 @@ use App\Http\Controllers\LaboratorioController;
 use App\Http\Controllers\FormaFarmaceuticaController;
 use App\Http\Controllers\CondicionVentaController;
 use App\Http\Controllers\TipoAdministracionController;
+use App\Http\Controllers\LinkController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,6 +30,15 @@ Route::get('dashboard', function () {
     return view('panel.dashboard');
 })->middleware(['auth'])->name('dashboard');
 
+
+# Categorias
+Route::get('admin/links', [LinkController::class, 'index'])->name('link.index');
+Route::get('admin/links/crear-link', [LinkController::class, 'create'])->name('link.create');
+Route::post('admin/links/guardar-link', [LinkController::class, 'store'])->name('link.store');
+Route::get('admin/links/{id}/ver-link', [LinkController::class, 'show'])->name('link.show');
+Route::get('admin/links/{id}/editar-link', [LinkController::class, 'edit'])->name('link.edit');
+Route::put('admin/links/{id}/actualizar-link', [LinkController::class, 'update'])->name('link.update');
+Route::post('admin/links/{id}/eliminar-link', [LinkController::class, 'destroy'])->name('link.destroy');
 
 
 # Categorias
@@ -105,7 +115,7 @@ Route::put('admin/configuraciones/condiciones-venta/{id}/actualizar-condiciones-
 Route::post('admin/configuraciones/condiciones-venta/{id}/eliminar-condiciones-venta', [CondicionVentaController::class, 'destroy'])->name('condicionesventa.destroy');
 
 
-# Tipo de administracion 
+# Tipo de administracion
 
 Route::get('admin/configuraciones/tipos-administracion', [TipoAdministracionController::class, 'index'])->name('tiposadministracion.index');
 Route::get('admin/configuraciones/tipos-administracion/crear-tipos-administracion', [TipoAdministracionController::class, 'create'])->name('tiposadministracion.create');

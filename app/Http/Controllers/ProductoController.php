@@ -23,7 +23,7 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        $data = Producto::where('estatus', 'Activo')->get();
+        $data = Producto::where('estatus', 'Activo')->orderBy('name', 'asc')->get();
         return view('panel.productos.index', compact('data'));
     }
 
@@ -57,7 +57,7 @@ class ProductoController extends Controller
         $request->validate([
             'name' => ['required'],
             'sku' => ['required'],
-            'informacion' => ['required'],
+            // 'informacion' => ['required'],
             // 'foto' => ['required'],
             'stock' => ['required'],
             'precio_venta' => ['required'],
@@ -74,7 +74,7 @@ class ProductoController extends Controller
         [
             'name.required' => 'El campo Nombre de Producto es obligatorio',
             'sku.required' => 'El campo Código SKU es obligatorio',
-            'informacion.required' => 'El campo Información de Producto es obligatorio',
+            // 'informacion.required' => 'El campo Información de Producto es obligatorio',
             // 'foto.required' => 'El campo Foto del Producto es obligatorio',
             'stock.required' => 'El campo Stock es obligatorio',
             'precio_venta.required' => 'El campo Precio de Venta es obligatorio',
@@ -100,16 +100,17 @@ class ProductoController extends Controller
         $registro->sku = $request->sku;
         $registro->name = $request->name;
         $registro->informacion = $request->informacion;
-        if ($request->hasFile('foto')) {
-            $uploadPath = public_path('/storage/Productos/');
-            $file = $request->file('foto');
-            $extension = $file->getClientOriginalExtension();
-            $uuid = Str::uuid(4);
-            $fileName = $uuid . '.' . $extension;
-            $file->move($uploadPath, $fileName);
-            $url = '/storage/Productos/'.$fileName;
-            $registro->foto = $url;
-        }
+        $registro->foto = $request->foto;
+        // if ($request->hasFile('foto')) {
+        //     $uploadPath = public_path('/storage/Productos/');
+        //     $file = $request->file('foto');
+        //     $extension = $file->getClientOriginalExtension();
+        //     $uuid = Str::uuid(4);
+        //     $fileName = $uuid . '.' . $extension;
+        //     $file->move($uploadPath, $fileName);
+        //     $url = '/storage/Productos/'.$fileName;
+        //     $registro->foto = $url;
+        // }
         $registro->stock = $request->stock;
         $registro->precio_venta = $request->precio_venta;
         $registro->estatus = 'Activo';
@@ -129,7 +130,7 @@ class ProductoController extends Controller
         $record->condiciones_almacenamiento = $request->condiciones_almacenamiento;
         $record->sobredosis = $request->sobredosis;
         $record->interacciones = $request->interacciones;
-        $record->precio_fraccionario = $request->precio_fraccionario;
+        $record->precio_fraccionario = $request->precio_fraccionado;
         $record->posologia = $request->posologia;
         $record->registro_sanitario = $request->registro_sanitario;
         $record->indicaciones = $request->indicaciones;
@@ -167,9 +168,22 @@ class ProductoController extends Controller
      * @param  \App\Models\Producto  $producto
      * @return \Illuminate\Http\Response
      */
-    public function edit(Producto $producto)
+    public function edit($id)
     {
-        //
+        $count = Producto::where('id', $id)->count();
+        if ($count>0) {
+            $categorias = Categoria::orderBy('name', 'asc')->get();
+            $laboratorios = Laboratorio::orderBy('name', 'asc')->get();
+            $subcategorias = Subcategoria::orderBy('name', 'asc')->get();
+            $tipoadministracion = TipoAdministracion::orderBy('name', 'asc')->get();
+            $forma_farmaceutica = FormaFarmaceutica::orderBy('name', 'asc')->get();
+            $condicion_venta = CondicionVenta::orderBy('name', 'asc')->get();
+            $data = Producto::where('id', $id)->first();
+            return view('panel.productos.edit', compact('data','categorias', 'laboratorios', 'subcategorias',
+            'tipoadministracion', 'forma_farmaceutica', 'condicion_venta'));
+        } else {
+            return redirect('admin/configuraciones/productos')->with('danger', 'Problemas para Mostrar el Registro.');
+        }
     }
 
     /**
@@ -179,9 +193,56 @@ class ProductoController extends Controller
      * @param  \App\Models\Producto  $producto
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Producto $producto)
+    public function update(Request $request, $id)
     {
-        //
+        $count = Producto::where('id', $id)->count();
+        if ($count>0) {
+
+            $registro = Producto::where('id', $id)->first();
+            $registro->categoria_id = $request->categoria_id;
+            $registro->sku = $request->sku;
+            $registro->name = $request->name;
+            $registro->informacion = $request->informacion;
+            $registro->foto = $request->foto;
+            $registro->stock = $request->stock;
+            $registro->precio_venta = $request->precio_venta;
+            $registro->estatus = 'Activo';
+            $registro->save();
+
+            $record = FichaTecnica::where('producto_id', $id)->first();
+            $record->condicion_venta_id = $request->condicion_venta_id;
+            $record->forma_farmaceutica_id = $request->forma_farmaceutica_id;
+            $record->tipo_administracion_id = $request->tipo_administracion_id;
+            $record->laboratorio_id = $request->laboratorio_id;
+            $record->dosis_farmaceutica = $request->dosis_farmaceutica;
+            $record->principio_activo = $request->principio_activo;
+            $record->excipiente = $request->excipiente;
+            $record->condiciones_almacenamiento = $request->condiciones_almacenamiento;
+            $record->sobredosis = $request->sobredosis;
+            $record->interacciones = $request->interacciones;
+            $record->precio_fraccionario = $request->precio_fraccionario;
+            $record->posologia = $request->posologia;
+            $record->registro_sanitario = $request->registro_sanitario;
+            $record->indicaciones = $request->indicaciones;
+            $record->advertencias = $request->advertencias;
+            $record->contraindicaciones = $request->contraindicaciones;
+            $record->estatus = 'Activo';
+            $record->save();
+
+            if ($request->has('subcategorias')) {
+                ProductoSubcategoria::where('producto_id', $id)->delete();
+                foreach ($request->subcategorias as $subcategoria) {
+                    $record = new ProductoSubcategoria();
+                    $record->producto_id =  $id;
+                    $record->subcategoria_id = $subcategoria;
+                    $record->save();
+                }
+            }
+
+            return redirect('admin/productos')->with('success', 'Registro Actualizado Exitosamente');
+        } else {
+            return redirect('admin/productos')->with('danger', 'Problemas para Mostrar el Registro.');
+        }
     }
 
     /**

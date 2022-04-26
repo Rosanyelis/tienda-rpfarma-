@@ -28,7 +28,7 @@
         <div class="nk-block nk-block-lg">
             <div class="card card-bordered">
                 <div class="card-inner">
-                    <form action="{{ url('admin/configuraciones/tipos-administracion/'.$data->id.'/actualizar-tipos-administracion') }}" class="form-validate" method="POST">
+                    <form action="{{ url('admin/configuraciones/categorias/'.$data->id.'/actualizar-categoria') }}" class="form-validate" method="POST">
                         @csrf
                         @method('PUT')
                         <div class="row g-gs">

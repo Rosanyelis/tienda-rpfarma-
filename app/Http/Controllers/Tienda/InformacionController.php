@@ -8,71 +8,42 @@ use App\Models\Categoria;
 
 class InformacionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $carritoItems = \Cart::getContent();
         return view('tienda.informacion.terminosycondiciones', compact('carritoItems'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $carritoItems = \Cart::getContent();
         return view('tienda.reclamos.index', compact('carritoItems'));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show()
     {
         $carritoItems = \Cart::getContent();
         return view('tienda.informacion.politicasprivacidad', compact('carritoItems'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function quienes()
     {
-        //
+        $carritoItems = \Cart::getContent();
+        return view('tienda.informacion.quienessomos', compact('carritoItems'));
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function inforeglam()
     {
-        //
+        $carritoItems = \Cart::getContent();
+        return view('tienda.informacion.informacionreglamentaria', compact('carritoItems'));
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function peritocart()
     {
-        //
+        $carritoItems = \Cart::getContent();
+        return view('tienda.informacion.peritocart', compact('carritoItems'));
+    }
+    public function devoluciones()
+    {
+        $carritoItems = \Cart::getContent();
+        return view('tienda.informacion.procedimientodevo', compact('carritoItems'));
     }
 }

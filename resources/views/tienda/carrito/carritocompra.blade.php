@@ -35,6 +35,9 @@
                             <th class="cart-table__column cart-table__column--product">
                                 Producto
                             </th>
+                            <th class="cart-table__column cart-table__column--product">
+                                Receta
+                            </th>
                             <th class="cart-table__column cart-table__column--price">
                                 Precio
                             </th>
@@ -61,12 +64,49 @@
                                     <li>{{$item->attributes->tipo}}</li>
                                 </ul>
                             </td>
+                            <td class="cart-table__column cart-table__column--product" data-title="{{ $item->attributes->tipo }}">
+                                @switch($item->attributes->tipo)
+                                    @case($item->attributes->tipo == 'Receta')
+                                    <input class="form-control" type="file" name="receta">
+                                    @break
+                                    @case($item->attributes->tipo == 'Receta Retenida')
+                                    <input class="form-control" type="file" name="receta">
+                                    @break
+                                    @case($item->attributes->tipo == 'Receta Retenida y Control de Stock')
+                                    <input class="form-control" type="file" name="receta">
+                                    @break
+                                    @case($item->attributes->tipo == 'Receta Cheque')
+                                    <input class="form-control" type="file" name="receta">
+                                    @break
+                                    @case($item->attributes->tipo == 'Venta Libre')
+                                    <ul class="cart-table__options">
+                                        <li>No requiere Receta</li>
+                                    </ul>
+                                    @break
+                                    @case($item->attributes->tipo == 'Sin Receta')
+                                    <ul class="cart-table__options">
+                                        <li>No requiere Receta</li>
+                                    </ul>
+                                    @break
+                                    @case($item->attributes->tipo == 'Sin Información')
+                                    <ul class="cart-table__options">
+                                        <li>No requiere Receta</li>
+                                    </ul>
+                                    @break
+                                    @default
+                                    @case($item->attributes->tipo == 'Sin Información')
+                                    <ul class="cart-table__options">
+                                        <li>No requiere Receta</li>
+                                    </ul>
+                                    @break
+                                @endswitch
+                            </td>
                             <td class="cart-table__column cart-table__column--price" carritoItems-title="Price">
                                 $ {{ number_format($item->price, 0, ",", "."); }}
                             </td>
                             <td class="cart-table__column cart-table__column--quantity" data-title="Quantity">
                                 <div class="input-number">
-                                    <input class="form-control input-number__input" type="number" name="quantity" min="1" value="{{ $item->quantity }}" />
+                                    <input class="form-control input-number__input" type="number" name="quantity" min="1" max="5" value="{{ $item->quantity }}" />
                                     <div class="input-number__add"></div>
                                     <div class="input-number__sub"></div>
                                 </div>
@@ -95,7 +135,7 @@
                     <div class="cart__coupon-form"></div>
                     <div class="cart__buttons">
                         <a href="{{ url('/productos') }}" class="btn btn-light">Continuar Comprando</a>
-                        <button type="button" class="checkout btn btn-primary">Checkout</button>
+                        <button type="button" class="checkout btn btn-primary">Finalizar Compra</button>
                     </div>
                 </div>
             </form>
@@ -106,31 +146,94 @@
 <script>
     (function($) {
         "use strict";
-
+        var ImagenBase64;
         var Productos = [];
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        });
 
         $('.checkout').click(function() {
-            $(".cart-table tbody tr").each(function(){
+            var validar = true;
 
+            $(".cart-table tbody tr").each(function(){
                 let id = $(this).find('td').eq(0).data('id');
-                let quantity = $(this).find('td').eq(3).find('input[name="quantity"]').val()
+                // let countimg = $(this).find('td').eq(2).find('input[name="receta"]')[0].files[0];
+                // let countimg = $(this).find('td').eq(2).find('input[name="receta"]')[0].files.length;
+                let img = $(this).find('td').eq(2).find('input[name="receta"]').val();
+                let quantity = $(this).find('td').eq(4).find('input[name="quantity"]').val();
+                console.log(img);
+                let receta;
+                if (img == '') {
+                    Toast.fire({
+                        icon: 'error',
+                        title: 'Ingresar archivo de receta es obligatorio'
+                    });
+                    validar = false;
+                }
+                switch ($(this).find('td').eq(2).data('title')) {
+                    case 'Receta':
+                    receta = img;
+                    break;
+                    case 'Receta Retenida':
+                    receta = img;
+                    break;
+                    case 'Receta Retenida y Control de Stock':
+                    receta = img;
+                    break;
+                    case 'Receta Cheque':
+                    receta = img;
+                    break;
+                    case 'Venta Libre':
+                    receta = 'No lleva receta';
+                    break;
+                    case 'Sin Receta':
+                    receta = 'No lleva receta';
+                    break;
+                    case 'Sin Información':
+                    receta = 'No lleva receta';
+                    break;
+                    default:
+                        receta = null;
+                    break
+                }
+
+
 
                 var datosFila = {};
-
                 datosFila.id = id;
+                datosFila.receta = receta;
                 datosFila.quantity = quantity;
 
                 Productos.push(datosFila);
-
-                console.log(datosFila);
             });
-            console.log(Productos);
             let data = JSON.stringify(Productos);
             $('.productosCart').val(data);
-            $('.formProductos').submit();
+            if (validar == true) {
+                $('.formProductos').submit();
+            }else{
+                Productos.splice(0,Productos.length);
+            }
+
         });
 
 
     })(jQuery);
+    // function encodeImageFileAsURL(element) {
+    //     var file = element.files[0];
+    //     var reader = new FileReader();
+    //     reader.onloadend = function() {
+    //         ImagenBase64 = reader.result;
+
+    //     }
+    //     reader.readAsDataURL(file);
+    // }
     </script>
 @endsection

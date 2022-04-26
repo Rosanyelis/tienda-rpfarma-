@@ -6,7 +6,7 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
-                                <a href="index.html">Inicio</a>
+                                <a href="{{ url('/') }}">Inicio</a>
                                 <svg class="breadcrumb-arrow" width="6px" height="9px">
                                     <use xlink:href="{{ asset('dist/images/sprite.svg#arrow-rounded-right-6x9')}}"></use>
                                 </svg>
@@ -43,28 +43,10 @@
                                                         <ul class="filter-categories__list">
                                                             @foreach ($categorias as $item)
                                                                 <li class="filter-categories__item filter-categories__item--child">
-                                                                    <a href="#">{{ $item->name }}</a>
-                                                                    <div class="filter-categories__counter"> 21 </div>
+                                                                    <a href="{{ url('/productos/'.$item->id.'/categoria') }}">{{ $item->name }}</a>
+                                                                    <div class="filter-categories__counter"> {{ count($item->productos) }} </div>
                                                                 </li>
-                                                                {{-- @if (count($item->subcategorias) > 0)
-                                                                    @foreach ($item->subcategorias as $item)
-                                                                    <li class="filter-categories__item filter-categories__item--child">
-                                                                        <a href="#">{{$item->name }}</a>
-                                                                        <div class="filter-categories__counter"> 15 </div>
-                                                                    </li>
-                                                                    @endforeach
-                                                                @endif --}}
                                                             @endforeach
-
-
-                                                            {{-- <li class="filter-categories__item filter-categories__item--child">
-                                                                <a href="#">Cordless Screwdrivers</a>
-                                                                <div class="filter-categories__counter"> 2 </div>
-                                                            </li>
-                                                            <li class="filter-categories__item filter-categories__item--child">
-                                                                <a href="#">Screwdrivers</a>
-                                                                <div class="filter-categories__counter"> 30</div>
-                                                            </li> --}}
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -73,10 +55,9 @@
                                     </div>
                                 </div>
                                 <div class="widget-filters__actions d-flex">
-                                    <button class="btn btn-primary btn-sm">Filtrar</button>
-                                    <button class="btn btn-secondary btn-sm ml-2">
+                                    <a href="{{ url('/productos') }}" class="btn btn-secondary btn-block">
                                         Reset
-                                    </button>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -87,6 +68,8 @@
                         <div class="products-view">
                             <div class="products-view__options">
                                 <div class="view-options">
+                                    <div class="view-options__legend"></div>
+                                    <div class="view-options__divider"></div>
                                     <div class="view-options__layout">
                                         <div class="layout-switcher">
                                             <div class="layout-switcher__list">
@@ -104,28 +87,6 @@
                                                     </svg>
                                                 </button>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="view-options__legend">
-                                        Mostrando 6 de 98 productos
-                                    </div>
-                                    <div class="view-options__divider"></div>
-                                    <div class="view-options__control">
-                                        <label for="">Ordenar por</label>
-                                        <div>
-                                            <select class="form-control form-control-sm" name="" id="">
-                                                <option value="">Default</option>
-                                                <option value="">Nombre (A-Z)</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="view-options__control">
-                                        <label for="">Mostrar</label>
-                                        <div>
-                                            <select class="form-control form-control-sm" name="" id="">
-                                                <option value="">12</option>
-                                                <option value="">24</option>
-                                            </select>
                                         </div>
                                     </div>
                                 </div>
@@ -214,34 +175,7 @@
 
                                 </div>
                             </div>
-                            <div class="products-view__pagination">
-                                <ul class="pagination justify-content-center">
-                                    <li class="page-item disabled">
-                                        <a class="page-link page-link--with-arrow" href="#" aria-label="Previous"><svg
-                                                class="page-link__arrow page-link__arrow--left" aria-hidden="true"
-                                                width="8px" height="13px">
-                                                <use xlink:href="{{ asset('dist/images/sprite.svg#arrow-rounded-left-8x13')}}"></use>
-                                            </svg></a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">1</a>
-                                    </li>
-                                    <li class="page-item active">
-                                        <a class="page-link" href="#">2 <span
-                                                class="sr-only">(current)</span></a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">3</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link page-link--with-arrow" href="#" aria-label="Next">
-                                            <svg class="page-link__arrow page-link__arrow--right" aria-hidden="true" width="8px" height="13px">
-                                                <use xlink:href="{{ asset('dist/images/sprite.svg#arrow-rounded-right-8x13')}}"></use>
-                                            </svg>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
+                            {{ $data->links() }}
                         </div>
                     </div>
                 </div>

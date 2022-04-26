@@ -43,7 +43,7 @@
                     <td class="nk-tb-col tb-col-sm">
                         <span class="tb-product">
                             <img src="{{ asset($item->foto) }}" alt="{{ $item->name }}" class="thumb">
-                            <span class="title">{{ $item->name }}</span>
+                            <span class="title" style="white-space: pre-wrap;">{{ $item->name }}</span>
                         </span>
                     </td>
                     <td class="nk-tb-col tb-col-sm">
@@ -74,15 +74,15 @@
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <ul class="link-list-opt no-bdr">
                                             <li>
-                                                <a href="{{ url('admin/configuraciones/categorias/'.$item->id.'/editar-categoria') }}" >
+                                                <a href="{{ url('admin/productos/'.$item->id.'/editar-producto') }}" >
                                                     <em class="icon ni ni-edit"></em>
-                                                    <span>Editar Categoría</span>
+                                                    <span>Editar Producto</span>
                                                 </a>
                                             </li>
                                             <li>
                                                 <button class="btn delete-record" data-id="{{ $item->id }}">
                                                     <em class="icon ni ni-trash"></em>
-                                                    <span>Eliminar Categoría</span>
+                                                    <span>Eliminar Producto</span>
                                                 </button>
                                             </li>
                                         </ul>

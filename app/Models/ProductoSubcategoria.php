@@ -18,4 +18,20 @@ class ProductoSubcategoria extends Model
     protected $fillable = [
         'id', 'producto_id', 'subcategoria_id',
     ];
+
+    /**
+     * Obtiene la categoria del producto
+     */
+    public function producto()
+    {
+        return $this->belongsTo(Producto::class, 'producto_id', 'id');
+    }
+
+    /**
+     * Obtiene la categoria del producto
+     */
+    public function subcategoria()
+    {
+        return $this->belongsTo(subcategoria::class, 'subcategoria_id', 'id');
+    }
 }

@@ -33,7 +33,7 @@
                                         <img src="{{ asset('dist/images/avatars/avatar-1.jpg')}}" alt="" />
                                     </div>
                                     <div class="review__content">
-                                        <div class="review__author">Samantha Smith</div>
+                                        <div class="review__author">Samantha</div>
                                         <div class="review__text">
                                             Probando mensaje de reclamo 1.
                                         </div>
@@ -47,7 +47,7 @@
                                         <img src="{{ asset('dist/images/avatars/avatar-2.jpg')}}" alt="" />
                                     </div>
                                     <div class="review__content">
-                                        <div class="review__author">Adam Taylor</div>
+                                        <div class="review__author">Adam</div>
                                         <div class="review__text">
                                             Probando mensaje de reclamo 2.
                                         </div>
@@ -57,7 +57,7 @@
                             </li>
 
                         </ol>
-                        <div class="reviews-list__pagination">
+                        {{-- <div class="reviews-list__pagination">
                             <ul class="pagination justify-content-center">
                                 <li class="page-item disabled">
                                     <a class="page-link page-link--with-arrow" href="#" aria-label="Previous">
@@ -87,7 +87,7 @@
                                     </a>
                                 </li>
                             </ul>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
                 <form class="reviews-view__form">

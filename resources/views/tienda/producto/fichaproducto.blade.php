@@ -73,7 +73,8 @@
                             </div>
                             <div class="product__prices">$ {{ number_format($producto->precio_venta, 0, ",", "."); }}</div>
                             <!-- .product__options -->
-                            <form class="product__options">
+                            <form class="product__options" action="{{ url('/productos/anadir-producto-al-carrito') }}" method="POST">
+                                @csrf
                                 <div class="form-group product__option">
                                     <label class="product__option-label" for="product-quantity">Cantidad</label>
                                     <div class="product__actions">
@@ -81,13 +82,15 @@
                                             <div class="input-number product__quantity">
                                                 <input id="product-quantity"
                                                     class="input-number__input form-control form-control-lg" type="number"
-                                                    min="1" value="1">
+                                                    min="1" max="5" name="quantity" value="1">
                                                 <div class="input-number__add"></div>
                                                 <div class="input-number__sub"></div>
                                             </div>
                                         </div>
                                         <div class="product__actions-item product__actions-item--addtocart">
-                                            <button class="btn btn-primary btn-lg">Añadir al Carrito</button>
+                                            <input type="hidden" value="{{ $producto->id }}" name="id">
+                                            <input type="hidden" value="/productos/{{ $producto->id }}/detalles-producto" name="url">
+                                            <button type="submit" class="btn btn-primary btn-lg">Añadir al Carrito</button>
                                         </div>
                                     </div>
                                 </div>

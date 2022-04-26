@@ -7,39 +7,7 @@
                     <ul class="departments__links">
                         @foreach ($categorias as $item)
                             <li class="departments__item">
-                                <a href="#">{{ $item->name }}
-                                    @if (count($item->subcategorias) > 0)
-                                        <svg class="departments__link-arrow" width="6px" height="9px">
-                                            <use
-                                                xlink:href="{{ asset('dist/images/sprite.svg#arrow-rounded-right-6x9') }}">
-                                            </use>
-                                        </svg>
-                                    @endif
-                                </a>
-                                @if (count($item->subcategorias) > 0)
-                                    <div class="departments__megamenu departments__megamenu--sm">
-                                        <!-- .megamenu -->
-                                        <div class="megamenu megamenu--departments">
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <ul class="megamenu__links megamenu__links--level--0">
-                                                        <li class="megamenu__item megamenu__item--with-submenu">
-                                                            <a href="#">{{ $item->name }}</a>
-                                                            <ul class="megamenu__links megamenu__links--level--1">
-                                                                @foreach ($item->subcategorias as $item)
-                                                                    <li class="megamenu__item">
-                                                                        <a href="#">{{ $item->name }}</a>
-                                                                    </li>
-                                                                @endforeach
-                                                            </ul>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- .megamenu / end -->
-                                    </div>
-                                @endif
+                                <a href="{{ url('/productos/'.$item->id.'/categoria') }}">{{ $item->name }}</a>
                             </li>
                         @endforeach
                     </ul>
@@ -63,7 +31,7 @@
                 <a href="{{ url('/') }}"><span>Inicio</span></a>
             </li>
             <li class="nav-links__item">
-                <a href="#">
+                <a href="{{ url('quienes-somos') }}">
                     <span>Quiénes Somos</span>
                 </a>
             </li>
