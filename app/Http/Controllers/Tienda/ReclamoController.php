@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Tienda;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Reclamo;
 
 class ReclamoController extends Controller
 {
@@ -15,7 +16,8 @@ class ReclamoController extends Controller
     public function index()
     {
         $carritoItems = \Cart::getContent();
-        return view('tienda.reclamos.index', compact('carritoItems'));
+        $reclamos = Reclamo::orderBy('created_at', 'asc')->paginate(10);
+        return view('tienda.reclamos.index', compact('carritoItems', 'reclamos'));
     }
 
     /**
@@ -36,7 +38,21 @@ class ReclamoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => ['required'],
+            'comentario' => ['required'],
+        ],
+        [
+            'name.required' => 'El campo Nombre es obligatorio',
+            'comentario.required' => 'El campo Comentario es obligatorio',
+        ]);
+
+        $registro = new Reclamo();
+        $registro->name = $request->name;
+        $registro->comentario = $request->comentario;
+        $registro->save();
+
+        return redirect('/libro-electronico-de-reclamos-y-sugerencias')->with('success', 'Su comentario fué publicado exitosamente!');
     }
 
     /**

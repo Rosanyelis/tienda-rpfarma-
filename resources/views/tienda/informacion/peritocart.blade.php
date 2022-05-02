@@ -25,14 +25,14 @@
                 <div class="block-features__item">
                     <div class="block-features__content">
                         <div class="block-features__title">Peritorio Mínimo</div>
-                        <a href="{{ asset('pdf/petitorio minimo.pdf') }}" target="_blank" class="block-features__subtitle">Ver</a>
+                        <a href="{{ asset('pdf/Carta de Peritorio Minimo Abril 2022.pdf') }}" target="_blank" class="block-features__subtitle">Ver</a>
                     </div>
                 </div>
                 <div class="block-features__divider"></div>
                 <div class="block-features__item">
                     <div class="block-features__content">
                         <div class="block-features__title">Carta de Desabastecimiento</div>
-                        <a href="{{ asset('pdf/cartaDesabastecimiento.pdf') }}" target="_blank" class="block-features__subtitle">Ver</a>
+                        <a href="{{ asset('pdf/CARTA DESABASTECIMIENTO ABRIL 2022.pdf') }}" target="_blank" class="block-features__subtitle">Ver</a>
                     </div>
                 </div>
                 <div class="block-features__divider"></div>

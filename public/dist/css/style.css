@@ -8629,10 +8629,19 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
 .block-slideshow .owl-carousel .owl-dot + .owl-dot {
     margin-left: 6px;
 }
+@keyframes scroll {
+	0% {
+		transform: translateX(0);
+	}
+	100% {
+		transform: translateX(calc(-250px * 7));
+	}
+}
 .block-slideshow__slide {
     position: relative;
     display: block;
     color: inherit;
+    animation: scroll 20s linear infinite;
 }
 .block-slideshow__slide:hover {
     color: inherit;

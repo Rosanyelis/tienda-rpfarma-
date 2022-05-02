@@ -28,7 +28,7 @@ class CreateDetallesOrdensTable extends Migration
                     ->onUpdate('cascade')
                     ->onDelete('cascade');
 
-            $table->foreign('productor_id')
+            $table->foreign('producto_id')
                     ->references('id')
                     ->on('productos')
                     ->onUpdate('cascade')

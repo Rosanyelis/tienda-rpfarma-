@@ -6,30 +6,30 @@
                 <div class="col-12">
                     <div class="block-slideshow__body">
                         <div class="owl-carousel">
-                            <a class="block-slideshow__slide" href="#">
+                            <div class="block-slideshow__slide">
                                 <div class="block-slideshow__slide-image block-slideshow__slide-image--desktop"
                                     style="background-image: url('{{asset('dist/images/slides/Banner-3.jpg')}}'); "></div>
                                 <div class="block-slideshow__slide-image block-slideshow__slide-image--mobile"
-                                    style="background-image: url('{{asset('images/slides/slide-1-mobile.jpg')}}')"></div>
-                            </a>
-                            <a class="block-slideshow__slide" href="#">
+                                    style="background-image: url('{{asset('dist/images/slides/Banner-3.jpg')}}')"></div>
+                            </div>
+                            <div class="block-slideshow__slide">
                                 <div class="block-slideshow__slide-image block-slideshow__slide-image--desktop"
                                     style="background-image: url('{{asset('dist/images/slides/Banner-2.jpg')}}')"></div>
                                 <div class="block-slideshow__slide-image block-slideshow__slide-image--mobile"
-                                    style="background-image: url('{{asset('dist/images/slides/slide-2-mobile.jpg')}}')"></div>
-                            </a>
-                            <a class="block-slideshow__slide" href="#">
+                                    style="background-image: url('{{asset('dist/images/slides/Banner-2.jpg')}}')"></div>
+                            </div>
+                            <div class="block-slideshow__slide">
                                 <div class="block-slideshow__slide-image block-slideshow__slide-image--desktop"
                                     style="background-image: url('{{asset('dist/images/slides/Banner-1.jpg')}}')"></div>
                                 <div class="block-slideshow__slide-image block-slideshow__slide-image--mobile"
-                                    style="background-image: url('{{asset('dist/images/slides/slide-3-mobile.jpg')}}')"></div>
-                            </a>
-                            <a class="block-slideshow__slide" href="#">
+                                    style="background-image: url('{{asset('dist/images/slides/Banner-1.jpg')}}')"></div>
+                            </div>
+                            <div class="block-slideshow__slide">
                                 <div class="block-slideshow__slide-image block-slideshow__slide-image--desktop"
                                     style="background-image: url('{{asset('dist/images/slides/Banner-4.jpg')}}')"></div>
                                 <div class="block-slideshow__slide-image block-slideshow__slide-image--mobile"
-                                    style="background-image: url('{{asset('dist/images/slides/slide-3-mobile.jpg')}}')"></div>
-                            </a>
+                                    style="background-image: url('{{asset('dist/images/slides/Banner-4.jpg')}}')"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -180,4 +180,13 @@
             </div>
         </div>
     </div>
+@endsection
+@section('scripts')
+<script>
+    (function($) {
+        "use strict";
+        const carousels = $('.owl-carousel');
+
+    })(jQuery);
+</script>
 @endsection

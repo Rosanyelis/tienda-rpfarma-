@@ -64,11 +64,12 @@
                     </div>
                     <div class="site-header__search">
                         <div class="search">
-                            <form class="search__form" action="#">
-                                <input class="search__input" name="search" placeholder="Buscar productos" aria-label="Site search" type="text" autocomplete="off">
+                            <form class="search__form" method="GET" action="{{ url('/productos') }}">
+                                @csrf
+                                <input class="search__input" name="name" placeholder="Buscar productos" aria-label="Site search" type="text" autocomplete="off">
                                 <button class="search__button" type="submit">
                                     <svg width="20px" height="20px">
-                                        <use xlink:href=""></use>
+                                        <use xlink:href="{{ asset('dist/images/sprite.svg#search-20')}}"></use>
                                     </svg>
                                 </button>
                                 <div class="search__border"></div>

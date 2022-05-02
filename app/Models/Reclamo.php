@@ -17,7 +17,7 @@ class Reclamo extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'id', 'user_id', 'mensaje', 'estatus',
+        'id', 'name', 'comentario', 'user_id', 'respuesta'
     ];
 
 

@@ -32,7 +32,7 @@ class SubcategoriaSeeder extends Seeder
         \App\Models\Subcategoria::create([
             'id' => Str::uuid(),
             'categoria_id' => $data->id,
-            'name' => 'Anticonceptivos y Sexualidad',
+            'name' => 'Anticonceptivos',
             'estatus' => 'Activo',
         ]);
         \App\Models\Subcategoria::create([
@@ -126,7 +126,7 @@ class SubcategoriaSeeder extends Seeder
             'estatus' => 'Activo',
         ]);
 
-        $data = \App\Models\Categoria::where('name', 'Anticonceptivos y Sexualidad')->first();
+        $data = \App\Models\Categoria::where('name', 'Anticonceptivos')->first();
 
         \App\Models\Subcategoria::create([
             'id' => Str::uuid(),
@@ -139,13 +139,6 @@ class SubcategoriaSeeder extends Seeder
             'id' => Str::uuid(),
             'categoria_id' => $data->id,
             'name' => 'Anticonceptivos Orales',
-            'estatus' => 'Activo',
-        ]);
-
-        \App\Models\Subcategoria::create([
-            'id' => Str::uuid(),
-            'categoria_id' => $data->id,
-            'name' => 'Lubricantes',
             'estatus' => 'Activo',
         ]);
 

@@ -50,7 +50,7 @@
     <!-- .nav-links / end -->
     <div class="nav-panel__indicators">
         <div class="indicator indicator--trigger--click">
-            <a href="cart.html" class="indicator__button">
+            <a href="{{ url('/productos/ver-carrito-de-compras') }}" class="indicator__button">
                 <span class="indicator__area">
                     <svg width="20px" height="20px">
                         <use xlink:href="{{ asset('dist/images/sprite.svg#cart-20') }}"></use>
@@ -101,6 +101,31 @@
                             <button type="submit" class="btn btn-secondary delete-product-car">Limpiar</button>
                         </form>
                         <a href="{{ url('/productos/ver-carrito-de-compras') }}" class="btn btn-primary verificar-car">Ver Carrito</a>
+                    </div>
+                </div>
+                <!-- .dropcart / end -->
+            </div>
+        </div>
+        <div class="indicator indicator--trigger--click">
+            <a href="javascript:void();" class="indicator__button">
+                <span class="indicator__area">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 14.4a4.74 4.74 0 1 1 4.73-4.73A4.73 4.73 0 0 1 12 14.4Zm0-8a3.24 3.24 0 1 0 3.23 3.24A3.24 3.24 0 0 0 12 6.43V6.4Z" fill="#000"/>
+                        <path d="M19 19.28a.74.74 0 0 1-.72-.58 5.63 5.63 0 0 0-5.48-4.3h-1.6a5.63 5.63 0 0 0-5.47 4.3.752.752 0 0 1-1.46-.36 7.13 7.13 0 0 1 6.93-5.44h1.59a7.11 7.11 0 0 1 6.93 5.45.76.76 0 0 1-.55.91l-.17.02Z" fill="#000"/>
+                        <path d="M12 22.31A10.31 10.31 0 1 1 22.31 12 10.32 10.32 0 0 1 12 22.31Zm0-19.12A8.81 8.81 0 1 0 20.81 12 8.82 8.82 0 0 0 12 3.19Z" fill="#000"/>
+                    </svg>
+                     @if (isset(Auth::user()->name)) &nbsp;&nbsp;{{ Auth::user()->name }} @endif
+                </span>
+
+            </a>
+            <div class="indicator__dropdown">
+                <!-- .dropcart -->
+                <div class="dropcart">
+                    <div class="dropcart__buttons">
+                        <form method="POST" action="{{ route('cerrar') }}">
+                            @csrf
+                            <a href="#" class="btn btn-danger" onclick="event.preventDefault(); this.closest('form').submit();">Cerrar Sesion</a>
+                        </form>
                     </div>
                 </div>
                 <!-- .dropcart / end -->

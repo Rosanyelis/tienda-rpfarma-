@@ -21,7 +21,7 @@ class CategoriaSeeder extends Seeder
         ]);
         \App\Models\Categoria::create([
             'id' => Str::uuid(),
-            'name' => 'AnticonceptivosSexualidad',
+            'name' => 'Anticonceptivos',
             'estatus' => 'Activo',
         ]);
         \App\Models\Categoria::create([

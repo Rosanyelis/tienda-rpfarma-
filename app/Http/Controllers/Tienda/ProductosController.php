@@ -14,10 +14,14 @@ class ProductosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data = Producto::orderBy('name', 'asc')->paginate(9);
+        $name = $request->get('name');
         $carritoItems = \Cart::getContent();
+        $data = Producto::orderBy('name', 'asc')
+                        ->name($name)
+                        ->paginate(9);
+
         return view('tienda.producto.productos', compact('data', 'carritoItems'));
     }
 

@@ -43,5 +43,11 @@ class Producto extends Model
         return $this->hasMany(ProductoSubcategoria::class, 'producto_id', 'id');
     }
 
-
+    // Query Scopes
+    public function ScopeName($query, $name)
+    {
+        if ($name) {
+            return $query->where('name', 'LIKE', "%$name%");
+        }
+    }
 }

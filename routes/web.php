@@ -61,5 +61,6 @@ Route::get('/procedimiento-de-devoluciones', [InformacionController::class, 'dev
 
 // Reclamos
 Route::get('/libro-electronico-de-reclamos-y-sugerencias', [ReclamoController::class, 'index']);
+Route::post('/libro-electronico-de-reclamos-y-sugerencias/guardar-comentario', [ReclamoController::class, 'store']);
 
 

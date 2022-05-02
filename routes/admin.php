@@ -31,7 +31,7 @@ Route::get('dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 
-# Categorias
+# Links
 Route::get('admin/links', [LinkController::class, 'index'])->name('link.index');
 Route::get('admin/links/crear-link', [LinkController::class, 'create'])->name('link.create');
 Route::post('admin/links/guardar-link', [LinkController::class, 'store'])->name('link.store');

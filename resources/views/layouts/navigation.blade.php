@@ -59,11 +59,6 @@
                                 </a>
                             </li>
                             <li class="nk-menu-item">
-                                <a href="{{ url('admin/configuraciones/usuarios') }}" class="nk-menu-link" data-original-title="" title="">
-                                    <span class="nk-menu-text">Usuarios</span>
-                                </a>
-                            </li>
-                            <li class="nk-menu-item">
                                 <a href="{{ url('admin/configuraciones/laboratorio') }}" class="nk-menu-link" data-original-title="" title="">
                                     <span class="nk-menu-text">Laboratorio</span>
                                 </a>
@@ -81,6 +76,11 @@
                             <li class="nk-menu-item">
                                 <a href="{{ url('admin/configuraciones/tipos-administracion') }}" class="nk-menu-link" data-original-title="" title="">
                                     <span class="nk-menu-text">Tipos de administracion</span>
+                                </a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a href="{{ url('admin/configuraciones/usuarios') }}" class="nk-menu-link" data-original-title="" title="">
+                                    <span class="nk-menu-text">Usuarios</span>
                                 </a>
                             </li>
                         </ul><!-- .nk-menu-sub -->
