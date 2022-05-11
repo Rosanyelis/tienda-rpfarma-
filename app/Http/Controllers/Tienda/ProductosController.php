@@ -20,6 +20,7 @@ class ProductosController extends Controller
         $carritoItems = \Cart::getContent();
         $data = Producto::orderBy('name', 'asc')
                         ->name($name)
+                        ->where('estatus', 'Activo')
                         ->paginate(9);
 
         return view('tienda.producto.productos', compact('data', 'carritoItems'));
@@ -34,7 +35,7 @@ class ProductosController extends Controller
      */
     public function filtrocategoria($id)
     {
-        $data = Producto::where('categoria_id', $id)->paginate(9);
+        $data = Producto::where('categoria_id', $id)->where('estatus', 'Activo')->paginate(9);
         $carritoItems = \Cart::getContent();
         return view('tienda.producto.productoscategoria', compact('data','carritoItems'));
     }

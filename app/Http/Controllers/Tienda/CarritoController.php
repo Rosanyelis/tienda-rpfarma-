@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 
 class CarritoController extends Controller
 {
@@ -203,7 +204,7 @@ class CarritoController extends Controller
             }
 
         }else{
-            if (!$request->users) {
+            if ($request->users === null) {
                 $credentials = $request->validate([
                     'email' => ['required','email'],
                     'password' => ['required'],
@@ -215,7 +216,11 @@ class CarritoController extends Controller
 
                 ]);
 
-                Auth::attempt($credentials);
+                if (!Auth::attempt($credentials)){
+                    throw ValidationException::withMessages([
+                        'email' => trans('auth.failed'),
+                    ]);
+                }
                 $request->session()->regenerate();
             }
 

@@ -57,7 +57,7 @@ class ProductoController extends Controller
         $request->validate([
             'name' => ['required'],
             'sku' => ['required'],
-            // 'informacion' => ['required'],
+            'informacion' => ['required'],
             // 'foto' => ['required'],
             'stock' => ['required'],
             'precio_venta' => ['required'],
@@ -251,8 +251,16 @@ class ProductoController extends Controller
      * @param  \App\Models\Producto  $producto
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Producto $producto)
+    public function destroy($id)
     {
-        //
+        $count = Producto::where('id', $id)->count();
+        if ($count>0) {
+            $record = Producto::where('id', $id)->first();
+            $record->estatus = 'Inactivo';
+            $record->save();
+            return response()->json(200);
+        } else {
+            return response()->json(404);
+        }
     }
 }

@@ -113,8 +113,8 @@
 
             $('.datatable-init tbody').on('click', '.delete-record', function(){
                 let dataid = $(this).data('id');
-                let baseUrl = '{{ url('admin/configuraciones/categorias') }}/' + dataid +
-                    '/eliminar-categoria';
+                let baseUrl = '{{ url('admin/productos/') }}/' + dataid +
+                    '/eliminar-producto';
                 Swal.fire({
                     title: '¿Está Seguro de Desactivar el Registro?',
                     text: "Si tiene datos dependientes, no podrá desactivarlo!",
