@@ -17,6 +17,7 @@ class CreateLinksTable extends Migration
             $table->uuid('id')->primary();
             $table->string('name');
             $table->text('contenido');
+            $table->text('enlace')->nullable();
             $table->timestamps();
         });
     }

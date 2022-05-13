@@ -8641,7 +8641,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
     position: relative;
     display: block;
     color: inherit;
-    animation: scroll 20s linear infinite;
+    animation: scroll 25s linear infinite;
 }
 .block-slideshow__slide:hover {
     color: inherit;

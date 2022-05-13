@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOrdenClientesTable extends Migration
+class CreateOrdenesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateOrdenClientesTable extends Migration
      */
     public function up()
     {
-        Schema::create('orden_clientes', function (Blueprint $table) {
+        Schema::create('ordenes', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('cliente_id');
             $table->char('nro_orden');

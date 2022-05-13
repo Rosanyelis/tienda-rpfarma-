@@ -118,7 +118,7 @@ class LaboratorioController extends Controller
      */
     public function destroy($id)
     {
-       
+
         $count = Laboratorio::where('id', $id)->count();
         if ($count>0) {
             $record = Laboratorio::where('id', $id)->first();

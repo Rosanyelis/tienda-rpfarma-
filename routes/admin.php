@@ -1,16 +1,17 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoriaController;
-use App\Http\Controllers\EmpresaController;
-use App\Http\Controllers\RolController;
-use App\Http\Controllers\ProductoController;
-use App\Http\Controllers\UsuarioController;
-use App\Http\Controllers\LaboratorioController;
-use App\Http\Controllers\FormaFarmaceuticaController;
 use App\Http\Controllers\CondicionVentaController;
-use App\Http\Controllers\TipoAdministracionController;
+use App\Http\Controllers\EmpresaController;
+use App\Http\Controllers\FormaFarmaceuticaController;
+use App\Http\Controllers\LaboratorioController;
 use App\Http\Controllers\LinkController;
+use App\Http\Controllers\OrdenesController;
+use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\RolController;
+use App\Http\Controllers\TipoAdministracionController;
+use App\Http\Controllers\UsuarioController;
+use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,6 +30,17 @@ require __DIR__.'/auth.php';
 Route::get('dashboard', function () {
     return view('panel.dashboard');
 })->middleware(['auth'])->name('dashboard');
+
+
+# Ordenes
+Route::get('admin/ordenes', [OrdenesController::class, 'index'])->name('orden.index');
+Route::get('admin/ordenes/crear-orden', [OrdenesController::class, 'create'])->name('orden.create');
+Route::post('admin/ordenes/guardar-orden', [OrdenesController::class, 'store'])->name('orden.store');
+Route::get('admin/ordenes/{id}/ver-orden', [OrdenesController::class, 'show'])->name('orden.show');
+Route::get('admin/ordenes/{id}/editar-orden', [OrdenesController::class, 'edit'])->name('orden.edit');
+Route::put('admin/ordenes/{id}/actualizar-orden', [OrdenesController::class, 'update'])->name('orden.update');
+Route::post('admin/ordenes/{id}/eliminar-orden', [OrdenesController::class, 'destroy'])->name('orden.destroy');
+
 
 
 # Links
