@@ -90,4 +90,14 @@ class HomeController extends Controller
     {
         //
     }
+
+
+    public function vercompras ()
+    {
+
+        $id = Auth::user()->id;
+
+        $carritoItems = \Cart::getContent();
+        return view('tienda.usuario.vercompras', compact('carritoItems'));
+    }
 }

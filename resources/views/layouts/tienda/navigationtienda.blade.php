@@ -122,9 +122,15 @@
                 <!-- .dropcart -->
                 <div class="dropcart">
                     <div class="dropcart__buttons">
+
+
+                            <a href="{{ url('ver-compras') }}" class="btn btn-secondary">Ver Compras</a>
+
+
                         <form method="POST" action="{{ route('cerrar') }}">
                             @csrf
                             <a href="#" class="btn btn-danger" onclick="event.preventDefault(); this.closest('form').submit();">Cerrar Sesion</a>
+
                         </form>
                     </div>
                 </div>

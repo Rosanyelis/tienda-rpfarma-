@@ -64,3 +64,10 @@ Route::get('/libro-electronico-de-reclamos-y-sugerencias', [ReclamoController::c
 Route::post('/libro-electronico-de-reclamos-y-sugerencias/guardar-comentario', [ReclamoController::class, 'store']);
 
 
+
+
+//Usuarios
+Route::get('/ver-compras', [HomeController::class, 'vercompras']);
+
+
+
