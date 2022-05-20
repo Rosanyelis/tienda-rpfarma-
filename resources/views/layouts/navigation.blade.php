@@ -27,7 +27,7 @@
                     </li><!-- .nk-menu-item -->
                     <li class="nk-menu-item">
                         <a href="{{ url('admin/productos') }}" class="nk-menu-link">
-                            <span class="nk-menu-icon"><em class="icon ni ni-home-fill"></em></span>
+                            <span class="nk-menu-icon"><em class="icon ni ni-grid-fill"></em></span>
                             <span class="nk-menu-text">Productos</span>
                         </a>
                     </li><!-- .nk-menu-item -->
@@ -35,6 +35,12 @@
                         <a href="{{ url('admin/ordenes') }}" class="nk-menu-link">
                             <span class="nk-menu-icon"><em class="icon ni ni-cc-alt-fill"></em></span>
                             <span class="nk-menu-text">Ordenes</span>
+                        </a>
+                    </li><!-- .nk-menu-item -->
+                    <li class="nk-menu-item">
+                        <a href="{{ url('admin/reclamos-y-sugerencias') }}" class="nk-menu-link">
+                            <span class="nk-menu-icon"><em class="icon ni ni-cc-alt-fill"></em></span>
+                            <span class="nk-menu-text">Reclamos</span>
                         </a>
                     </li><!-- .nk-menu-item -->
                     <li class="nk-menu-item has-sub">

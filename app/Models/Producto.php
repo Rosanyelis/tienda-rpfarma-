@@ -44,10 +44,16 @@ class Producto extends Model
     }
 
     // Query Scopes
-    public function ScopeName($query, $name)
-    {
-        if ($name) {
-            return $query->where('name', 'LIKE', "%$name%");
-        }
-    }
+    // public function ScopeName($query, $name)
+    // {
+    //     if ($name) {
+    //         return $query->where('name', 'LIKE', "%$name%");
+    //     }
+    // }
+    // public function ScopeComponente($query, $name)
+    // {
+    //     if ($name) {
+    //         return $query->where('principio_activo', 'LIKE', "%$name%");
+    //     }
+    // }
 }

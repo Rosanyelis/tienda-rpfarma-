@@ -22,94 +22,120 @@
     <div class="block">
         <div class="container">
             <div class="product-tabs">
-            <div class="reviews-view">
-                <div class="reviews-view__list">
-                    <div class="reviews-list">
-                        <ol class="reviews-list__content">
-                            @foreach ($reclamos as $item)
-                            <li class="reviews-list__item">
-                                <div class="review">
-                                    <div class="review__avatar">
-                                        <img src="{{ asset('dist/images/avatars/blank.png')}}" alt="" />
-                                    </div>
-                                    <div class="review__content">
-                                        <div class="review__author">{{ $item->name }}</div>
-                                        <div class="review__text">
-                                            {{ $item->comentario }}
+
+                <div class="reviews-view">
+                    <div class="reviews-view__list">
+                        <div class="reviews-list">
+                            <ol class="comments-list comments-list--level--0">
+                                @foreach ($reclamos as $item)
+                                    <li class="comments-list__item">
+                                        <div class="comment">
+                                            <div class="comment__avatar">
+                                                <img src="{{ asset('dist/images/avatars/blank.png') }}" alt="">
+                                            </div>
+                                            <div class="comment__content">
+                                                <div class="comment__header">
+                                                    @php
+                                                        $nombre = strtok($item->name," ");
+                                                    @endphp
+                                                    <div class="comment__author">{{ $nombre }}</div>
+                                                    <div class="comment__reply"><span class="badge badge-info">{{ $item->tipo }}</span></div>
+                                                </div>
+                                                <div class="comment__text">{{ $item->comentario }}</div>
+                                                <div class="comment__date">
+                                                    {{ \Carbon\Carbon::parse($item->created_at)->translatedFormat('d F, Y h:i A') }}
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="review__date">{{ \Carbon\Carbon::parse($item->created_at)->translatedFormat('d F, Y h:i A')  }}</div>
-                                    </div>
-                                </div>
-                            </li>
-                            @endforeach
-                        </ol>
-                        {{ $reclamos->links() }}
-                        {{-- <div class="reviews-list__pagination">
-                            <ul class="pagination justify-content-center">
-                                <li class="page-item disabled">
-                                    <a class="page-link page-link--with-arrow" href="#" aria-label="Previous">
-                                        <svg
-                                            class="page-link__arrow page-link__arrow--left" aria-hidden="true" width="8px"
-                                            height="13px">
-                                            <use xlink:href="{{asset('dist/images/sprite.svg#arrow-rounded-left-8x13')}}"></use>
-                                        </svg>
-                                    </a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">1</a>
-                                </li>
-                                <li class="page-item active">
-                                    <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">3</a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link page-link--with-arrow" href="#" aria-label="Next">
-                                        <svg
-                                            class="page-link__arrow page-link__arrow--right" aria-hidden="true" width="8px"
-                                            height="13px">
-                                            <use xlink:href="{{ asset('dist/images/sprite.svg#arrow-rounded-right-8x13')}}"></use>
-                                        </svg>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div> --}}
+                                    </li>
+                                @endforeach
+
+                            </ol>
+                            {{ $reclamos->links() }}
+                        </div>
                     </div>
-                </div>
-                <form method="POST" action="{{ url('/libro-electronico-de-reclamos-y-sugerencias/guardar-comentario') }}" class="reviews-view__form">
-                    @csrf
-                    <h3 class="reviews-view__header">Escribe tu Opinión</h3>
-                    <div class="row">
-                        <div class="col-12 col-lg-9 col-xl-8">
-                            <div class="form-group">
-                                <label for="review-text">Nombre</label>
-                                <input class="form-control  @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" placeholder="Nombre">
-                                @if ($errors->has('name'))
-                                    <div class="invalid-feedback">
-                                        {{ $errors->first('name') }}
-                                    </div>
-                                @endif
+                    <section class="post__section">
+                        <h4 class="post__section-title">Escribe tu Reclamo o Sugerencia</h4>
+                        <form method="POST"
+                            action="{{ url('/libro-electronico-de-reclamos-y-sugerencias/guardar-comentario') }}">
+                            @csrf
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="comment-first-name">Nombre</label>
+                                    <input type="text" name="name" value="{{ old('name') }}" class="form-control"
+                                        id="comment-first-name" placeholder="Ejm: Jon Doe">
+                                    @if ($errors->has('name'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('name') }}
+                                        </div>
+                                    @endif
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="comment-last-name">Tipo Comentario</label>
+                                    <select class="form-control" name="tipo">
+                                        <option>Seleccione...</option>
+                                        <option value="Reclamo">Reclamo</option>
+                                        <option value="Sugerencia">Sugerencia</option>
+                                        <option value="Opinión">Opinión</option>
+                                    </select>
+                                    @if ($errors->has('tipo'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('tipo') }}
+                                        </div>
+                                    @endif
+                                </div>
                             </div>
                             <div class="form-group">
-                                <label for="review-text">Comentario</label>
-                                <textarea class="form-control @error('comentario') is-invalid @enderror" name="comentario" id="review-text" rows="6">{{ old('comentario') }}</textarea>
+                                <label for="comentario">Comentario</label>
+                                <textarea class="form-control" id="comentario" name="comentario" rows="6">{{ old('comentario') }}</textarea>
                                 @if ($errors->has('comentario'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('comentario') }}
                                     </div>
                                 @endif
                             </div>
-                            <div class="form-group mb-0">
-                                <button type="submit" class="btn btn-primary btn-lg">
-                                    Publicar
-                                </button>
+                            <div class="form-group mt-2 float-right">
+                                <button type="submit" class="btn btn-primary btn-lg">Publicar</button>
+                            </div>
+                        </form>
+                    </section>
+                    {{-- <form method="POST"
+                        action="{{ url('/libro-electronico-de-reclamos-y-sugerencias/guardar-comentario') }}"
+                        class="reviews-view__form">
+                        @csrf
+                        <h3 class="reviews-view__header">Escribe tu Opinión</h3>
+                        <div class="row">
+                            <div class="col-12 col-lg-9 col-xl-8">
+                                <div class="form-group">
+                                    <label for="review-text">Nombre</label>
+                                    <input class="form-control  @error('name') is-invalid @enderror" name="name"
+                                        value="{{ old('name') }}" placeholder="Nombre">
+                                    @if ($errors->has('name'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('name') }}
+                                        </div>
+                                    @endif
+                                </div>
+                                <div class="form-group">
+                                    <label for="review-text">Comentario</label>
+                                    <textarea class="form-control @error('comentario') is-invalid @enderror" name="comentario" id="review-text"
+                                        rows="6">{{ old('comentario') }}</textarea>
+                                    @if ($errors->has('comentario'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('comentario') }}
+                                        </div>
+                                    @endif
+                                </div>
+                                <div class="form-group mb-0">
+                                    <button type="submit" class="btn btn-primary btn-lg">
+                                        Publicar
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </form>
+                    </form> --}}
+                </div>
             </div>
-        </div>
         </div>
     </div>
 @endsection

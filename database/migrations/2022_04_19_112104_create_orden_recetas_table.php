@@ -15,7 +15,7 @@ class CreateOrdenRecetasTable extends Migration
     {
         Schema::create('orden_recetas', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('orden_id');
+            $table->uuid('orden_id')->nullable();
             $table->text('url_receta');
             $table->timestamps();
 

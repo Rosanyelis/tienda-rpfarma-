@@ -47,7 +47,6 @@
                             <div class="product__rating">
                                 <li><strong>{{$producto->ficha->condicionventa->name}}</strong></li>
                             </div>
-                            <div class="product__description">{{ $producto->informacion }}</div>
                             <ul class="product__meta">
                                 <li class="product__meta-availability">
                                     Stock:
@@ -118,7 +117,18 @@
                     <div class="product-tabs__list">
                         <a href="#tab-specification"
                             class="product-tabs__item product-tabs__item--active">Especificacion</a>
-                        <a href="#tab-description" class="product-tabs__item">Descripción</a>
+                        @switch($producto->ficha->condicionventa->name)
+                            @case($producto->ficha->condicionventa->name == 'Receta')
+                            <a href="#tab-description" class="product-tabs__item">Descripción</a>
+                                @break
+                            @case($producto->ficha->condicionventa->name == 'Venta Libre')
+                            <a href="#tab-description" class="product-tabs__item">Descripción</a>
+                                @break
+                            @case($producto->ficha->condicionventa->name == 'Sin Receta')
+                            <a href="#tab-description" class="product-tabs__item">Descripción</a>
+                                @break
+                            @default
+                        @endswitch
                     </div>
                     <div class="product-tabs__content">
                         <div class="product-tabs__pane product-tabs__pane--active" id="tab-specification">
@@ -141,10 +151,10 @@
                                         <div class="spec__name">Laboratorio</div>
                                         <div class="spec__value">{{ $producto->ficha->laboratorio->name }}</div>
                                     </div>
-                                    <div class="spec__row">
+                                    {{-- <div class="spec__row">
                                         <div class="spec__name">Registro ISP</div>
                                         <div class="spec__value">{{ $producto->ficha->registro_sanitario }}</div>
-                                    </div>
+                                    </div> --}}
                                     <div class="spec__row">
                                         <div class="spec__name">Forma Farmaceútica</div>
                                         <div class="spec__value">{{ $producto->ficha->formafarmaceutica->name }}</div>
@@ -152,10 +162,6 @@
                                     <div class="spec__row">
                                         <div class="spec__name">Condición de Venta</div>
                                         <div class="spec__value">{{ $producto->ficha->condicionventa->name }}</div>
-                                    </div>
-                                    <div class="spec__row">
-                                        <div class="spec__name">Contenido</div>
-                                        <div class="spec__value">{{ $producto->ficha->contenido }}</div>
                                     </div>
                                     <div class="spec__row">
                                         <div class="spec__name">Dosis Farmaceútica</div>

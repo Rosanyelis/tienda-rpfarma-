@@ -185,7 +185,6 @@
 <script>
     (function($) {
         "use strict";
-        const carousels = $('.owl-carousel');
 
     })(jQuery);
 </script>

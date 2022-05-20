@@ -56,7 +56,7 @@
                     <div class="col-12 col-md-12 col-lg-4">
                         <div class="site-footer__widget footer-newsletter">
                             <h5 class="footer-newsletter__title">Pagos Seguros con</h5>
-                            <img src="{{asset('dist/images/webpay-plus.png')}}" width="80%" alt="">
+                            <img src="{{asset('images/flow2.jpg')}}" width="100%" alt="">
                         </div>
                     </div>
                 </div>

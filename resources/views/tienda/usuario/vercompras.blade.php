@@ -31,28 +31,25 @@
                 <table class="cart__table cart-table">
                     <thead class="cart-table__head">
                         <tr class="cart-table__row">
-                            <th class="cart-table__column cart-table__column--product">
-                               Nro. Orden
-                            </th>
-                            <th class="cart-table__column cart-table__column--product">
-                                Productos
-                            </th>
-                            <th class="cart-table__column cart-table__column--product">
-                                Estatus
-                            </th>
-
-                            <th class="cart-table__column cart-table__column--remove"></th>
+                            <th class="cart-table__column">Nro.</th>
+                            <th class="cart-table__column">Nro. Orden</th>
+                            <th class="cart-table__column">Total Productos</th>
+                            <th class="cart-table__column">Fecha</th>
+                            <th class="cart-table__column">Estatus</th>
+                            <th class="cart-table__column">Acciones</th>
                         </tr>
                     </thead>
-
-
                     <tbody class="cart-table__body">
-
-
-
-
-
-
+                        @foreach ($ordenes as $item)
+                        <tr class="cart-table__row">
+                            <td class="cart-table__column cart-table__column--product">{{ $loop->iteration }}</td>
+                            <td class="cart-table__column cart-table__column--product">#{{ $item->nro_orden }}</td>
+                            <td class="cart-table__column cart-table__column--product">{{ $item->detallesCompra->count() }}</td>
+                            <td class="cart-table__column cart-table__column--product">{{ \Carbon\Carbon::parse($item->created_at)->translatedFormat('d F, Y h:i A')  }}</td>
+                            <td class="cart-table__column cart-table__column--product">{{ $item->estatus }}</td>
+                            <td class="cart-table__column cart-table__column--product"></td>
+                        </tr>
+                        @endforeach
                     </tbody>
                 </table>
                 <input class="productosCart" type="hidden" name="productos" value="">

@@ -17,8 +17,22 @@ class Reclamo extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'id', 'name', 'comentario', 'user_id', 'respuesta'
+        'id', 'user_id', 'codigo', 'name', 'comentario', 'tipo',
     ];
 
+    /**
+     * Obtiene los usuarios con el rol.
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 
+     /**
+     * Obtiene los subcategorias del producto.
+     */
+    public function mensajes()
+    {
+        return $this->hasMany(UserReclamo::class, 'reclamo_id', 'id');
+    }
 }

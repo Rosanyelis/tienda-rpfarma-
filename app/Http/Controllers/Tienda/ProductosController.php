@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Tienda;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Producto;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class ProductosController extends Controller
@@ -18,12 +19,17 @@ class ProductosController extends Controller
     {
         $name = $request->get('name');
         $carritoItems = \Cart::getContent();
-        $data = Producto::orderBy('name', 'asc')
-                        ->name($name)
-                        ->where('estatus', 'Activo')
+        $data = DB::table('productos')
+                        ->join('ficha_tecnicas', 'productos.id', '=', 'ficha_tecnicas.producto_id')
+                        ->join('condicion_ventas', 'ficha_tecnicas.condicion_venta_id', '=', 'condicion_ventas.id')
+                        ->select('productos.*', 'ficha_tecnicas.principio_activo as principio_activo', 'condicion_ventas.name as condicion_venta')
+                        ->orderBy('name', 'asc')
+                        ->where('productos.name', 'LIKE', "%$name%")
+                        ->where('principio_activo', 'LIKE', "%$name%")
+                        ->where('productos.estatus', 'Activo')
                         ->paginate(9);
 
-        return view('tienda.producto.productos', compact('data', 'carritoItems'));
+        return view('tienda.producto.productos', compact('carritoItems', 'data'));
     }
 
 

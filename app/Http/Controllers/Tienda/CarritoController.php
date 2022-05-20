@@ -3,19 +3,20 @@
 namespace App\Http\Controllers\Tienda;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\LoginRequest;
 use App\Models\Carrito;
 use App\Models\Categoria;
-use App\Models\Producto;
 use App\Models\Cliente;
-use App\Models\OrdenCliente;
 use App\Models\DetallesOrden;
+use App\Models\OrdenCliente;
 use App\Models\OrdenReceta;
+use App\Models\Producto;
 use App\Models\User;
-use App\Http\Requests\Auth\LoginRequest;
+use Darryldecode\Cart\Cart;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
@@ -46,6 +47,7 @@ class CarritoController extends Controller
             'attributes' => array(
                 'foto' => $producto->foto,
                 'tipo' => $producto->ficha->condicionventa->name,
+                'receta' => null,
             )
         ));
 
@@ -54,31 +56,28 @@ class CarritoController extends Controller
 
     public function updateCart(Request $request)
     {
-        $data = json_decode($request->productos, True);
+        /** Procesamos las imagenes de las recetas para guardarlas en galeria */
+        $arrayImg = [];
+        if ($request->recetas) {
+            foreach ($request->recetas as $key => $value) {
+                $uploadPath = public_path('/storage/RecetaTienda/');
+                $file = $value;
+                $extension = $file->getClientOriginalExtension();
+                $uuid = Str::uuid(4);
+                $fileName = $uuid . '.' . $extension;
+                $file->move($uploadPath, $fileName);
+                $url = '/storage/RecetaTienda/'.$fileName;
+                OrdenReceta::create(['url_receta' => $url]);
 
+                array_push($arrayImg, $url);
+            }
+        }
+
+        /** Procesa los productos seleccionados por el cliente */
+        $data = json_decode($request->productos, True);
         foreach ($data as $item) {
             $id = $item['id'];
             $cant = $item['quantity'];
-            // $receta = $item['receta'];
-            // if ($receta !== 'No lleva receta' || $receta !== null) {
-            //     $file = $receta;
-            //     // Decodificamos la imagen
-            //     list($type, $receta) = explode(';', $receta);
-            //     list(, $receta) = explode(',', $receta);
-            //     if ($type == 'data:application/pdf') {
-            //         list(, $type) = explode('data:application/', $type);
-            //     }else{
-            //         list(, $type) = explode('data:image/', $type);
-            //     }
-            //     $uploadPath = public_path('/storage/CarritoRecetas/');
-            //     $uuid = Str::uuid(4);
-            //     $fileName = $uuid . '.' . $type;
-            //     file_put_contents($uploadPath.$fileName, base64_decode($receta));
-            //     $urlreceta = '/storage/CarritoRecetas/'.$fileName;
-            // }else{
-            //     $urlreceta = null;
-            // }
-
             $producto = Producto::where('id', $id)->first();
             $precio = number_format($producto->precio_venta, 0, ",", "");
 
@@ -92,11 +91,9 @@ class CarritoController extends Controller
                 'attributes' => array(
                     'foto' => $producto->foto,
                     'tipo' => $producto->ficha->condicionventa->name,
-                    // 'receta' => $urlreceta,
+                    'receta' => $arrayImg,
                 )
             ));
-
-
         }
 
 
@@ -131,7 +128,7 @@ class CarritoController extends Controller
      */
     public function addShop(Request $request)
     {
-        // dd($request->all());
+        // dd(\Cart::getContent());
         if ($request->cuenta == '1') {
             $request->validate([
                 'nombre' => ['required'],
@@ -141,6 +138,7 @@ class CarritoController extends Controller
                 'email' => ['required', 'unique:users'],
                 'password' => ['required'],
                 'telefono' => ['required', 'numeric'],
+                'checkout_payment_method' => ['required'],
             ],
             [
                 'nombre.required' => 'El campo Nombre es obligatorio',
@@ -151,6 +149,7 @@ class CarritoController extends Controller
                 'password.required' => 'El campo Contraseña es obligatorio',
                 'telefono.required' => 'El campo Teléfono es obligatorio',
                 'telefono.numeric' => 'El campo Teléfono debe ser sólo números, sin símbolos',
+                'checkout_payment_method.required' => 'La selección de Tipo de Recepción es obligatorio',
             ]);
             $name = $request->nombre.' '.$request->apellido;
             $nro_orden = rand(5, 15);
@@ -168,11 +167,11 @@ class CarritoController extends Controller
             Auth::login($user);
 
             $registro = new Cliente();
+            $registro->user_id = $user->id;
             $registro->nombre = $request->nombre;
             $registro->apellido = $request->apellido;
             $registro->rut = $request->rut;
             $registro->direccion = $request->direccion;
-            $registro->correo = $request->email;
             $registro->telefono = $request->telefono;
             $registro->save();
 
@@ -181,10 +180,16 @@ class CarritoController extends Controller
             $record = new OrdenCliente();
             $record->cliente_id = $idCliente;
             $record->nro_orden = $nro_orden;
+            $record->subtotal = $request->subtotal;
+            $record->envio = $request->envio;
             $record->monto = $request->monto;
-            $record->direccion_compras = $request->direccion;
-            $record->direccion_pedido = $request->direccion;
-            $record->estatus = 'Activo';
+            $record->tipo_recepcion = $request->checkout_payment_method;
+            $record->local = $request->local;
+            $record->comuna = $request->comuna;
+            $record->correo_receptor = $request->correo_receptor;
+            $record->telefono_receptor = $request->telefono_receptor;
+            $record->direccion_pedido = $request->direccion_recepcion;
+            $record->estatus = 'Por Confirmar';
             $record->save();
 
             $idOrden = $record->id;
@@ -201,20 +206,35 @@ class CarritoController extends Controller
                 $data->cantidad = $item->quantity;
                 $data->precio = $item->price;
                 $data->save();
+
+                if ($item->attributes->receta != null) {
+                    foreach ($item->attributes->receta as $item => $value) {
+                        $ver = OrdenReceta::where('url_receta', $value)->count();
+                        if ($ver>0) {
+                            $registro =  OrdenReceta::where('url_receta', $value)->first();
+                            $registro->orden_id = $idOrden;
+                            $registro->save();
+                        }
+                    }
+                }
+
             }
+
 
         }else{
             if ($request->users === null) {
                 $credentials = $request->validate([
                     'email' => ['required','email'],
                     'password' => ['required'],
+                    'checkout_payment_method' => ['required'],
                 ],
                 [
                     'email.required' => 'El campo Correo es obligatorio',
                     'email.email' => 'El campo Correo debe tener un formato example@example.com',
                     'password.required' => 'El campo Contraseña es obligatorio',
-
+                    'checkout_payment_method.required' => 'La selección de Tipo de Recepción es obligatorio',
                 ]);
+
 
                 if (!Auth::attempt($credentials)){
                     throw ValidationException::withMessages([
@@ -222,27 +242,37 @@ class CarritoController extends Controller
                     ]);
                 }
                 $request->session()->regenerate();
+            }else{
+                $request->validate([
+                    'checkout_payment_method' => ['required'],
+                ],
+                [
+                    'checkout_payment_method.required' => 'La selección de Tipo de Recepción es obligatorio',
+                ]);
             }
 
+
+
             $nro_orden = rand(5, 15);
-            $registro = new Cliente();
-            $registro->nombre = 'Carlos';
-            $registro->apellido = 'Doe';
-            $registro->rut = '12345678-7';
-            $registro->direccion = 'calle 9 de abril';
-            $registro->correo = 'carlosdoe@gmail.com';
-            $registro->telefono = '04148035352';
-            $registro->save();
-
-            $idCliente = $registro->id;
-
+            $cliente = Cliente::where('id', Auth::user()->cliente->id)->first();
+            if ($request->comuna == 'Seleccione Comuna...') {
+                $comuna = null;
+            }else{
+                $comuna = $request->comuna;
+            }
             $record = new OrdenCliente();
-            $record->cliente_id = $idCliente;
+            $record->cliente_id = $cliente->id;
             $record->nro_orden = $nro_orden;
+            $record->subtotal = $request->subtotal;
+            $record->envio = $request->envio;
             $record->monto = $request->monto;
-            $record->direccion_compras = 'calle 9 de abril';
-            $record->direccion_pedido = 'calle 9 de abril';
-            $record->estatus = 'Activo';
+            $record->tipo_recepcion = $request->checkout_payment_method;
+            $record->local = $request->local;
+            $record->comuna = $comuna;
+            $record->correo_receptor = $request->correo_receptor;
+            $record->telefono_receptor = $request->telefono_receptor;
+            $record->direccion_pedido = $request->direccion_recepcion;
+            $record->estatus = 'Por Confirmar';
             $record->save();
 
             $idOrden = $record->id;
@@ -259,6 +289,15 @@ class CarritoController extends Controller
                 $data->cantidad = $item->quantity;
                 $data->precio = $item->price;
                 $data->save();
+
+                foreach ($item->attributes->receta as $item => $value) {
+                    $ver = OrdenReceta::where('url_receta', $value)->count();
+                    if ($ver>0) {
+                        $registro =  OrdenReceta::where('url_receta', $value)->first();
+                        $registro->orden_id = $idOrden;
+                        $registro->save();
+                    }
+                }
             }
 
         }

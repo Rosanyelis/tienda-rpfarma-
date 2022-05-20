@@ -16,7 +16,7 @@ class Cliente extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'id', 'nombre', 'apellido', 'rut', 'correo', 'direccion', 'estatus',
+        'id', 'user_id', 'nombre', 'apellido', 'rut', 'correo', 'direccion', 'estatus',
     ];
 
     /**
@@ -25,5 +25,13 @@ class Cliente extends Model
     public function ordenes()
     {
         return $this->hasMany(OrdenCliente::class, 'cliente_id', 'id');
+    }
+
+    /**
+     * Obtiene los usuarios con el rol.
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }

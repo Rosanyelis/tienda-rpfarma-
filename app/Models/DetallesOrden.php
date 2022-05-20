@@ -26,4 +26,11 @@ class DetallesOrden extends Model
     {
         return $this->belongsTo(OrdenCliente::class, 'orden_id', 'id');
     }
+    /**
+     * la orden de compra
+     */
+    public function producto()
+    {
+        return $this->belongsTo(Producto::class, 'producto_id', 'id');
+    }
 }

@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Tienda;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Producto;
 use App\Models\Categoria;
+use App\Models\OrdenCliente;
+use App\Models\Producto;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -92,12 +94,10 @@ class HomeController extends Controller
     }
 
 
-    public function vercompras ()
+    public function vercompras()
     {
-
-        $id = Auth::user()->id;
-
+        $ordenes = OrdenCliente::where('cliente_id', Auth::user()->cliente->id)->get();
         $carritoItems = \Cart::getContent();
-        return view('tienda.usuario.vercompras', compact('carritoItems'));
+        return view('tienda.usuario.vercompras', compact('carritoItems', 'ordenes'));
     }
 }

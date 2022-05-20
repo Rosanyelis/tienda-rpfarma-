@@ -49,5 +49,11 @@ class User extends Authenticatable
         return $this->belongsTo(Rol::class, 'rol_id', 'id');
     }
 
-
+     /**
+     * Obtiene datos de ficha tecnica.
+     */
+    public function cliente()
+    {
+        return $this->hasOne(Cliente::class, 'user_id', 'id');
+    }
 }

@@ -132,11 +132,7 @@
                 </div>
                 <!-- main header @e -->
                 <!-- content @s -->
-                <div class="nk-content ">
-                    <div class="container-fluid">
-                        @yield('contenido')
-                    </div>
-                </div>
+                @yield('contenido')
                 <!-- content @e -->
                 <!-- footer @s -->
                 <div class="nk-footer">

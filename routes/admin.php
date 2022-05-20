@@ -8,6 +8,7 @@ use App\Http\Controllers\LaboratorioController;
 use App\Http\Controllers\LinkController;
 use App\Http\Controllers\OrdenesController;
 use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\ReclamosSugerenciaController;
 use App\Http\Controllers\RolController;
 use App\Http\Controllers\TipoAdministracionController;
 use App\Http\Controllers\UsuarioController;
@@ -35,13 +36,13 @@ Route::get('dashboard', function () {
 # Ordenes
 Route::get('admin/ordenes', [OrdenesController::class, 'index'])->name('orden.index');
 Route::get('admin/ordenes/crear-orden', [OrdenesController::class, 'create'])->name('orden.create');
-Route::post('admin/ordenes/guardar-orden', [OrdenesController::class, 'store'])->name('orden.store');
 Route::get('admin/ordenes/{id}/ver-orden', [OrdenesController::class, 'show'])->name('orden.show');
-Route::get('admin/ordenes/{id}/editar-orden', [OrdenesController::class, 'edit'])->name('orden.edit');
-Route::put('admin/ordenes/{id}/actualizar-orden', [OrdenesController::class, 'update'])->name('orden.update');
-Route::post('admin/ordenes/{id}/eliminar-orden', [OrdenesController::class, 'destroy'])->name('orden.destroy');
-
-
+Route::get('admin/ordenes/{id}/aprobar-orden', [OrdenesController::class, 'aprueba'])->name('orden.aprueba');
+Route::get('admin/ordenes/{id}/rechazo-orden', [OrdenesController::class, 'rechazo'])->name('orden.rechazo');
+# Reclamos y Sugerencias
+Route::get('admin/reclamos-y-sugerencias', [ReclamosSugerenciaController::class, 'index'])->name('reclamo.index');
+Route::get('admin/reclamos-y-sugerencias/{id}/responder-reclamo-y-sugerencia', [ReclamosSugerenciaController::class, 'edit'])->name('reclamo.edit');
+Route::post('admin/reclamos-y-sugerencias/{id}/enviar-respuesta', [ReclamosSugerenciaController::class, 'update'])->name('reclamo.update');
 
 # Links
 Route::get('admin/links', [LinkController::class, 'index'])->name('link.index');

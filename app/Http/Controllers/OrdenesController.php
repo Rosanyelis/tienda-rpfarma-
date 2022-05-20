@@ -2,8 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\NotificacionApruebaOrden;
+use App\Mail\NotificacionRechazaOrden;
+use App\Models\Cliente;
+use App\Models\DetallesOrden;
 use App\Models\OrdenCliente;
+use App\Models\OrdenReceta;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class OrdenesController extends Controller
 {
@@ -47,8 +53,10 @@ class OrdenesController extends Controller
      */
     public function show($id)
     {
-        $data = OrdenCliente::where('id', $id)->get();
-        return view('panel.ordenes.show', compact('data'));
+        $data = OrdenCliente::where('id', $id)->with('cliente')->first();
+        $orden = DetallesOrden::where('orden_id', $data->id)->get();
+        $recetas = OrdenReceta::where('orden_id', $data->id)->get();
+        return view('panel.ordenes.show', compact('data', 'orden', 'recetas'));
     }
 
     /**
@@ -57,9 +65,43 @@ class OrdenesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function aprueba($id)
     {
-        //
+        $orden = OrdenCliente::where('id', $id)->first();
+        $cliente = Cliente::where('id', $orden->cliente_id)->first();
+        $email = $cliente->user->email;
+
+        $registro = OrdenCliente::where('id', $id)->first();
+        $registro->estatus = 'Aprobado';
+        $registro->save();
+
+
+        $mailable = new NotificacionApruebaOrden($orden);
+        Mail::to($email)->send($mailable);
+
+        return redirect('admin/ordenes')->with('success', 'Orden Aprobada Exitosamente');
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function rechazo($id)
+    {
+        $orden = OrdenCliente::where('id', $id)->first();
+        $cliente = Cliente::where('id', $orden->cliente_id)->first();
+        $email = $cliente->user->email;
+
+        $registro = OrdenCliente::where('id', $id)->first();
+        $registro->estatus = 'Rechazada';
+        $registro->save();
+
+        $mailable = new NotificacionRechazaOrden($orden);
+        Mail::to($email)->send($mailable);
+
+        return redirect('admin/ordenes')->with('success', 'Orden Rechazada Exitosamente');
     }
 
     /**

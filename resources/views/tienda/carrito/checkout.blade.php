@@ -22,8 +22,7 @@
     <div class="checkout block">
         <div class="container">
             {{-- <div > --}}
-            <form class="row" action="{{ url('/productos/completar-compra') }}" method="POST"
-                enctype="multipart/form-data">
+            <form class="row" action="{{ url('/productos/completar-compra') }}" method="POST">
                 @csrf
                 @if (!Auth::user())
                     <div class="col-12 col-lg-6 col-xl-6">
@@ -135,7 +134,7 @@
                     </div>
                 @endif
 
-                <div class="col-12 col-lg-6 col-xl-6 mt-4 mt-lg-0">
+                <div class="col-12 col-lg-6 @if (Auth::user()) col-xl-12 @else col-xl-6 @endif mt-4 mt-lg-0">
                     <div class="card mb-0">
                         <div class="card-body">
                             <h3 class="card-title">Tu Orden</h3>
@@ -179,56 +178,152 @@
                                 </tfoot>
                             </table>
                             <div class="payment-methods">
-                                    <ul class="payment-methods__list">
-                                        <li class="payment-methods__item payment-methods__item--active">
-                                            <label class="payment-methods__item-header">
-                                                <span class="payment-methods__item-radio input-radio">
-                                                    <span class="input-radio__body">
-                                                        <input class="input-radio__input" name="checkout_payment_method" type="radio" checked="checked" />
-                                                        <span class="input-radio__circle"></span>
-                                                    </span>
+                                <ul class="payment-methods__list">
+                                    <li class="payment-methods__item payment-methods__item--active">
+                                        <label class="payment-methods__item-header">
+                                            <span class="payment-methods__item-radio input-radio">
+                                                <span class="input-radio__body">
+                                                    <input class="input-radio__input" type="radio" checked="checked" />
+                                                    <span class="input-radio__circle"></span>
                                                 </span>
-                                                <span class="payment-methods__item-title">Información de Envío </span>
-                                            </label>
-                                            <div class="payment-methods__item-container">
-                                                <div class="payment-methods__item-description text-muted" style="text-align: justify">
-                                                    Rp Farma realizará los despachos a través de la empresa “RV Transportes”<br><br>
-                                                    Los pedidos  recepcionados hasta las 15:00 hrs serán despachados el siguiente
-                                                    día hábil, los pedidos recepcionados después de las 15:00 hrs serán despachados
-                                                    el día hábil subsiguiente. <br><br>
-                                                    Los despachos se realizaran de Lunes a Viernes de 15:00 a 21:00 hrs,
-                                                    Sábados, Domingos y Festivos no se realizaran envíos.<br><br>
-                                                    En caso de que la persona no se encuentre en el domicilio al
-                                                    momento de la entrega, se contactará para ver si hay un adulto
-                                                     quien podrá recibir el pedido y en caso de que no se pueda contactar
-                                                     el despacho se reagendará para el día hábil siguiente, previo al nuevo
-                                                     pago de los gastos de envío.<br><br>
-                                                    El comprador será responsable de encontrarse en el lugar de despacho
-                                                    dentro de las horas y el día especificado al momento de la compra,
-                                                    Rp Farma no reembolsará el valor del despacho en caso de que el cliente no se encuentre.<br>
-                                                    El cliente podrá retirar los productos en tienda de manera gratuita,
-                                                    de Lunes a Viernes de 09:00hrs a 18:00 hrs o al día hábil siguiente.<br><br>
-                                                    <strong>• Américo Vespucio 0410, local J, Comuna de Quilicura.</strong><br><br>
-                                                    Cobertura solo Región Metropolitana.
+                                            </span>
+                                            <span class="payment-methods__item-title">Información de Envío </span>
+                                        </label>
+                                        <div class="payment-methods__item-container">
+                                            <div class="payment-methods__item-description text-muted" style="text-align: justify">
+                                                Rp Farma realizará los despachos a través de la empresa “RV Transportes”<br><br>
+                                                Los pedidos  recepcionados hasta las 15:00 hrs serán despachados el siguiente
+                                                día hábil, los pedidos recepcionados después de las 15:00 hrs serán despachados
+                                                el día hábil subsiguiente. <br><br>
+                                                Los despachos se realizaran de Lunes a Viernes de 15:00 a 21:00 hrs,
+                                                Sábados, Domingos y Festivos no se realizaran envíos.<br><br>
+                                                En caso de que la persona no se encuentre en el domicilio al
+                                                momento de la entrega, se contactará para ver si hay un adulto
+                                                    quien podrá recibir el pedido y en caso de que no se pueda contactar
+                                                    el despacho se reagendará para el día hábil siguiente, previo al nuevo
+                                                    pago de los gastos de envío.<br><br>
+                                                El comprador será responsable de encontrarse en el lugar de despacho
+                                                dentro de las horas y el día especificado al momento de la compra,
+                                                Rp Farma no reembolsará el valor del despacho en caso de que el cliente no se encuentre.<br>
+                                                El cliente podrá retirar los productos en tienda de manera gratuita,
+                                                de Lunes a Viernes de 09:00hrs a 18:00 hrs o al día hábil siguiente.<br><br>
+                                                <strong>• Américo Vespucio 0410, local J, Comuna de Quilicura.</strong><br><br>
+                                                Cobertura solo Región Metropolitana.
+                                            </div>
+                                        </div>
+                                    </li>
+                                    {{-- <li class="payment-methods__item">
+                                        <label class="payment-methods__item-header"><span
+                                                class="payment-methods__item-radio input-radio"><span
+                                                    class="input-radio__body"><input class="input-radio__input"
+                                                        name="checkout_payment_method" type="radio" />
+                                                    <span class="input-radio__circle"></span> </span></span><span
+                                                class="payment-methods__item-title">PayPal</span></label>
+                                        <div class="payment-methods__item-container">
+                                            <div class="payment-methods__item-description text-muted">
+                                                Pagar a través de PayPal; puedes pagar con tu tarjeta de credito
+                                                si no tiene una cuenta de PayPal.
+                                            </div>
+                                        </div>
+                                    </li> --}}
+                                </ul>
+                            </div>
+                            <div class="payment-methods">
+                                <h5>Tipo de Recepción</h5>
+                                <ul class="payment-methods__list">
+                                    <li class="payment-methods__item">
+                                        <label class="payment-methods__item-header">
+                                            <span class="payment-methods__item-radio input-radio">
+                                                <span class="input-radio__body">
+                                                    <input class="input-radio__input" name="checkout_payment_method" type="radio" value="Retiro en local"/>
+                                                    <span class="input-radio__circle"></span>
+                                                </span>
+                                            </span>
+                                            <span class="payment-methods__item-title">Retiro en local</span>
+                                        </label>
+                                        <div class="payment-methods__item-container">
+                                            <div class="payment-methods__item-description text-muted">
+                                                <div class="form-group">
+                                                    <label>Locales </label>
+                                                    <select class="form-control" name="local">
+                                                        <option>Seleccione local...</option>
+                                                        <option value="Local Quilicura">Local Quilicura</option>
+                                                    </select>
                                                 </div>
                                             </div>
-                                        </li>
-                                        {{-- <li class="payment-methods__item">
-                                            <label class="payment-methods__item-header"><span
-                                                    class="payment-methods__item-radio input-radio"><span
-                                                        class="input-radio__body"><input class="input-radio__input"
-                                                            name="checkout_payment_method" type="radio" />
-                                                        <span class="input-radio__circle"></span> </span></span><span
-                                                    class="payment-methods__item-title">PayPal</span></label>
-                                            <div class="payment-methods__item-container">
-                                                <div class="payment-methods__item-description text-muted">
-                                                    Pagar a través de PayPal; puedes pagar con tu tarjeta de credito
-                                                    si no tiene una cuenta de PayPal.
+                                        </div>
+                                    </li>
+                                    <li class="payment-methods__item">
+                                        <label class="payment-methods__item-header">
+                                            <span class="payment-methods__item-radio input-radio">
+                                                <span class="input-radio__body">
+                                                    <input class="input-radio__input" name="checkout_payment_method" type="radio" value="Entrega a domicilio" />
+                                                    <span class="input-radio__circle"></span>
+                                                </span>
+                                            </span>
+                                            <span class="payment-methods__item-title">Entrega a domicilio</span>
+                                        </label>
+                                        <div class="payment-methods__item-container">
+                                            <div class="payment-methods__item-description text-muted">
+                                                <div class="form-group">
+                                                    <label>Comuna</label>
+                                                    <select class="form-control" name="comuna">
+                                                        <option>Seleccione Comuna...</option>
+                                                        <option value="Santiago">Santiago</option>
+                                                        <option value="Conchalí">Conchalí</option>
+                                                        <option value="Huechuraba">Huechuraba</option>
+                                                        <option value="Independencia">Independencia</option>
+                                                        <option value="Quilicura">Quilicura</option>
+                                                        <option value="Recoleta">Recoleta</option>
+                                                        <option value="Renca">Renca</option>
+                                                        <option value="Las Condes">Las Condes</option>
+                                                        <option value="Lo Barnechea">Lo Barnechea</option>
+                                                        <option value="Providencia">Providencia</option>
+                                                        <option value="Vitacura">Vitacura</option>
+                                                        <option value="La Reina">La Reina</option>
+                                                        <option value="Macul">Macul</option>
+                                                        <option value="Ñuñoa">Ñuñoa</option>
+                                                        <option value="Peñalolén">Peñalolén</option>
+                                                        <option value="La Florida">La Florida</option>
+                                                        <option value="La Granja">La Granja</option>
+                                                        <option value="El Bosque">El Bosque</option>
+                                                        <option value="La Cisterna">La Cisterna</option>
+                                                        <option value="La Pintana">La Pintana</option>
+                                                        <option value="San Ramón">San Ramón</option>
+                                                        <option value="Lo Espejo">Lo Espejo</option>
+                                                        <option value="Pedro Aguirre Cerda">Pedro Aguirre Cerda</option>
+                                                        <option value="San Joaquín">San Joaquín</option>
+                                                        <option value="San Miguel">San Miguel</option>
+                                                        <option value="Cerrillos">Cerrillos</option>
+                                                        <option value="Estación Central">Estación Central</option>
+                                                        <option value="Maipú">Maipú</option>
+                                                        <option value="Cerro Navia">Cerro Navia</option>
+                                                        <option value="Lo Prado">Lo Prado</option>
+                                                        <option value="Pudahuel">Pudahuel</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Dirección de recepción</label>
+                                                    <textarea rows="3" class="form-control" name="direccion_recepcion" placeholder="Direccion"></textarea>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Telefono de Contacto del Receptor del Pedido</label>
+                                                    <input type="text" class="form-control" name="telefono_receptor" placeholder="telefono">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Correo de Contacto del Receptor del Pedido (opcional)</label>
+                                                    <input type="text" class="form-control" name="correo_receptor" placeholder="example@example.com">
                                                 </div>
                                             </div>
-                                        </li> --}}
-                                    </ul>
-                                </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                @if ($errors->has('checkout_payment_method'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('checkout_payment_method') }}
+                                    </div>
+                                @endif
+                            </div>
                             <div class="checkout__agree form-group">
                                 <div class="form-check">
                                     <span class="form-check-input input-check">
@@ -247,6 +342,8 @@
                                             condiciones</a> del sitio web*</label>
                                 </div>
                             </div>
+                            <input class="subtotal" type="hidden" name="subtotal" value="">
+                            <input class="envio" type="hidden" name="envio" value="">
                             <input class="monto" type="hidden" name="monto" value="">
                             <input type="hidden" name="users"
                                 value="@if (Auth::user()) {{ Auth::user()->id }} @endif">
@@ -286,15 +383,19 @@
                 if (sum > 30000) {
                     $('.envio').text('$' + 0);
                         var envio = 0;
-                }
-                else {
+                }else if (sum == 0) {
+                    $('.envio').text('$' + 0);
+                        var envio = 0;
+                } else {
                     $('.envio').text('$' + 4000);
                         var envio = 4000;
                 }
 
                 $('.subtotal').text('$' + sum);
-                $('.monto').val(sum);
+                $('.subtotal').val(sum);
+                $('.envio').val(envio);
                 var total = sum += envio; $('.total').text('$' + total);
+                $('.monto').val(total);
             })(jQuery);
 
             function checkRut(rut) {

@@ -67,16 +67,16 @@
                             <td class="cart-table__column cart-table__column--product" data-title="{{ $item->attributes->tipo }}">
                                 @switch($item->attributes->tipo)
                                     @case($item->attributes->tipo == 'Receta')
-                                    <input class="form-control" type="file" name="receta">
+                                    <input class="form-control" type="file" name="recetas[]">
                                     @break
                                     @case($item->attributes->tipo == 'Receta Retenida')
-                                    <input class="form-control" type="file" name="receta">
+                                    <input class="form-control" type="file" name="recetas[]">
                                     @break
                                     @case($item->attributes->tipo == 'Receta Retenida y Control de Stock')
-                                    <input class="form-control" type="file" name="receta">
+                                    <input class="form-control" type="file" name="recetas[]">
                                     @break
                                     @case($item->attributes->tipo == 'Receta Cheque')
-                                    <input class="form-control" type="file" name="receta">
+                                    <input class="form-control" type="file" name="recetas[]">
                                     @break
                                     @case($item->attributes->tipo == 'Venta Libre')
                                     <ul class="cart-table__options">
@@ -204,9 +204,6 @@
                         receta = null;
                     break
                 }
-
-
-
                 var datosFila = {};
                 datosFila.id = id;
                 datosFila.receta = receta;
@@ -230,6 +227,7 @@
     //     var file = element.files[0];
     //     var reader = new FileReader();
     //     reader.onloadend = function() {
+
     //         ImagenBase64 = reader.result;
 
     //     }

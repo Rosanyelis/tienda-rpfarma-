@@ -134,8 +134,16 @@
                 title: '{{ session('success') }}'
             });
             @endif
+            @if (session('error'))
+            Toast.fire({
+                icon: 'error',
+                title: '{{ session('error') }}'
+            });
+            @endif
 
-
+            $('.dropdown-menu').on('click', function (e) {
+                e.stopPropagation();
+            });
         })(jQuery);
     </script>
     @yield('scripts')

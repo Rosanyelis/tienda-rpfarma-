@@ -94,50 +94,51 @@
                             <div class="products-view__list products-list" data-layout="grid-3-sidebar"
                                 data-with-features="false">
                                 <div class="products-list__body">
+
                                     @foreach ($data as $item)
                                     <div class="products-list__item">
                                         <div class="product-card">
                                             <div class="product-card__badges-list">
-                                                @switch($item->ficha->condicionventa->name)
-                                                    @case($item->ficha->condicionventa->name == 'Receta')
+                                                @switch($item->condicion_venta)
+                                                    @case($item->condicion_venta == 'Receta')
                                                     <div class="product-card__badge product-card__badge--sale">
-                                                        {{ $item->ficha->condicionventa->name }}
+                                                        {{ $item->condicion_venta }}
                                                     </div>
                                                     @break
-                                                    @case($item->ficha->condicionventa->name == 'Receta Retenida')
+                                                    @case($item->condicion_venta == 'Receta Retenida')
                                                     <div class="product-card__badge product-card__badge--sale">
-                                                        {{ $item->ficha->condicionventa->name }}
+                                                        {{ $item->condicion_venta }}
                                                     </div>
                                                     @break
-                                                    @case($item->ficha->condicionventa->name == 'Receta Retenida y Control de Stock')
+                                                    @case($item->condicion_venta == 'Receta Retenida y Control de Stock')
                                                     <div class="product-card__badge product-card__badge--sale">
-                                                        {{ $item->ficha->condicionventa->name }}
+                                                        {{ $item->condicion_venta }}
                                                     </div>
                                                     @break
-                                                    @case($item->ficha->condicionventa->name == 'Receta Cheque')
+                                                    @case($item->condicion_venta == 'Receta Cheque')
                                                     <div class="product-card__badge product-card__badge--sale">
-                                                        {{ $item->ficha->condicionventa->name }}
+                                                        {{ $item->condicion_venta }}
                                                     </div>
                                                     @break
-                                                    @case($item->ficha->condicionventa->name == 'Venta Libre')
+                                                    @case($item->condicion_venta == 'Venta Libre')
                                                     <div class="product-card__badge product-card__badge--new">
-                                                        {{ $item->ficha->condicionventa->name }}
+                                                        {{ $item->condicion_venta }}
                                                     </div>
                                                     @break
-                                                    @case($item->ficha->condicionventa->name == 'Sin Receta')
+                                                    @case($item->condicion_venta == 'Sin Receta')
                                                     <div class="product-card__badge product-card__badge--hot">
-                                                        {{ $item->ficha->condicionventa->name }}
+                                                        {{ $item->condicion_venta }}
                                                     </div>
                                                     @break
-                                                    @case($item->ficha->condicionventa->name == 'Sin Información')
+                                                    @case($item->condicion_venta == 'Sin Información')
                                                     <div class="product-card__badge product-card__badge--hot">
-                                                        {{ $item->ficha->condicionventa->name }}
+                                                        {{ $item->condicion_venta }}
                                                     </div>
                                                     @break
                                                     @default
-                                                    @case($item->ficha->condicionventa->name == 'Sin Información')
+                                                    @case($item->condicion_venta == 'Sin Información')
                                                     <div class="product-card__badge product-card__badge--hot">
-                                                        {{ $item->ficha->condicionventa->name }}
+                                                        {{ $item->condicion_venta }}
                                                     </div>
                                                     @break
                                                 @endswitch

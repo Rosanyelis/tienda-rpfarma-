@@ -16,7 +16,7 @@ class CreateReclamosTable extends Migration
         Schema::create('reclamos', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name');
-            $table->text('comentario');
+            $table->text('comentario')->nullable();
             $table->uuid('user_id')->nullable();
             $table->text('respuesta')->nullable();
             $table->timestamps();

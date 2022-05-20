@@ -17,7 +17,9 @@ class OrdenCliente extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'id', 'cliente_id', 'nro_orden', 'monto', 'direccion_compras', 'direccion_pedido', 'estatus',
+        'id', 'cliente_id', 'nro_orden', 'subtotal', 'envio', 'monto',
+        'tipo_recepcion', 'local', 'comuna', 'correo_receptor', 'telefono_receptor',
+        'direccion_pedido', 'estatus', 'motivo_rechazo', 'fecha_rechazo',
     ];
 
     /**

@@ -1,12 +1,13 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Tienda\HomeController;
-use App\Http\Controllers\Tienda\ProductosController;
 use App\Http\Controllers\Tienda\CarritoController;
 use App\Http\Controllers\Tienda\ContactenosController;
+use App\Http\Controllers\Tienda\HomeController;
 use App\Http\Controllers\Tienda\InformacionController;
+use App\Http\Controllers\Tienda\LoginController;
+use App\Http\Controllers\Tienda\ProductosController;
 use App\Http\Controllers\Tienda\ReclamoController;
+use Illuminate\Support\Facades\Route;
 
 
 /*
@@ -25,6 +26,10 @@ require __DIR__.'/admin.php';
 
 // Inicio
 Route::get('/', [HomeController::class, 'index'])->name('tienda.index');
+
+// Login en Tienda
+Route::post('/ingresar', [LoginController::class, 'store'])->name('login.store');
+Route::post('/salir', [LoginController::class, 'close'])->name('login.close');
 
 
 //Productos Tienda
