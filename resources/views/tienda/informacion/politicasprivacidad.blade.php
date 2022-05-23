@@ -33,7 +33,7 @@
                         <strong>Farmacia RP FARMA</strong> (en adelante la “Empresa”) ha puesto a
                         disposición de usted (en adelante también el “Usuario” o los “Usuarios”) el servicio de compra
                         online (en adelante el Servicio de compra online), que consiste en un Sistema automatizado para la
-                        compraventa de productos farmacéuticos a través de la página web www.rpfarma.cl. La presente
+                        compraventa de productos farmacéuticos a través de la página web www.farmaciasrpfarma.cl. La presente
                         Política de Privacidad establece los términos en que usa y protege la información que es
                         proporcionada por nuestros usuarios al momento de utilizar nuestro web. Farmacia Rp FARMA está
                         comprometida con la seguridad de los datos de todos sus usuarios. Cuando le pedimos llenar los

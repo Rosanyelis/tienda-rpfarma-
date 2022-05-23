@@ -40,7 +40,7 @@
                             devolver tu dinero de la compra en un plazo máximo de 5 días hábiles, sin costo para usted. La
                             devolución de dinero o anulaciones de transacciones dependen del operador de sus tarjetas o
                             banco.</li>
-                        <li>Comunícate con nosotros a nuestros canales de atención, nuestro mail: contacto@rpfarma.cl,
+                        <li>Comunícate con nosotros a nuestros canales de atención, nuestro mail: contacto@farmaciasrpfarma.cl,
                             nuestro WhatsApp +56 9 4140 9095 o directamente a nuestro teléfono +56 9 4140 9095. Te
                             solicitaremos
                             el número de pedido y que tengas tu boleta a mano.</li>
@@ -72,14 +72,14 @@
 
                     <p>
                         Una vez que esté seguro de cumplir con lo indicado, comunícate con nosotros a nuestros canales de
-                        atención, nuestro mail: contacto@rpfarma.cl , nuestro WhatsApp +56 9 4140 9095 o directamente a
+                        atención, nuestro mail: contacto@farmaciasrpfarma.cl , nuestro WhatsApp +56 9 4140 9095 o directamente a
                         nuestro teléfono +56 9 4140 9095. Te solicitaremos el número de pedido y que tengas tu boleta a
                         mano.
                     </p>
                     <h5>3. En el caso de que tu pedido llegue en malas condiciones, como el sello de seguridad roto o los
                         productos deteriorados por el transporte.</h5>
                     <ul>
-                        <li>Comunícate con nosotros a nuestros canales de atención, nuestro mail: contacto@rpfarma.cl ,
+                        <li>Comunícate con nosotros a nuestros canales de atención, nuestro mail: contacto@farmaciasrpfarma.cl ,
                             nuestro
                             WhatsApp +56 9 4140 9095 o directamente a nuestro teléfono +56 9 4140 9095. Te solicitaremos el
                             número de pedido y que tengas tu boleta a mano.</li>
@@ -102,7 +102,7 @@
                             extraños
                             en el interior, comprimidos fracturados, soluciones con material precipitado u otras que hagan
                             sospechar de una falla de calidad.</li>
-                        <li>Comunícate con nosotros a nuestros canales de atención, nuestro mail: contacto@rpfarma.cl ,
+                        <li>Comunícate con nosotros a nuestros canales de atención, nuestro mail: contacto@farmaciasrpfarma.cl ,
                             nuestro WhatsApp +56 9 4140 9095 o directamente a nuestro teléfono +56 9 4140 9095. Te
                             solicitaremos
                             el número de pedido y que tengas tu boleta a mano.</li>

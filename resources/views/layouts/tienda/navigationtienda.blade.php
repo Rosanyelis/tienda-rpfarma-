@@ -159,8 +159,8 @@
                         <button type="submit" class="btn btn-primary btn-block">Iniciar Sesión</button>
                     </form>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">¿No Posees Cuenta? Registrate</a>
-                    <a class="dropdown-item" href="#">Olvidaste tu Contraseña?</a>
+                    <a class="dropdown-item" href="{{ url('/registrarme') }}">¿No Posees Cuenta? Registrate</a>
+                    {{-- <a class="dropdown-item" href="#">Olvidaste tu Contraseña?</a> --}}
                 </div>
             @endif
         </div>

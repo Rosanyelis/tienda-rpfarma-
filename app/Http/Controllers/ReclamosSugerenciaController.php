@@ -44,7 +44,7 @@ class ReclamosSugerenciaController extends Controller
     public function edit($id)
     {
         $data = Reclamo::where('id', $id)->first();
-        $conversacion = UserReclamo::where('reclamo_id', $id)->get();
+        $conversacion = UserReclamo::where('reclamo_id', $id)->orderBy('created_at', 'desc')->get();
         return view('panel.reclamos.responder', compact('data', 'conversacion'));
     }
 
@@ -77,8 +77,8 @@ class ReclamosSugerenciaController extends Controller
         $email = $reclamo->user->email;
 
         // Envío de correo
-        $mailable = new SeguimientoReclamo($reclamo, $respuesta);
-        Mail::to($email)->send($mailable);
+        // $mailable = new SeguimientoReclamo($reclamo, $respuesta);
+        // Mail::to($email)->send($mailable);
 
         return redirect('/admin/reclamos-y-sugerencias')->with('success', 'Respuesta Enviada Exitosamente');
     }
@@ -91,6 +91,6 @@ class ReclamosSugerenciaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
     }
 }

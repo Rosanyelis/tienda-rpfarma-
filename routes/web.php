@@ -28,6 +28,8 @@ require __DIR__.'/admin.php';
 Route::get('/', [HomeController::class, 'index'])->name('tienda.index');
 
 // Login en Tienda
+Route::get('/registrarme', [LoginController::class, 'create'])->name('login.create');
+Route::post('/guardar-registro', [LoginController::class, 'registrarme'])->name('login.registrarme');
 Route::post('/ingresar', [LoginController::class, 'store'])->name('login.store');
 Route::post('/salir', [LoginController::class, 'close'])->name('login.close');
 

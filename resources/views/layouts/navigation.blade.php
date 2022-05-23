@@ -19,6 +19,7 @@
                     <li class="nk-menu-heading">
                         <h6 class="overline-title text-primary-alt">Módulos</h6>
                     </li><!-- .nk-menu-item -->
+                    @if (Auth::user()->rol->name == 'Developer')
                     <li class="nk-menu-item">
                         <a href="{{ url('admin/dashboard')}}" class="nk-menu-link">
                             <span class="nk-menu-icon"><em class="icon ni ni-home-fill"></em></span>
@@ -39,7 +40,7 @@
                     </li><!-- .nk-menu-item -->
                     <li class="nk-menu-item">
                         <a href="{{ url('admin/reclamos-y-sugerencias') }}" class="nk-menu-link">
-                            <span class="nk-menu-icon"><em class="icon ni ni-cc-alt-fill"></em></span>
+                            <span class="nk-menu-icon"><em class="icon ni ni-user-list-fill"></em></span>
                             <span class="nk-menu-text">Reclamos</span>
                         </a>
                     </li><!-- .nk-menu-item -->
@@ -49,11 +50,6 @@
                             <span class="nk-menu-text">Configuraciones</span>
                         </a>
                         <ul class="nk-menu-sub">
-                            <li class="nk-menu-item">
-                                <a href="{{ url('admin/configuraciones/empresa') }}" class="nk-menu-link" data-original-title="" title="">
-                                    <span class="nk-menu-text">Empresa</span>
-                                </a>
-                            </li>
                             <li class="nk-menu-item">
                                 <a href="{{ url('admin/configuraciones/categorias') }}" class="nk-menu-link" data-original-title="" title="">
                                     <span class="nk-menu-text">Categorías</span>
@@ -91,6 +87,88 @@
                             </li>
                         </ul><!-- .nk-menu-sub -->
                     </li>
+                    @endif
+                    @if (Auth::user()->rol->name == 'Químico Evaluador')
+                    <li class="nk-menu-item">
+                        <a href="{{ url('admin/productos') }}" class="nk-menu-link">
+                            <span class="nk-menu-icon"><em class="icon ni ni-grid-fill"></em></span>
+                            <span class="nk-menu-text">Productos</span>
+                        </a>
+                    </li><!-- .nk-menu-item -->
+                    <li class="nk-menu-item">
+                        <a href="{{ url('admin/ordenes') }}" class="nk-menu-link">
+                            <span class="nk-menu-icon"><em class="icon ni ni-cc-alt-fill"></em></span>
+                            <span class="nk-menu-text">Ordenes</span>
+                        </a>
+                    </li><!-- .nk-menu-item -->
+                    @endif
+                    @if (Auth::user()->rol->name == 'Soporte')
+                    <li class="nk-menu-item">
+                        <a href="{{ url('admin/reclamos-y-sugerencias') }}" class="nk-menu-link">
+                            <span class="nk-menu-icon"><em class="icon ni ni-user-list-fill"></em></span>
+                            <span class="nk-menu-text">Reclamos</span>
+                        </a>
+                    </li><!-- .nk-menu-item -->
+                    @endif
+                    @if (Auth::user()->rol->name == 'Administrador')
+                    <li class="nk-menu-item">
+                        <a href="{{ url('admin/dashboard')}}" class="nk-menu-link">
+                            <span class="nk-menu-icon"><em class="icon ni ni-home-fill"></em></span>
+                            <span class="nk-menu-text">Dashboard</span>
+                        </a>
+                    </li><!-- .nk-menu-item -->
+                    <li class="nk-menu-item">
+                        <a href="{{ url('admin/productos') }}" class="nk-menu-link">
+                            <span class="nk-menu-icon"><em class="icon ni ni-grid-fill"></em></span>
+                            <span class="nk-menu-text">Productos</span>
+                        </a>
+                    </li><!-- .nk-menu-item -->
+                    <li class="nk-menu-item">
+                        <a href="{{ url('admin/ordenes') }}" class="nk-menu-link">
+                            <span class="nk-menu-icon"><em class="icon ni ni-cc-alt-fill"></em></span>
+                            <span class="nk-menu-text">Ordenes</span>
+                        </a>
+                    </li><!-- .nk-menu-item -->
+                    <li class="nk-menu-item">
+                        <a href="{{ url('admin/reclamos-y-sugerencias') }}" class="nk-menu-link">
+                            <span class="nk-menu-icon"><em class="icon ni ni-user-list-fill"></em></span>
+                            <span class="nk-menu-text">Reclamos</span>
+                        </a>
+                    </li><!-- .nk-menu-item -->
+                    <li class="nk-menu-item has-sub">
+                        <a href="#" class="nk-menu-link nk-menu-toggle" data-original-title="" title="">
+                            <span class="nk-menu-icon"><em class="icon ni ni-setting-fill"></em></span>
+                            <span class="nk-menu-text">Configuraciones</span>
+                        </a>
+                        <ul class="nk-menu-sub">
+                            <li class="nk-menu-item">
+                                <a href="{{ url('admin/configuraciones/categorias') }}" class="nk-menu-link" data-original-title="" title="">
+                                    <span class="nk-menu-text">Categorías</span>
+                                </a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a href="{{ url('admin/configuraciones/laboratorio') }}" class="nk-menu-link" data-original-title="" title="">
+                                    <span class="nk-menu-text">Laboratorio</span>
+                                </a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a href="{{ url('admin/configuraciones/formas-farmaceuticas') }}" class="nk-menu-link" data-original-title="" title="">
+                                    <span class="nk-menu-text">Formas Farmaceuticas</span>
+                                </a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a href="{{ url('admin/configuraciones/condiciones-venta') }}" class="nk-menu-link" data-original-title="" title="">
+                                    <span class="nk-menu-text">Condiciones de venta</span>
+                                </a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a href="{{ url('admin/configuraciones/tipos-administracion') }}" class="nk-menu-link" data-original-title="" title="">
+                                    <span class="nk-menu-text">Tipos de administracion</span>
+                                </a>
+                            </li>
+                        </ul><!-- .nk-menu-sub -->
+                    </li>
+                    @endif
                 </ul><!-- .nk-menu -->
             </div><!-- .nk-sidebar-menu -->
         </div><!-- .nk-sidebar-content -->

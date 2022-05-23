@@ -39,7 +39,7 @@
                                     <a href="{{ url('/procedimiento-de-devoluciones') }}" class="footer-links__link">Procedimiento de Devoluciones</a>
                                 </li>
                                 <li class="footer-links__item">
-                                    <a href="{{ url('/peritorio-minimo-y-carta-de-desabastecimiento') }}" class="footer-links__link">Peritorio Mínimo y Carta de Desabastecimiento</a>
+                                    <a href="{{ url('/peritorio-minimo-y-carta-de-desabastecimiento') }}" class="footer-links__link">Carta de Desabastecimiento</a>
                                 </li>
                                 <li class="footer-links__item">
                                     <a href="{{ url('/terminos-y-condiciones') }}" class="footer-links__link">Términos y Condiciones</a>

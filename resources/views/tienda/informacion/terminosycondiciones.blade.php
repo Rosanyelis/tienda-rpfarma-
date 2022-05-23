@@ -34,9 +34,9 @@
                         <strong>Farmacia RP FARMA</strong> ha puesto a su disposición el servicio venta de
                         medicamentos Online que consiste en un sistema automatizado para la
                         compraventa de productos farmacéuticos a través de nuestro
-                        sitio web: www.rpfarma.cl
+                        sitio web: www.farmaciasrpfarma.cl
                         La compraventa de productos farmacéuticos facilitada por el
-                        Servicio se realiza a través de nuestro sitio web: “www.rpfarma.cl”
+                        Servicio se realiza a través de nuestro sitio web: “www.farmaciasrpfarma.cl”
                         Para acceder al Servicio, el Usuario deberá previamente registrarse
                         en el sitio web correspondiente, a través de la creación de una cuenta
                         de Usuario y contraseña para elegir y comprar los productos ofrecidos y

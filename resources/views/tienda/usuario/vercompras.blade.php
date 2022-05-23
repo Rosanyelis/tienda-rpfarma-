@@ -1,5 +1,3 @@
-
-
 @extends('layouts.layoutienda')
 @section('content')
     <div class="page-header">

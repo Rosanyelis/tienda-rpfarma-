@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -28,11 +29,16 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request)
     {
-        $request->authenticate();
+        $rol = \App\Models\Rol::where('name', 'Cliente')->first();
+        $user = User::where('email', $request->email)->where('rol_id', $rol->id)->count();
+        if ($user>0) {
+            return redirect('/admin/iniciar-sesion')->with('error', 'El correo ingresado no tiene acceso permitido');  # code...
+        }else{
+            $request->authenticate();
+            $request->session()->regenerate();
+            return redirect()->intended(RouteServiceProvider::HOME);
+        }
 
-        $request->session()->regenerate();
-
-        return redirect()->intended(RouteServiceProvider::HOME);
     }
 
     /**

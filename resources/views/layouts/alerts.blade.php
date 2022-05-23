@@ -1,4 +1,4 @@
-            if (localStorage.getItem("success") == 1){
+            {{-- if (localStorage.getItem("success") == 1){
                 Swal.fire({
                     position: 'top-center',
                     icon: 'success',
@@ -7,7 +7,7 @@
                     timer: 2500
                 });
                 localStorage.removeItem("success");
-            }
+            } --}}
 
             @if (session('success'))
             Swal.fire({
@@ -19,11 +19,11 @@
             });
             @endif
 
-            @if (session('danger'))
+            @if (session('error'))
             Swal.fire({
                 position: 'top-center',
                 icon: 'error',
-                title: '{{ session('danger') }}',
+                title: '{{ session('error') }}',
                 showConfirmButton: false,
                 timer: 2500
             });
