@@ -8,6 +8,15 @@ use Illuminate\Http\Request;
 class TipoAdministracionController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -89,7 +98,7 @@ class TipoAdministracionController extends Controller
      */
     public function update(Request $request, $id)
     {
-       
+
         $count = TipoAdministracion::where('id', $id)->count();
         if ($count>0) {
             $request->validate([

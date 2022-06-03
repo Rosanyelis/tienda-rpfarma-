@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Tienda\CarritoController;
+use App\Http\Controllers\Tienda\ComprasController;
 use App\Http\Controllers\Tienda\ContactenosController;
 use App\Http\Controllers\Tienda\HomeController;
 use App\Http\Controllers\Tienda\InformacionController;
@@ -23,6 +24,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 require __DIR__.'/admin.php';
+
 
 // Inicio
 Route::get('/', [HomeController::class, 'index'])->name('tienda.index');
@@ -73,8 +75,14 @@ Route::post('/libro-electronico-de-reclamos-y-sugerencias/guardar-comentario', [
 
 
 
-//Usuarios
-Route::get('/ver-compras', [HomeController::class, 'vercompras']);
+Route::group(['middleware' => ['auth']], function () {
+    //Panel Cliente Usuarios
+    Route::get('/mi-perfil', [ComprasController::class, 'index']);
+    Route::get('/mi-perfil/{id}/ver-orden', [ComprasController::class, 'showorden']);
+    Route::get('/mi-perfil/{id}/ver-reclamo', [ComprasController::class, 'showreclamo']);
+    Route::post('/mi-perfil/{id}/responder-reclamo', [ComprasController::class, 'responsereclamo']);
+});
+
 
 
 

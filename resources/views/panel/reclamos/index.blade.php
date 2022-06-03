@@ -67,7 +67,7 @@
                                         <div class="dropdown-menu dropdown-menu-right">
                                             <ul class="link-list-opt no-bdr">
                                                 <li><a href="{{ url('admin/reclamos-y-sugerencias/'.$item->id.'/responder-reclamo-y-sugerencia') }}"
-                                                ><em class="icon ni ni-edit"></em><span>Responder Comentario</span></a></li>
+                                                ><em class="icon ni ni-edit"></em><span>Ver Conversación</span></a></li>
                                             </ul>
                                         </div>
                                     </div>

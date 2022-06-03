@@ -31,6 +31,10 @@ class NotificacionRechazaOrden extends Mailable
      */
     public function build()
     {
-        return $this->view('panel.mails.rechazorden');
+        return $this->view('panel.mails.rechazorden')
+                    ->subject("RpFarma - Notificación de Rechazo de Compra")
+                    ->with([
+                        "orden" => $this->orden,
+                    ]);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Mail\NotificacionReclamoCerrado;
 use App\Mail\SeguimientoReclamo;
 use App\Models\Reclamo;
 use App\Models\UserReclamo;
@@ -12,6 +13,15 @@ use Illuminate\Support\Facades\Mail;
 
 class ReclamosSugerenciaController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -77,8 +87,8 @@ class ReclamosSugerenciaController extends Controller
         $email = $reclamo->user->email;
 
         // Envío de correo
-        // $mailable = new SeguimientoReclamo($reclamo, $respuesta);
-        // Mail::to($email)->send($mailable);
+        $mailable = new SeguimientoReclamo($reclamo, $respuesta);
+        Mail::to($email)->send($mailable);
 
         return redirect('/admin/reclamos-y-sugerencias')->with('success', 'Respuesta Enviada Exitosamente');
     }
@@ -91,6 +101,26 @@ class ReclamosSugerenciaController extends Controller
      */
     public function destroy($id)
     {
-        
+        $count = Reclamo::where('id', $id)->count();
+        if ($count > 0) {
+            $registro = Reclamo::where('id', $id)->first();
+            $registro->estatus = 'Cerrado';
+            $registro->save();
+
+            // data de reclamo y respuesta
+            $reclamo = Reclamo::where('id', $id)->first();
+            // Receptor de respuesta
+            if ($reclamo->user) {
+                $email = $reclamo->user->email;
+                // Envío de correo
+                $mailable = new NotificacionReclamoCerrado($reclamo);
+                Mail::to($email)->send($mailable);
+            }
+
+            return redirect('/admin/reclamos-y-sugerencias')->with('success', 'Respuesta Enviada Exitosamente');
+        }else{
+            return redirect('/admin/reclamos-y-sugerencias')->with('error', 'No se ha podido cerra el reclamo');
+        }
+
     }
 }

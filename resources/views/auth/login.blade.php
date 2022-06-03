@@ -9,7 +9,7 @@
     <!-- Fav Icon  -->
     <link rel="shortcut icon" href="{{ asset('images/favicon.png') }}">
     <!-- Page Title  -->
-    <title>Login | Panel Administrativo RPFARMA</title>
+    <title>Login | Panel Administrativo RpFarma</title>
     <!-- StyleSheets  -->
     <link rel="stylesheet" href="{{ asset('assets/css/dashlite.css?ver=2.9.0') }}">
     <link id="skin-default" rel="stylesheet" href="{{ asset('assets/css/theme.css?ver=2.9.0') }}">
@@ -32,7 +32,7 @@
                         </div>
                         <div class="card">
                             <div class="card-inner card-inner-lg">
-                                <form method="POST" action="{{ route('login') }}">
+                                <form method="POST" action="{{ url('login') }}">
                                     @csrf
                                     <div class="form-group">
                                         <div class="form-label-group">

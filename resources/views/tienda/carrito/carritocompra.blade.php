@@ -67,12 +67,12 @@
                             <td class="cart-table__column cart-table__column--product" data-title="{{ $item->attributes->tipo }}">
                                 @switch($item->attributes->tipo)
                                     @case($item->attributes->tipo == 'Receta')
-                                    <input class="form-control" type="file" name="recetas[]">
+                                    <input class="form-control campor" type="file" name="recetas[]">
                                     @break
                                     @case($item->attributes->tipo == 'Receta Retenida')
                                     <input class="form-control" type="file" name="recetas[]">
                                     @break
-                                    @case($item->attributes->tipo == 'Receta Retenida y Control de Stock')
+                                    @case($item->condicion_venta == 'RECETA RETENIDA, RETIRO EN LOCAL')
                                     <input class="form-control" type="file" name="recetas[]">
                                     @break
                                     @case($item->attributes->tipo == 'Receta Cheque')
@@ -165,9 +165,7 @@
 
             $(".cart-table tbody tr").each(function(){
                 let id = $(this).find('td').eq(0).data('id');
-                // let countimg = $(this).find('td').eq(2).find('input[name="receta"]')[0].files[0];
-                // let countimg = $(this).find('td').eq(2).find('input[name="receta"]')[0].files.length;
-                let img = $(this).find('td').eq(2).find('input[name="receta"]').val();
+                let img = $(this).find('td').eq(2).find('.campor').val();
                 let quantity = $(this).find('td').eq(4).find('input[name="quantity"]').val();
                 console.log(img);
                 let receta;

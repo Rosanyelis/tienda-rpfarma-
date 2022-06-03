@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -96,8 +97,6 @@ class HomeController extends Controller
 
     public function vercompras()
     {
-        $ordenes = OrdenCliente::where('cliente_id', Auth::user()->cliente->id)->get();
-        $carritoItems = \Cart::getContent();
-        return view('tienda.usuario.vercompras', compact('carritoItems', 'ordenes'));
+
     }
 }

@@ -1,13 +1,3 @@
-            {{-- if (localStorage.getItem("success") == 1){
-                Swal.fire({
-                    position: 'top-center',
-                    icon: 'success',
-                    title: 'Registro Eliminado Exitosamente!',
-                    showConfirmButton: false,
-                    timer: 2500
-                });
-                localStorage.removeItem("success");
-            } --}}
 
             @if (session('success'))
             Swal.fire({

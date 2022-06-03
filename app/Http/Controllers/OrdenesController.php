@@ -8,11 +8,22 @@ use App\Models\Cliente;
 use App\Models\DetallesOrden;
 use App\Models\OrdenCliente;
 use App\Models\OrdenReceta;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
 class OrdenesController extends Controller
 {
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -24,15 +35,6 @@ class OrdenesController extends Controller
         return view('panel.ordenes.index', compact('data'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -67,36 +69,55 @@ class OrdenesController extends Controller
      */
     public function aprueba($id)
     {
-        $orden = OrdenCliente::where('id', $id)->first();
-        $cliente = Cliente::where('id', $orden->cliente_id)->first();
-        $email = $cliente->user->email;
 
         $registro = OrdenCliente::where('id', $id)->first();
         $registro->estatus = 'Aprobado';
         $registro->save();
 
+        $orden = OrdenCliente::where('id', $id)->first();
+        $cliente = Cliente::where('id', $orden->cliente_id)->first();
+        $email = $cliente->user->email;
 
         $mailable = new NotificacionApruebaOrden($orden);
         Mail::to($email)->send($mailable);
 
         return redirect('admin/ordenes')->with('success', 'Orden Aprobada Exitosamente');
     }
-
+    /**
+     * fORMCULARIO DE RECHAZO
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create($id)
+    {
+        $data = OrdenCliente::where('id', $id)->with('cliente')->first();
+        return view('panel.ordenes.motivor', compact('data'));
+    }
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function rechazo($id)
+    public function rechazo(Request $request, $id)
     {
+        $request->validate([
+            'motivo_rechazo' => ['required'],
+        ],
+        [
+            'motivo_rechazo.required' => 'El campo Motivo de Rechazo es obligatorio',
+        ]);
+
+        $dater = Carbon::now();
+        $registro = OrdenCliente::where('id', $id)->first();
+        $registro->motivo_rechazo = $request->motivo_rechazo;
+        $registro->estatus = 'Rechazada';
+        $registro->fecha_rechazo = $dater->format('Y-m-d');;
+        $registro->save();
+
         $orden = OrdenCliente::where('id', $id)->first();
         $cliente = Cliente::where('id', $orden->cliente_id)->first();
         $email = $cliente->user->email;
-
-        $registro = OrdenCliente::where('id', $id)->first();
-        $registro->estatus = 'Rechazada';
-        $registro->save();
 
         $mailable = new NotificacionRechazaOrden($orden);
         Mail::to($email)->send($mailable);

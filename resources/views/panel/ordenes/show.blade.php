@@ -62,8 +62,20 @@
                                 <div class="form-group mb-0">
                                     <label class="form-label">Teléfono:</label> {{ $data->cliente->telefono }}
                                 </div>
+                                <div class="form-group mb-0">
+                                    <label class="form-label">Estatus:</label> {{ $data->estatus }}
+                                </div>
                             </div>
+                            @if ($data->motivo_rechazo)
+                            <div class="col-md-12">
+                                <div class="form-group mb-0">
+                                    <label class="form-label">Motivo de Rechazo:</label> {{ $data->motivo_rechazo }}
+                                </div>
+                            </div>
+                            @endif
                         </div>
+
+
                         <div class="invoice-bills mb-4">
                             <h5>Productos</h5>
                             <div class="table-responsive">
@@ -114,9 +126,34 @@
                                 @foreach ($recetas as $item)
                                 <div class="col-sm-6 col-lg-4 col-xxl-3">
                                     <div class="gallery card card-bordered">
-                                        <a class="gallery-image popup-image" href="{{asset($item->url_receta)}}">
-                                            <img class="w-100 rounded-top" src="{{asset($item->url_receta)}}" alt="">
-                                        </a>
+                                        @php
+                                            $archivo = substr($item->url_receta, -4);
+                                        @endphp
+                                        @switch($archivo)
+                                            @case($archivo == '.jpg')
+                                            <a class="gallery-image popup-image" href="{{asset($item->url_receta)}}">
+                                                <img class="w-100 rounded-top" src="{{asset($item->url_receta)}}" alt="">
+                                            </a>
+                                                @break
+                                            @case($archivo == '.png')
+                                            <a class="gallery-image popup-image" href="{{asset($item->url_receta)}}">
+                                                <img class="w-100 rounded-top" src="{{asset($item->url_receta)}}" alt="">
+                                            </a>
+                                                @break
+                                            @case($archivo == 'jpeg')
+                                            <a class="gallery-image popup-image" href="{{asset($item->url_receta)}}">
+                                                <img class="w-100 rounded-top" src="{{asset($item->url_receta)}}" alt="">
+                                            </a>
+                                                @break
+                                            @case($archivo == '.pdf')
+                                            <embed src="{{asset($item->url_receta)}}" type="application/pdf" width="100%" height="400px" />
+                                                @break
+                                            @default
+                                            <a class="gallery-image popup-image" href="{{asset($item->url_receta)}}">
+                                                <img class="w-100 rounded-top" src="{{asset($item->url_receta)}}" alt="">
+                                            </a>
+                                        @endswitch
+
                                     </div>
                                 </div>
                                 @endforeach
@@ -126,7 +163,7 @@
                             <div class="col-md-12 ">
                                 <div class="form-group float-right">
                                     @if ($data->estatus == 'Por Confirmar')
-                                    <a href="" class="btn btn-lg btn-danger mr-3">Rechazar</a>
+                                    <a href="{{ url('admin/ordenes/'.$data->id.'/motivo-de-rechazo') }}" class="btn btn-lg btn-danger mr-3">Rechazar</a>
                                     <a href="{{ url('admin/ordenes/'.$data->id.'/aprobar-orden') }}" class="btn btn-lg btn-primary">Aprobar</a>
                                     @endif
                                 </div>

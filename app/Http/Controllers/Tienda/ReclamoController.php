@@ -18,7 +18,7 @@ class ReclamoController extends Controller
     public function index()
     {
         $carritoItems = \Cart::getContent();
-        $reclamos = Reclamo::orderBy('created_at', 'asc')->paginate(10);
+        $reclamos = Reclamo::orderBy('created_at', 'desc')->paginate(10);
         return view('tienda.reclamos.index', compact('carritoItems', 'reclamos'));
     }
 
@@ -51,14 +51,10 @@ class ReclamoController extends Controller
             'comentario.required' => 'El campo Comentario es obligatorio',
         ]);
 
-        if (!Auth::user()) {
-            return redirect('/libro-electronico-de-reclamos-y-sugerencias')->with('error', 'No puede publicar comentario si no esta logueado!');
-        }
-
 
         $aleatorio = rand(1,10000);
         switch ($request->tipo) {
-            case $request->tipo == 'Opinion':
+            case $request->tipo == 'Opinión':
                 $codigo = 'O-'.$aleatorio;
                 break;
             case $request->tipo == 'Sugerencia':
@@ -72,9 +68,10 @@ class ReclamoController extends Controller
                 break;
         }
 
-
         $registro = new Reclamo();
-        $registro->user_id = Auth::user()->id;
+        if (Auth::user()) {
+            $registro->user_id = Auth::user()->id;
+        }
         $registro->codigo = $codigo;
         $registro->name = $request->name;
         $registro->comentario = $request->comentario;
@@ -82,12 +79,13 @@ class ReclamoController extends Controller
         $registro->estatus = 'Abierto';
         $registro->save();
 
-        $record = new UserReclamo();
-        $record->cliente_id = Auth::user()->id;
-        $record->reclamo_id = $registro->id;
-        $record->mensaje = $request->comentario;
-        $record->save();
-
+        if (Auth::user()) {
+            $record = new UserReclamo();
+            $record->cliente_id = Auth::user()->id;
+            $record->reclamo_id = $registro->id;
+            $record->mensaje = $request->comentario;
+            $record->save();
+        }
         return redirect('/libro-electronico-de-reclamos-y-sugerencias')->with('success', 'Su comentario fué publicado exitosamente!');
     }
 

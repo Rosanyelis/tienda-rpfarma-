@@ -112,7 +112,7 @@
                                             <div class="dropdown-inner">
                                                 <ul class="link-list">
                                                     <li>
-                                                        <form method="POST" action="{{ route('logout') }}">
+                                                        <form method="POST" action="{{ url('/cerrar-sesion-admin') }}">
                                                             @csrf
                                                             <a href="#" onclick="event.preventDefault();
                                                             this.closest('form').submit();">

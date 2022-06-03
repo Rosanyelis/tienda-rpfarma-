@@ -88,6 +88,7 @@ class LoginController extends Controller
      */
     public function store(Request $request)
     {
+
         $credentials = $request->validate([
             'email' => ['required','email'],
             'password' => ['required'],
@@ -109,7 +110,7 @@ class LoginController extends Controller
                     'email' => trans('auth.failed'),
                 ]);
             }
-            $request->session()->regenerate();
+
             return redirect('/')->with('success', 'Sesión Iniciada');
         }else{
             return redirect('/')->with('error', 'El correo ingresado no se encuentra registrado');
@@ -125,11 +126,8 @@ class LoginController extends Controller
      */
     public function close(Request $request)
     {
-        Auth::guard('web')->logout();
-
-        $request->session()->invalidate();
-
-        $request->session()->regenerateToken();
+        Auth::logout();
+        // $request->session()->forget('sesionTienda');
 
         return redirect('/')->with('success', 'Sesión Cerrada Exitosamente!');;
     }

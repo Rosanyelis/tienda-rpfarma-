@@ -78,14 +78,6 @@
                                                         <span>Ver Orden</span>
                                                     </a>
                                                 </li>
-                                                @if ($item->estatus == 'Por Confirmar')
-                                                <li>
-                                                    <button class="btn delete-record" data-id="{{ $item->id }}">
-                                                        <em class="icon ni ni-trash"></em>
-                                                        <span>Rechazar Orden</span>
-                                                    </button>
-                                                </li>
-                                                @endif
                                             </ul>
                                         </div>
                                     </div>
@@ -107,36 +99,7 @@
 
             @include('layouts.alerts')
 
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
 
-            $('.datatable-init tbody').on('click', '.delete-record', function(){
-                let dataid = $(this).data('id');
-                let baseUrl = '';
-                Swal.fire({
-                    title: '¿Está Seguro de Desactivar el Registro?',
-                    text: "Si tiene datos dependientes, no podrá desactivarlo!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonText: 'Si, estoy seguro!'
-                }).then((result) => {
-                    if (result.value) {
-                        $.ajax({
-                            type: 'POST',
-                            url: baseUrl,
-                            dataType: 'json',
-                            success: function(response) {
-                               console.log(response);
-                                localStorage.setItem("success", 1);
-                                location.reload();
-                            }
-                        });
-                    }
-                });
-            });
         })(NioApp, jQuery);
     </script>
 @endsection

@@ -127,14 +127,17 @@
                             d="M12 22.31A10.31 10.31 0 1 1 22.31 12 10.32 10.32 0 0 1 12 22.31Zm0-19.12A8.81 8.81 0 1 0 20.81 12 8.82 8.82 0 0 0 12 3.19Z"
                             fill="#000" />
                     </svg>
-                    @if (isset(Auth::user()->name))
-                        &nbsp;&nbsp;{{ Auth::user()->name }}
+                    @if (Auth::check())
+                        @if (Auth::user()->rol->name == 'Cliente' && isset(Auth::user()->name))
+                            &nbsp;&nbsp;{{ Auth::user()->name }}
+                        @endif
                     @endif
+
                 </span>
             </a>
             @if (Auth::user())
                 <div class="dropdown-menu dropdown-menu-right">
-                    <a href="{{ url('ver-compras') }}" class="dropdown-item">Mis Compras</a>
+                    <a href="{{ url('/mi-perfil') }}" class="dropdown-item">Mi Perfil</a>
                     <div class="dropdown-divider"></div>
                     <form method="POST" action="{{ url('/salir') }}">
                         @csrf

@@ -39,7 +39,9 @@
                                                         $nombre = strtok($item->name," ");
                                                     @endphp
                                                     <div class="comment__author">{{ $nombre }}</div>
-                                                    <div class="comment__reply"><span class="badge badge-info">{{ $item->tipo }}</span></div>
+                                                    <div class="comment__reply">
+                                                        <span class="badge badge-info">{{ $item->tipo }}</span>
+                                                        <span class="badge badge-success">{{ $item->codigo }}</span></div>
                                                 </div>
                                                 <div class="comment__text">{{ $item->comentario }}</div>
                                                 <div class="comment__date">
@@ -62,7 +64,7 @@
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="comment-first-name">Nombre</label>
-                                    <input type="text" name="name" value="{{ old('name') }}" class="form-control"
+                                    <input type="text" name="name" value="{{ old('name') }}" class="form-control @error('name') is-invalid @enderror"
                                         id="comment-first-name" placeholder="Ejm: Jon Doe">
                                     @if ($errors->has('name'))
                                         <div class="invalid-feedback">
@@ -72,7 +74,7 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="comment-last-name">Tipo Comentario</label>
-                                    <select class="form-control" name="tipo">
+                                    <select class="form-control  @error('tipo') is-invalid @enderror" name="tipo">
                                         <option>Seleccione...</option>
                                         <option value="Reclamo">Reclamo</option>
                                         <option value="Sugerencia">Sugerencia</option>
@@ -87,7 +89,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="comentario">Comentario</label>
-                                <textarea class="form-control" id="comentario" name="comentario" rows="6">{{ old('comentario') }}</textarea>
+                                <textarea class="form-control @error('comentario') is-invalid @enderror" id="comentario" name="comentario" rows="6">{{ old('comentario') }}</textarea>
                                 @if ($errors->has('comentario'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('comentario') }}
@@ -99,41 +101,6 @@
                             </div>
                         </form>
                     </section>
-                    {{-- <form method="POST"
-                        action="{{ url('/libro-electronico-de-reclamos-y-sugerencias/guardar-comentario') }}"
-                        class="reviews-view__form">
-                        @csrf
-                        <h3 class="reviews-view__header">Escribe tu Opinión</h3>
-                        <div class="row">
-                            <div class="col-12 col-lg-9 col-xl-8">
-                                <div class="form-group">
-                                    <label for="review-text">Nombre</label>
-                                    <input class="form-control  @error('name') is-invalid @enderror" name="name"
-                                        value="{{ old('name') }}" placeholder="Nombre">
-                                    @if ($errors->has('name'))
-                                        <div class="invalid-feedback">
-                                            {{ $errors->first('name') }}
-                                        </div>
-                                    @endif
-                                </div>
-                                <div class="form-group">
-                                    <label for="review-text">Comentario</label>
-                                    <textarea class="form-control @error('comentario') is-invalid @enderror" name="comentario" id="review-text"
-                                        rows="6">{{ old('comentario') }}</textarea>
-                                    @if ($errors->has('comentario'))
-                                        <div class="invalid-feedback">
-                                            {{ $errors->first('comentario') }}
-                                        </div>
-                                    @endif
-                                </div>
-                                <div class="form-group mb-0">
-                                    <button type="submit" class="btn btn-primary btn-lg">
-                                        Publicar
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </form> --}}
                 </div>
             </div>
         </div>

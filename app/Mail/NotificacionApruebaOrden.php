@@ -33,7 +33,7 @@ class NotificacionApruebaOrden extends Mailable
     {
         return $this
             ->view('panel.mails.aprueborden')
-            ->subject("RpFarma - Notificación de Compra")
+            ->subject("RpFarma - Notificación de Aprobación de Compra")
             ->with([
                 "orden" => $this->orden,
             ]);

@@ -129,7 +129,7 @@
                                                         {{ $item->ficha->condicionventa->name }}
                                                     </div>
                                                     @break
-                                                    @case($item->ficha->condicionventa->name == 'Receta Retenida y Control de Stock')
+                                                    @case($item->condicion_venta == 'RECETA RETENIDA, RETIRO EN LOCAL')
                                                     <div class="product-card__badge product-card__badge--sale">
                                                         {{ $item->ficha->condicionventa->name }}
                                                     </div>

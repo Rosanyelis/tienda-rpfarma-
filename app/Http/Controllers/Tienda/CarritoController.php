@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Tienda;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Mail\OrdenGenerada;
 use App\Models\Carrito;
 use App\Models\Categoria;
 use App\Models\Cliente;
@@ -17,11 +18,13 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 class CarritoController extends Controller
 {
+
 
     public function cartList()
     {
@@ -220,6 +223,14 @@ class CarritoController extends Controller
 
             }
 
+            $cliente = Cliente::where('id', $idCliente)->first();
+            $orden = OrdenCliente::where('id', $idOrden)->first();
+            $detalles = DetallesOrden::where('orden_id', $idOrden)->first();
+
+            $email = $cliente->user->email;
+            // Envío de correo
+            $mailable = new OrdenGenerada($orden, $detalles);
+            Mail::to($email)->send($mailable);
 
         }else{
             if ($request->users === null) {
@@ -260,6 +271,11 @@ class CarritoController extends Controller
             }else{
                 $comuna = $request->comuna;
             }
+            if ($request->local == 'Seleccione local...') {
+                $local = null;
+            }else{
+                $local = $request->local;
+            }
             $record = new OrdenCliente();
             $record->cliente_id = $cliente->id;
             $record->nro_orden = $nro_orden;
@@ -267,7 +283,7 @@ class CarritoController extends Controller
             $record->envio = $request->envio;
             $record->monto = $request->monto;
             $record->tipo_recepcion = $request->checkout_payment_method;
-            $record->local = $request->local;
+            $record->local = $local;
             $record->comuna = $comuna;
             $record->correo_receptor = $request->correo_receptor;
             $record->telefono_receptor = $request->telefono_receptor;
@@ -299,6 +315,15 @@ class CarritoController extends Controller
                     }
                 }
             }
+
+            $cliente = Cliente::where('id', $cliente->id)->first();
+            $orden = OrdenCliente::where('id', $idOrden)->first();
+            $detalles = DetallesOrden::where('orden_id', $idOrden)->get();
+
+            $email = $cliente->user->email;
+            // Envío de correo
+            $mailable = new OrdenGenerada($orden);
+            Mail::to($email)->send($mailable);
 
         }
 

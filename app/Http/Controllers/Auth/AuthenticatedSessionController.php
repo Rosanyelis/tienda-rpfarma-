@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -32,11 +33,18 @@ class AuthenticatedSessionController extends Controller
         $rol = \App\Models\Rol::where('name', 'Cliente')->first();
         $user = User::where('email', $request->email)->where('rol_id', $rol->id)->count();
         if ($user>0) {
-            return redirect('/admin/iniciar-sesion')->with('error', 'El correo ingresado no tiene acceso permitido');  # code...
+            Auth::logout();
+            return redirect('/admin/iniciar-sesion')->with('error', 'Acceso no permitido');  # code...
         }else{
             $request->authenticate();
             $request->session()->regenerate();
-            return redirect()->intended(RouteServiceProvider::HOME);
+            if (Auth::check() && Auth::user()->rol->name != 'Cliente') {
+                return redirect()->intended(RouteServiceProvider::HOME);
+            }else{
+                Auth::logout();
+                return redirect('/admin/iniciar-sesion')->with('error', 'Acceso no permitido');
+            }
+
         }
 
     }
@@ -49,29 +57,10 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request)
     {
-        Auth::guard('web')->logout();
-
-        $request->session()->invalidate();
-
-        $request->session()->regenerateToken();
+        Auth::logout();
 
         return redirect('/admin/iniciar-sesion');
     }
 
-    /**
-     * Destroy an authenticated session.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function cerrar(Request $request)
-    {
-        Auth::guard('web')->logout();
 
-        $request->session()->invalidate();
-
-        $request->session()->regenerateToken();
-
-        return redirect('/');
-    }
 }

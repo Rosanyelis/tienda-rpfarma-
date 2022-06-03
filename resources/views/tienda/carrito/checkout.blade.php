@@ -235,7 +235,7 @@
                                         <label class="payment-methods__item-header">
                                             <span class="payment-methods__item-radio input-radio">
                                                 <span class="input-radio__body">
-                                                    <input class="input-radio__input" name="checkout_payment_method" type="radio" value="Retiro en local"/>
+                                                    <input id="tipoEnvioLocal" class="input-radio__input" name="checkout_payment_method" type="radio" value="Retiro en local"/>
                                                     <span class="input-radio__circle"></span>
                                                 </span>
                                             </span>
@@ -257,7 +257,7 @@
                                         <label class="payment-methods__item-header">
                                             <span class="payment-methods__item-radio input-radio">
                                                 <span class="input-radio__body">
-                                                    <input class="input-radio__input" name="checkout_payment_method" type="radio" value="Entrega a domicilio" />
+                                                    <input id="tipoEnvioDespacho" class="input-radio__input" name="checkout_payment_method" type="radio" value="Entrega a domicilio" />
                                                     <span class="input-radio__circle"></span>
                                                 </span>
                                             </span>
@@ -374,7 +374,6 @@
                         $('#registerClient').hide();
                     }
                 });
-
                 var sum = 0;
                 $(".suma .cant").each(function() {
                     sum += parseFloat($(this).text());
@@ -394,8 +393,46 @@
                 $('.subtotal').text('$' + sum);
                 $('.subtotal').val(sum);
                 $('.envio').val(envio);
-                var total = sum += envio; $('.total').text('$' + total);
+                var total = sum += envio;
+                $('.total').text('$' + total);
                 $('.monto').val(total);
+
+                $("#tipoEnvioLocal").on("change", function() {
+                    if($("#tipoEnvioLocal").is(':checked')) {
+                        $('.envio').text('$' + 0);
+                        var envio = 0;
+                        $('.envio').val(envio);
+                        var totalLocal = $('.subtotal').val();
+                        $('.total').text('$' + totalLocal);
+                        $('.monto').val(totalLocal);
+                    }
+                });
+                $("#tipoEnvioDespacho").on("change", function() {
+                    if($("#tipoEnvioDespacho").is(':checked')) {
+                        var sum = 0;
+                        $(".suma .cant").each(function() {
+                            sum += parseFloat($(this).text());
+                        });
+                        if (sum > 30000) {
+                            $('.envio').text('$' + 0);
+                                var envio = 0;
+                        }else if (sum == 0) {
+                            $('.envio').text('$' + 0);
+                                var envio = 0;
+                        } else {
+                            $('.envio').text('$' + 4000);
+                                var envio = 4000;
+                        }
+
+                        $('.subtotal').text('$' + sum);
+                        $('.subtotal').val(sum);
+                        $('.envio').val(envio);
+                        var total = sum += envio;
+                        $('.total').text('$' + total);
+                        $('.monto').val(total);
+                    }
+                });
+
             })(jQuery);
 
             function checkRut(rut) {

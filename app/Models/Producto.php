@@ -43,6 +43,14 @@ class Producto extends Model
         return $this->hasMany(ProductoSubcategoria::class, 'producto_id', 'id');
     }
 
+    /**
+     * Obtiene los subcategorias del producto.
+     */
+    public function detallesorden()
+    {
+        return $this->hasMany(DetallesOrden::class, 'producto_id', 'id');
+    }
+
     // Query Scopes
     // public function ScopeName($query, $name)
     // {
