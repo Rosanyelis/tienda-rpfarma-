@@ -28,6 +28,7 @@
                         <th width="50px" class="nk-tb-col"><span>#</span></th>
                         <th class="nk-tb-col tb-col-sm"><span>ORDEN</span></th>
                         <th class="nk-tb-col tb-col-sm"><span>CLIENTE</span></th>
+                        <th class="nk-tb-col tb-col-sm"><span>FECHA</span></th>
                         <th class="nk-tb-col tb-col-sm">CANT.</th>
                         <th class="nk-tb-col tb-col-sm">PRODUCTOS</th>
                         <th class="nk-tb-col tb-col-sm">MONTO</th>
@@ -49,14 +50,16 @@
                                     <span>{{ $item->cliente->rut }}</span>
                                 </div>
                             </div>
-
+                        </td>
+                        <td class="nk-tb-col tb-col-sm">
+                            {{ \Carbon\Carbon::parse($item->created_at)->translatedFormat('d/m/Y') }}
                         </td>
                         <td class="nk-tb-col tb-col-sm">
                             {{ $item->detallesCompra->count() }}
                         </td>
                         <td class="nk-tb-col tb-col-sm">
                             @foreach ($item->detallesCompra as $dato)
-                            <span class="tb-sub">{{ $dato->producto->name }}</span><br>
+                            <span class="tb-sub"  style="white-space: pre-wrap;">* {{ $dato->producto->name }}</span><br>
                             @endforeach
                         </td>
                         <td class="nk-tb-col tb-col-sm">

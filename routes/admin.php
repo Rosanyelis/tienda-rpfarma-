@@ -43,6 +43,7 @@ Route::group(['middleware' => ['auth', 'checkAdmin']], function () {
     Route::post('admin/ordenes/{id}/rechazo-orden', [OrdenesController::class, 'rechazo'])->name('orden.rechazo');
     # Ordenes
     Route::get('admin/ventas', [VentasController::class, 'index'])->name('venta.index');
+    Route::get('admin/ventas/export', [VentasController::class, 'export'])->name('venta.export');
 
     # Reclamos y Sugerencias
     Route::get('admin/reclamos-y-sugerencias', [ReclamosSugerenciaController::class, 'index'])->name('reclamo.index');

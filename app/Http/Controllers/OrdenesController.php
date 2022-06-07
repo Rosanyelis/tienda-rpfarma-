@@ -31,7 +31,7 @@ class OrdenesController extends Controller
      */
     public function index()
     {
-        $data = OrdenCliente::all();
+        $data = OrdenCliente::orderBy('created_at', 'desc')->get();
         return view('panel.ordenes.index', compact('data'));
     }
 

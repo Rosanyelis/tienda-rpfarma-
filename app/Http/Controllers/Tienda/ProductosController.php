@@ -25,7 +25,6 @@ class ProductosController extends Controller
                         ->select('productos.*', 'ficha_tecnicas.principio_activo as principio_activo', 'condicion_ventas.name as condicion_venta')
                         ->orderBy('name', 'asc')
                         ->where('productos.name', 'LIKE', "%$name%")
-                        ->where('principio_activo', 'LIKE', "%$name%")
                         ->where('productos.estatus', 'Activo')
                         ->paginate(9);
 

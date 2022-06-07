@@ -59,48 +59,57 @@ class CarritoController extends Controller
 
     public function updateCart(Request $request)
     {
-        /** Procesamos las imagenes de las recetas para guardarlas en galeria */
-        $arrayImg = [];
-        if ($request->recetas) {
-            foreach ($request->recetas as $key => $value) {
-                $uploadPath = public_path('/storage/RecetaTienda/');
-                $file = $value;
-                $extension = $file->getClientOriginalExtension();
-                $uuid = Str::uuid(4);
-                $fileName = $uuid . '.' . $extension;
-                $file->move($uploadPath, $fileName);
-                $url = '/storage/RecetaTienda/'.$fileName;
-                OrdenReceta::create(['url_receta' => $url]);
 
-                array_push($arrayImg, $url);
+        $carritoItems = \Cart::getContent();
+        $cant = count($carritoItems);
+
+        if($cant>0){
+            /** Procesamos las imagenes de las recetas para guardarlas en galeria */
+            $arrayImg = [];
+            if ($request->recetas) {
+                foreach ($request->recetas as $key => $value) {
+                    $uploadPath = public_path('/storage/RecetaTienda/');
+                    $file = $value;
+                    $extension = $file->getClientOriginalExtension();
+                    $uuid = Str::uuid(4);
+                    $fileName = $uuid . '.' . $extension;
+                    $file->move($uploadPath, $fileName);
+                    $url = '/storage/RecetaTienda/'.$fileName;
+                    OrdenReceta::create(['url_receta' => $url]);
+
+                    array_push($arrayImg, $url);
+                }
             }
+
+            /** Procesa los productos seleccionados por el cliente */
+            $data = json_decode($request->productos, True);
+            foreach ($data as $item) {
+                $id = $item['id'];
+                $cant = $item['quantity'];
+                $producto = Producto::where('id', $id)->first();
+                $precio = number_format($producto->precio_venta, 0, ",", "");
+
+                \Cart::remove($id);
+
+                \Cart::add(array(
+                    'id' => $producto->id,
+                    'price' => $precio,
+                    'quantity' => $cant,
+                    'name' => $producto->name,
+                    'attributes' => array(
+                        'foto' => $producto->foto,
+                        'tipo' => $producto->ficha->condicionventa->name,
+                        'receta' => $arrayImg,
+                    )
+                ));
+            }
+
+
+            return redirect('/productos/ver-checkout')->with('success', 'Producto Actualizados en Carrito Exitosamente!');
+        }else{
+            return redirect('/productos/ver-carrito-de-compras')->with('error', 'Debe haber productos en carrito para seguir con la compra!');
         }
 
-        /** Procesa los productos seleccionados por el cliente */
-        $data = json_decode($request->productos, True);
-        foreach ($data as $item) {
-            $id = $item['id'];
-            $cant = $item['quantity'];
-            $producto = Producto::where('id', $id)->first();
-            $precio = number_format($producto->precio_venta, 0, ",", "");
-
-            \Cart::remove($id);
-
-            \Cart::add(array(
-                'id' => $producto->id,
-                'price' => $precio,
-                'quantity' => $cant,
-                'name' => $producto->name,
-                'attributes' => array(
-                    'foto' => $producto->foto,
-                    'tipo' => $producto->ficha->condicionventa->name,
-                    'receta' => $arrayImg,
-                )
-            ));
-        }
-
-
-        return redirect('/productos/ver-checkout')->with('success', 'Producto Actualizados en Carrito Exitosamente!');
     }
 
     public function checkout(){

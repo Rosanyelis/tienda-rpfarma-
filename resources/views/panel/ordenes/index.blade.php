@@ -28,7 +28,7 @@
                         <th width="50px" class="nk-tb-col"><span>#</span></th>
                         <th class="nk-tb-col tb-col-sm"><span>ORDEN</span></th>
                         <th class="nk-tb-col tb-col-sm"><span>CLIENTE</span></th>
-                        <th class="nk-tb-col tb-col-sm">RUT</th>
+                        <th class="nk-tb-col tb-col-sm">FECHA</th>
                         <th class="nk-tb-col tb-col-sm">PRODUCTOS</th>
                         <th class="nk-tb-col tb-col-sm">MONTO</th>
                         <th width="100px" class="nk-tb-col tb-col-sm">ESTATUS</th>
@@ -43,10 +43,15 @@
                             #{{ $item->nro_orden }}
                         </td>
                         <td class="nk-tb-col tb-col-sm">
-                            {{ $item->cliente->nombre }} {{ $item->cliente->apellido }}
+                            <div class="user-card">
+                                <div class="user-info">
+                                    <span class="tb-lead">{{ $item->cliente->nombre }} {{ $item->cliente->apellido }} </span>
+                                    <span>{{ $item->cliente->rut }}</span>
+                                </div>
+                            </div>
                         </td>
                         <td class="nk-tb-col tb-col-sm">
-                            {{ $item->cliente->rut }}
+                            {{ \Carbon\Carbon::parse($item->created_at)->translatedFormat('d/m/Y') }}
                         </td>
                         <td class="nk-tb-col tb-col-sm">
                             {{ $item->detallesCompra->count() }}
