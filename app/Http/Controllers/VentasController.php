@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ReceptorVentaExport;
 use App\Exports\VentasExport;
 use App\Models\OrdenCliente;
 use Illuminate\Http\Request;
@@ -32,5 +33,10 @@ class VentasController extends Controller
     public function export()
     {
         return Excel::download(new VentasExport, 'ventas-de-la-tienda.xlsx');
+    }
+
+    public function exportarReceptores()
+    {
+        return Excel::download(new ReceptorVentaExport, 'datos-de-clientes-receptores-de-compras.csv');
     }
 }

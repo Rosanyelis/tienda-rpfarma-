@@ -121,8 +121,13 @@ class CarritoController extends Controller
     public function removeCart(Request $request)
     {
         \Cart::remove($request->id);
-
         return redirect($request->url)->with('success', 'Producto Eliminado del Carrito Exitosamente!');
+    }
+
+    public function removeCartAjax($id)
+    {
+        \Cart::remove($id);
+        return redirect('/productos/ver-carrito-de-compras')->with('success', 'Producto Eliminado del Carrito Exitosamente!');
     }
 
     public function clearAllCart(Request $request)
@@ -198,6 +203,7 @@ class CarritoController extends Controller
             $record->tipo_recepcion = $request->checkout_payment_method;
             $record->local = $request->local;
             $record->comuna = $request->comuna;
+            $record->nombre_receptor = $request->nombre_receptor;
             $record->correo_receptor = $request->correo_receptor;
             $record->telefono_receptor = $request->telefono_receptor;
             $record->direccion_pedido = $request->direccion_recepcion;
@@ -246,13 +252,11 @@ class CarritoController extends Controller
                 $credentials = $request->validate([
                     'email' => ['required','email'],
                     'password' => ['required'],
-                    'checkout_payment_method' => ['required'],
                 ],
                 [
                     'email.required' => 'El campo Correo es obligatorio',
                     'email.email' => 'El campo Correo debe tener un formato example@example.com',
                     'password.required' => 'El campo Contraseña es obligatorio',
-                    'checkout_payment_method.required' => 'La selección de Tipo de Recepción es obligatorio',
                 ]);
 
 
@@ -262,29 +266,11 @@ class CarritoController extends Controller
                     ]);
                 }
                 $request->session()->regenerate();
-            }else{
-                $request->validate([
-                    'checkout_payment_method' => ['required'],
-                ],
-                [
-                    'checkout_payment_method.required' => 'La selección de Tipo de Recepción es obligatorio',
-                ]);
             }
-
-
 
             $nro_orden = rand(5, 15);
             $cliente = Cliente::where('id', Auth::user()->cliente->id)->first();
-            if ($request->comuna == 'Seleccione Comuna...') {
-                $comuna = null;
-            }else{
-                $comuna = $request->comuna;
-            }
-            if ($request->local == 'Seleccione local...') {
-                $local = null;
-            }else{
-                $local = $request->local;
-            }
+
             $record = new OrdenCliente();
             $record->cliente_id = $cliente->id;
             $record->nro_orden = $nro_orden;
@@ -292,8 +278,9 @@ class CarritoController extends Controller
             $record->envio = $request->envio;
             $record->monto = $request->monto;
             $record->tipo_recepcion = $request->checkout_payment_method;
-            $record->local = $local;
-            $record->comuna = $comuna;
+            $record->local = $request->local;
+            $record->comuna = $request->comuna;
+            $record->nombre_receptor = $request->nombre_receptor;
             $record->correo_receptor = $request->correo_receptor;
             $record->telefono_receptor = $request->telefono_receptor;
             $record->direccion_pedido = $request->direccion_recepcion;

@@ -47,18 +47,7 @@ class HomeController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        $carritoItems = \Cart::getContent();
-        $producto = Producto::where('id', $id)->first();
-        return view('tienda.producto.fichaproducto', compact('producto', 'carritoItems'));
-    }
+
 
     /**
      * Show the form for editing the specified resource.

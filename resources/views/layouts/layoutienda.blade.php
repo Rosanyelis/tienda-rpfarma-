@@ -17,6 +17,34 @@
     <link rel="stylesheet" href="{{ asset('dist/vendor/fontawesome-5.6.1/css/all.min.css') }}">
     <!-- font - stroyka -->
     <link rel="stylesheet" href="{{ asset('dist/fonts/stroyka/stroyka.css') }}">
+    <style>
+        .window-notice {
+            background: rgba(33, 41, 52, .85);
+            left: 0;
+            bottom: 0;
+            right: 0;
+            top: 0;
+            display: flex;
+            position: fixed;
+            z-index: 999;
+        }
+        .window-notice .content {
+            background: #fff;
+            border-radius: 2px;
+            box-shadow: 0 1px 3px rgba(33, 41, 52, .75);
+            box-sizing: content-box;
+            display: flex;
+            flex-direction: column;
+            margin: auto;
+            max-width: 600px;
+            min-width: 320px !important;
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+            padding: 2rem;
+            font-size: 1.3rem;
+        }
+    </style>
 </head>
 
 <body>
@@ -25,7 +53,15 @@
             <div class="modal-content"></div>
         </div>
     </div>
-
+    <div class="window-notice" id="window-notice">
+        <div class="content text-center">
+            <h4>Sitio Web en Desarrollo</h4>
+            <img src="{{ asset('images/mantenimiento.png') }}" alt="">
+            <div class="content-buttons">
+                <a href="#" class="btn btn-primary" id="close-button">Aceptar</a>
+            </div>
+        </div>
+    </div>
     <div class="mobilemenu">
         <div class="mobilemenu__backdrop"></div>
         <div class="mobilemenu__body">
@@ -145,6 +181,11 @@
                 e.stopPropagation();
             });
         })(jQuery);
+        let close_button = document.getElementById('close-button');
+        close_button.addEventListener("click", function(e) {
+            e.preventDefault();
+            document.getElementById("window-notice").style.display = "none";
+        });
     </script>
     @yield('scripts')
 </body>

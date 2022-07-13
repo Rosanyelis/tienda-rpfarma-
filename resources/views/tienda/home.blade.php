@@ -1,5 +1,6 @@
 @extends ('layouts.layoutienda')
 @section('content')
+
     <div class="block-slideshow block-slideshow--layout--full block">
         <div class="container">
             <div class="row">
@@ -36,7 +37,6 @@
             </div>
         </div>
     </div>
-
     <div class="block block-features block-features--layout--classic">
         <div class="container">
             <div class="block-features__list">
@@ -180,6 +180,7 @@
             </div>
         </div>
     </div>
+
 @endsection
 @section('scripts')
 <script>

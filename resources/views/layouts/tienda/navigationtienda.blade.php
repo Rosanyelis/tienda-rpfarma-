@@ -9,6 +9,8 @@
                             <li class="departments__item">
                                 <a href="@if ($item->name == 'Recetario Magistral')
                                     {{ asset('recetario-magistral') }}
+                                @elseif ($item->name == 'Medicamentos')
+                                    {{ url('buscar-medicamentos') }}
                                 @else
                                     {{ url('/productos/' . $item->id . '/categoria') }}
                                 @endif">{{ $item->name }}</a>

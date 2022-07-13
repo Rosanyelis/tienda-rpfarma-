@@ -14,7 +14,14 @@
                             <div class="toggle-expand-content" data-content="pageMenu">
                                 <ul class="nk-block-tools g-3">
                                     <li class="nk-block-tools-opt">
-
+                                        <a href="{{ url('admin/ventas/export') }}" class="btn btn-info">
+                                            <em class="icon ni ni-file-xls"></em>
+                                            <span>Generar Excel</span>
+                                        </a>
+                                        <a href="{{ url('admin/ventas/exportar-datos-de-receptor-de-compras') }}" class="btn btn-success ml-2">
+                                            <em class="icon ni ni-file-xls"></em>
+                                            <span>Generar CVS</span>
+                                        </a>
                                     </li>
                                 </ul>
                             </div>

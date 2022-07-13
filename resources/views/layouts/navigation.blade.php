@@ -87,6 +87,11 @@
                                 </a>
                             </li>
                             <li class="nk-menu-item">
+                                <a href="{{ url('admin/reportes') }}" class="nk-menu-link" data-original-title="" title="">
+                                    <span class="nk-menu-text">Reportes</span>
+                                </a>
+                            </li>
+                            <li class="nk-menu-item">
                                 <a href="{{ url('admin/configuraciones/usuarios') }}" class="nk-menu-link" data-original-title="" title="">
                                     <span class="nk-menu-text">Usuarios</span>
                                 </a>

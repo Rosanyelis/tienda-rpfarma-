@@ -38,8 +38,10 @@ Route::post('/salir', [LoginController::class, 'close'])->name('login.close');
 
 //Productos Tienda
 Route::get('/productos', [ProductosController::class, 'index'])->name('tienda.productos');
+Route::get('/buscar-medicamentos', [ProductosController::class, 'buscarMedicamentos'])->name('tienda.buscarMedicamentos');
 Route::get('/productos/{id}/categoria', [ProductosController::class, 'filtrocategoria'])->name('tienda.productoscategoria');
-Route::get('/productos/{id}/detalles-producto', [HomeController::class, 'show'])->name('tienda.show');
+Route::get('/productos/{id}/detalles-producto', [ProductosController::class, 'show'])->name('tienda.show');
+Route::get('/productos/{principio_activo}/productos-bioequivalentes', [ProductosController::class, 'bioequivalentes'])->name('tienda.bioequivalentes');
 
 
 
@@ -50,6 +52,7 @@ Route::post('/productos/actualizar-carrito', [CarritoController::class, 'updateC
 Route::get('/productos/ver-checkout', [CarritoController::class, 'checkout']);
 Route::post('/productos/completar-compra', [CarritoController::class, 'addShop']);
 Route::post('/productos/remover-producto-del-carrito', [CarritoController::class, 'removeCart']);
+Route::get('/productos/{id}/remover-producto-ajax', [CarritoController::class, 'removeCartAjax']);
 Route::post('/productos/remover-todos-los-producto-del-carrito', [CarritoController::class, 'clearAllCart']);
 // Route::get('/productos/carrito-de-compra/{id}/checkout', [ProductosController::class, 'show']);
 

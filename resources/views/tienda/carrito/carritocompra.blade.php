@@ -24,6 +24,18 @@
     </div>
     <div class="cart block">
         <div class="container">
+            <div id="alerta" class="alert alert-danger mb-3 d-none" >
+                <strong>
+                    NOTA: LOS SIGUIENTES MEDICAMENTOS SOLO ES POSIBLE DISPENSARLOS EN NUESTRA TIENDA, NO SE REALIZAN DESPACHOS A DOMICILIO DE PRODUCTOS CONTROLADOS NI REFRIGERADOS
+                </strong>
+                <ul class="mt-2">
+                    @foreach ($carritoItems as $item)
+                        @if ($item->attributes->tipo == 'Receta Retenida, Retiro en local' || $item->attributes->tipo == 'Receta Médica, Producto Refrigerado, Retiro en Tienda')
+                            <li>{{ $item->name }}</li>
+                        @endif
+                    @endforeach
+                </ul>
+            </div>
             <form class="formProductos" action="{{ url('/productos/actualizar-carrito') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <table class="cart__table cart-table">
@@ -47,7 +59,7 @@
                             <th class="cart-table__column cart-table__column--total">
                                 Total
                             </th>
-                            <th class="cart-table__column cart-table__column--remove"></th>
+                            <th class="cart-table__column cart-table__column--remove">Acciones</th>
                         </tr>
                     </thead>
                     <tbody class="cart-table__body">
@@ -65,41 +77,16 @@
                                 </ul>
                             </td>
                             <td class="cart-table__column cart-table__column--product" data-title="{{ $item->attributes->tipo }}">
-                                @switch($item->attributes->tipo)
-                                    @case($item->attributes->tipo == 'Receta')
-                                    <input class="form-control campor" type="file" name="recetas[]">
-                                    @break
-                                    @case($item->attributes->tipo == 'Receta Retenida')
-                                    <input class="form-control" type="file" name="recetas[]">
-                                    @break
-                                    @case($item->condicion_venta == 'RECETA RETENIDA, RETIRO EN LOCAL')
-                                    <input class="form-control" type="file" name="recetas[]">
-                                    @break
-                                    @case($item->attributes->tipo == 'Receta Cheque')
-                                    <input class="form-control" type="file" name="recetas[]">
-                                    @break
-                                    @case($item->attributes->tipo == 'Venta Libre')
-                                    <ul class="cart-table__options">
-                                        <li>No requiere Receta</li>
-                                    </ul>
-                                    @break
-                                    @case($item->attributes->tipo == 'Sin Receta')
-                                    <ul class="cart-table__options">
-                                        <li>No requiere Receta</li>
-                                    </ul>
-                                    @break
-                                    @case($item->attributes->tipo == 'Sin Información')
-                                    <ul class="cart-table__options">
-                                        <li>No requiere Receta</li>
-                                    </ul>
-                                    @break
-                                    @default
-                                    @case($item->attributes->tipo == 'Sin Información')
-                                    <ul class="cart-table__options">
-                                        <li>No requiere Receta</li>
-                                    </ul>
-                                    @break
-                                @endswitch
+                                @php
+                                    $palabra = substr($item->attributes->tipo, 0, 6);
+                                @endphp
+                                @if ($palabra === 'Receta')
+                                <input class="form-control campor" type="file" name="recetas[]">
+                                @else
+                                <ul class="cart-table__options">
+                                    <li>No requiere Receta</li>
+                                </ul>
+                                @endif
                             </td>
                             <td class="cart-table__column cart-table__column--price" carritoItems-title="Price">
                                 $ {{ number_format($item->price, 0, ",", "."); }}
@@ -114,17 +101,12 @@
                             <td class="cart-table__column cart-table__column--total" data-title="Total">
                                 $ {{ number_format($item->price, 0, ",", "."); }}
                             </td>
-                            <td class="cart-table__column cart-table__column--remove">
-                                <form action="{{ url('/productos/remover-producto-del-carrito') }}" method="POST">
-                                    @csrf
-                                    <input type="hidden" value="{{ $item->id }}" name="id">
-                                    <input type="hidden" value="/productos/ver-carrito-de-compras" name="url">
-                                    <button type="submit" class="btn btn-light btn-sm btn-svg-icon">
-                                        <svg width="12px" height="12px">
-                                            <use xlink:href="{{ asset('dist/images/sprite.svg#cross-12') }}"></use>
-                                        </svg>
-                                    </button>
-                                </form>
+                            <td class="cart-table__column cart-table__column--remove" data-title="remover">
+                                <a href="{{ url('/productos/'.$item->id.'/remover-producto-ajax') }}" class="btn btn-light btn-sm btn-svg-icon">
+                                    <svg width="12px" height="12px">
+                                        <use xlink:href="{{ asset('dist/images/sprite.svg#cross-12') }}"></use>
+                                    </svg>
+                                </a>
                             </td>
                         </tr>
                         @endforeach
@@ -160,6 +142,18 @@
             }
         });
 
+        var tipor = 0;
+        $(".cart-table tbody tr").each(function(){
+            var title = $(this).find('td').eq(2).data('title');
+            if (title == 'Receta Retenida, Retiro en local' || title == 'Receta Médica, Producto Refrigerado, Retiro en Tienda') {
+                tipor = tipor += 1;
+            }
+
+            if (tipor>0) {
+                $('#alerta').removeClass('d-none');
+            }
+        });
+
         $('.checkout').click(function() {
             var validar = true;
 
@@ -167,7 +161,6 @@
                 let id = $(this).find('td').eq(0).data('id');
                 let img = $(this).find('td').eq(2).find('.campor').val();
                 let quantity = $(this).find('td').eq(4).find('input[name="quantity"]').val();
-                console.log(img);
                 let receta;
                 if (img == '') {
                     Toast.fire({
@@ -183,7 +176,10 @@
                     case 'Receta Retenida':
                     receta = img;
                     break;
-                    case 'Receta Retenida y Control de Stock':
+                    case 'Receta Retenida, Retiro en local':
+                    receta = img;
+                    break;
+                    case 'Receta Médica, Producto Refrigerado, Retiro en Tienda':
                     receta = img;
                     break;
                     case 'Receta Cheque':
@@ -220,16 +216,7 @@
         });
 
 
+
     })(jQuery);
-    // function encodeImageFileAsURL(element) {
-    //     var file = element.files[0];
-    //     var reader = new FileReader();
-    //     reader.onloadend = function() {
-
-    //         ImagenBase64 = reader.result;
-
-    //     }
-    //     reader.readAsDataURL(file);
-    // }
     </script>
 @endsection

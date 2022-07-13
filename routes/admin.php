@@ -9,6 +9,7 @@ use App\Http\Controllers\LinkController;
 use App\Http\Controllers\OrdenesController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ReclamosSugerenciaController;
+use App\Http\Controllers\ReportesController;
 use App\Http\Controllers\RolController;
 use App\Http\Controllers\TipoAdministracionController;
 use App\Http\Controllers\UsuarioController;
@@ -44,6 +45,12 @@ Route::group(['middleware' => ['auth', 'checkAdmin']], function () {
     # Ordenes
     Route::get('admin/ventas', [VentasController::class, 'index'])->name('venta.index');
     Route::get('admin/ventas/export', [VentasController::class, 'export'])->name('venta.export');
+    Route::get('admin/ventas/exportar-datos-de-receptor-de-compras', [VentasController::class, 'exportarReceptores'])->name('venta.exportReceptores');
+
+    #Reportes
+    Route::get('admin/reportes', [ReportesController::class, 'index'])->name('reportes.index');
+    Route::get('admin/reportes/exportar-productos-sin-info', [ReportesController::class, 'export'])->name('reportes.export');
+    Route::get('admin/reportes/exportar-productos-todos', [ReportesController::class, 'exportProductosAll'])->name('reportes.exportProductosAll');
 
     # Reclamos y Sugerencias
     Route::get('admin/reclamos-y-sugerencias', [ReclamosSugerenciaController::class, 'index'])->name('reclamo.index');
