@@ -27,6 +27,8 @@
                         aria-controls="nav-home" aria-selected="true">Mis Compras</a>
                     <a class="nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
                         aria-controls="nav-profile" aria-selected="false">Reclamos</a>
+                    <a class="nav-link" id="nav-recetas-tab" data-toggle="tab" href="#nav-recetas" role="tab"
+                        aria-controls="nav-recetas" aria-selected="false">Recetas Solicitadas</a>
                 </div>
             </nav>
             <div class="tab-content" id="nav-tabContent">
@@ -80,6 +82,36 @@
                                 <td class="cart-table__column cart-table__column--product">{{ $item->estatus }}</td>
                                 <td class="cart-table__column cart-table__column--product">
                                     <a href="{{ url('/mi-perfil/'.$item->id.'/ver-reclamo') }}" class="btn btn-primary btn-sm">Ver Reclamo</a>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane fade" id="nav-recetas" role="tabpanel" aria-labelledby="nav-recetas-tab">
+                    <table class="cart__table cart-table">
+                        <thead class="cart-table__head">
+                            <tr class="cart-table__row">
+                                <th class="cart-table__column">Nro.</th>
+                                <th class="cart-table__column">Solicitante</th>
+                                <th class="cart-table__column">Teléfono</th>
+                                <th class="cart-table__column">Precio</th>
+                                <th class="cart-table__column">Fecha</th>
+                                <th class="cart-table__column">Estatus</th>
+                                <th class="cart-table__column">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody class="cart-table__body">
+                            @foreach ($recetas as $item)
+                            <tr class="cart-table__row">
+                                <td class="cart-table__column cart-table__column--product">{{ $loop->iteration }}</td>
+                                <td class="cart-table__column cart-table__column--product">{{ $item->nombre }}</td>
+                                <td class="cart-table__column cart-table__column--product">{{ $item->telefono }}</td>
+                                <td class="cart-table__column cart-table__column--product">$ {{ number_format($item->precio, 0, ",", "."); }}</td>
+                                <td class="cart-table__column cart-table__column--product">{{ \Carbon\Carbon::parse($item->fecha_creacion)->translatedFormat('d F, Y h:i A')  }}</td>
+                                <td class="cart-table__column cart-table__column--product">{{ $item->estado }}</td>
+                                <td class="cart-table__column cart-table__column--product">
+                                    <a href="{{ url('/mi-perfil/'.$item->id_registro.'/ver-solicitud') }}" class="btn btn-primary btn-sm">Ver Solicitud</a>
                                 </td>
                             </tr>
                             @endforeach

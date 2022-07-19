@@ -7,6 +7,7 @@ use App\Models\DetallesOrden;
 use App\Models\OrdenCliente;
 use App\Models\OrdenReceta;
 use App\Models\Reclamo;
+use App\Models\RegistroCotizacion;
 use App\Models\UserReclamo;
 use Darryldecode\Cart\Cart;
 use Illuminate\Http\Request;
@@ -33,8 +34,9 @@ class ComprasController extends Controller
     {
         $ordenes = OrdenCliente::where('cliente_id', Auth::user()->cliente->id)->get();
         $reclamos = Reclamo::where('user_id', Auth::user()->id)->get();
+        $recetas = RegistroCotizacion::where('mail', Auth::user()->email)->get();
         $carritoItems = \Cart::getContent();
-        return view('tienda.usuario.perfil', compact('carritoItems', 'ordenes', 'reclamos'));
+        return view('tienda.usuario.perfil', compact('carritoItems', 'ordenes', 'reclamos', 'recetas'));
     }
 
     /**
@@ -123,13 +125,51 @@ class ComprasController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Show the form for editing the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function showsolicitud($id)
     {
-        //
+        $data = RegistroCotizacion::where('id_registro', $id)->first();
+        $conversacion = UserReclamo::where('solicitud_id', $id)->orderBy('created_at', 'asc')->get();
+        $carritoItems = \Cart::getContent();
+        return view('tienda.recetas-solicitadas.show', compact('carritoItems','data', 'conversacion'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function responsesolicitud(Request $request, $id)
+    {
+        $request->validate([
+            'respuesta' => ['required'],
+        ],
+        [
+            'respuesta.required' => 'El campo Mensaje de Respuesta es obligatorio',
+        ]);
+
+        $registro = new UserReclamo();
+        $registro->solicitud_id = $id;
+        $registro->cliente_id = Auth::user()->id;
+        $registro->mensaje = $request->respuesta;
+        $registro->save();
+
+        // data de reclamo y respuesta
+        // $reclamo = Reclamo::where('id', $id)->first();
+        // $respuesta = UserReclamo::where('id', $registro->id)->first();
+        // Receptor de respuesta
+        // $email = $reclamo->user->email;
+
+        // Envío de correo
+        // $mailable = new SeguimientoReclamo($reclamo, $respuesta);
+        // Mail::to($email)->send($mailable);
+
+        return redirect('/mi-perfil/'.$id.'/ver-solicitud')->with('success', 'Respuesta Enviada Exitosamente!');
     }
 }

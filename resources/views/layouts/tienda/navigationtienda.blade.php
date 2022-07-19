@@ -8,7 +8,7 @@
                         @foreach ($categorias as $item)
                             <li class="departments__item">
                                 <a href="@if ($item->name == 'Recetario Magistral')
-                                    {{ asset('recetario-magistral') }}
+                                    {{ url('recetario-magistral') }}
                                 @elseif ($item->name == 'Medicamentos')
                                     {{ url('buscar-medicamentos') }}
                                 @else
@@ -42,7 +42,7 @@
                 </a>
             </li>
             <li class="nav-links__item">
-                <a href="{{ asset('recetario-magistral') }}">
+                <a href="{{ url('recetario-magistral') }}">
                     <span>Recetario Magistral</span>
                 </a>
             </li>

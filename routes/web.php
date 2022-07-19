@@ -7,6 +7,7 @@ use App\Http\Controllers\Tienda\HomeController;
 use App\Http\Controllers\Tienda\InformacionController;
 use App\Http\Controllers\Tienda\LoginController;
 use App\Http\Controllers\Tienda\ProductosController;
+use App\Http\Controllers\Tienda\RecetarioMagistralController;
 use App\Http\Controllers\Tienda\ReclamoController;
 use Illuminate\Support\Facades\Route;
 
@@ -56,6 +57,10 @@ Route::get('/productos/{id}/remover-producto-ajax', [CarritoController::class, '
 Route::post('/productos/remover-todos-los-producto-del-carrito', [CarritoController::class, 'clearAllCart']);
 // Route::get('/productos/carrito-de-compra/{id}/checkout', [ProductosController::class, 'show']);
 
+// Recetario Magistral
+Route::get('/recetario-magistral', [RecetarioMagistralController::class, 'index']);
+Route::post('/guardar-receta', [RecetarioMagistralController::class, 'store']);
+
 
 // Contactanos
 Route::get('/contactenos', [ContactenosController::class, 'index']);
@@ -83,7 +88,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/mi-perfil', [ComprasController::class, 'index']);
     Route::get('/mi-perfil/{id}/ver-orden', [ComprasController::class, 'showorden']);
     Route::get('/mi-perfil/{id}/ver-reclamo', [ComprasController::class, 'showreclamo']);
+    Route::get('/mi-perfil/{id}/ver-solicitud', [ComprasController::class, 'showsolicitud']);
     Route::post('/mi-perfil/{id}/responder-reclamo', [ComprasController::class, 'responsereclamo']);
+    Route::post('/mi-perfil/{id}/responder-solicitud', [ComprasController::class, 'responsesolicitud']);
 });
 
 

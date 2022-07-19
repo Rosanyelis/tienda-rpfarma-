@@ -5,9 +5,10 @@ use App\Http\Controllers\CondicionVentaController;
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\FormaFarmaceuticaController;
 use App\Http\Controllers\LaboratorioController;
-use App\Http\Controllers\LinkController;
+// use App\Http\Controllers\LinkController;
 use App\Http\Controllers\OrdenesController;
 use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\RecetasMagistralesController;
 use App\Http\Controllers\ReclamosSugerenciaController;
 use App\Http\Controllers\ReportesController;
 use App\Http\Controllers\RolController;
@@ -57,6 +58,12 @@ Route::group(['middleware' => ['auth', 'checkAdmin']], function () {
     Route::get('admin/reclamos-y-sugerencias/{id}/responder-reclamo-y-sugerencia', [ReclamosSugerenciaController::class, 'edit'])->name('reclamo.edit');
     Route::post('admin/reclamos-y-sugerencias/{id}/enviar-respuesta', [ReclamosSugerenciaController::class, 'update'])->name('reclamo.update');
     Route::get('admin/reclamos-y-sugerencias/{id}/cierre-de-reclamo', [ReclamosSugerenciaController::class, 'destroy'])->name('reclamo.destroy');
+
+    # Recetas Magistrales
+    Route::get('admin/recetas-magistrales', [RecetasMagistralesController::class, 'index'])->name('recetas.index');
+    Route::get('admin/recetas-magistrales/{id}/ver-solicitud', [RecetasMagistralesController::class, 'edit'])->name('recetas.edit');
+    Route::post('admin/recetas-magistrales/{id}/responder-solicitud', [RecetasMagistralesController::class, 'update'])->name('recetas.update');
+
 
 
     # Categorias

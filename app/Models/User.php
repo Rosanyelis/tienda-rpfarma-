@@ -56,4 +56,12 @@ class User extends Authenticatable
     {
         return $this->hasOne(Cliente::class, 'user_id', 'id');
     }
+
+    /**
+     * Obtiene datos de recetas magistrales solicitadas.
+     */
+    public function cotizaciones()
+    {
+        return $this->hasMany(RegistroCotizacion::class, 'user_id', 'id');
+    }
 }
