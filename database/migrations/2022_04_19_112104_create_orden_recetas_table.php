@@ -14,14 +14,16 @@ class CreateOrdenRecetasTable extends Migration
     public function up()
     {
         Schema::create('orden_recetas', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->uuid('orden_id')->nullable();
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8mb4';
+            $table->collation = 'utf8mb4_unicode_ci';
+            $table->id();
+            $table->foreignId('orden_id');
             $table->text('url_receta');
             $table->timestamps();
 
-            $table->foreign('orden_id')
-                    ->references('id')
-                    ->on('orden_clientes')
+            $table->foreignId('orden_id')
+                    ->constrained('ordenes')
                     ->onUpdate('cascade')
                     ->onDelete('cascade');
         });

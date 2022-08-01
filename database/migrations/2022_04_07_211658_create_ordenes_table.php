@@ -14,8 +14,11 @@ class CreateOrdenesTable extends Migration
     public function up()
     {
         Schema::create('ordenes', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->uuid('cliente_id');
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8mb4';
+            $table->collation = 'utf8mb4_unicode_ci';
+            $table->id();
+            $table->foreignId('cliente_id');
             $table->char('nro_orden');
             $table->integer('subtotal');
             $table->integer('envio');
@@ -24,12 +27,16 @@ class CreateOrdenesTable extends Migration
             $table->string('local')->nullable();
             $table->string('comuna')->nullable();
             $table->string('direccion_pedido')->nullable();
+            $table->string('nombre_receptor')->nullable();
+            $table->string('correo_receptor')->nullable();
+            $table->string('telefono_receptor')->nullable();
+            $table->string('motivo_rechazo')->nullable();
+            $table->string('fecha_rechazo')->nullable();
             $table->string('estatus');
             $table->timestamps();
 
-            $table->foreign('cliente_id')
-                    ->references('id')
-                    ->on('clientes')
+            $table->foreignId('cliente_id')
+                    ->constrained('clientes')
                     ->onUpdate('cascade')
                     ->onDelete('cascade');
         });

@@ -15,59 +15,53 @@ class CategoriaSeeder extends Seeder
     public function run()
     {
         \App\Models\Categoria::create([
-            'id' => Str::uuid(),
-            'name' => 'Medicamentos',
-            'estatus' => 'Activo',
-        ]);
-        \App\Models\Categoria::create([
-            'id' => Str::uuid(),
             'name' => 'Anticonceptivos',
             'estatus' => 'Activo',
         ]);
         \App\Models\Categoria::create([
-            'id' => Str::uuid(),
-            'name' => 'Sexualidad',
+            'name' => 'Bebé e Infantil',
             'estatus' => 'Activo',
         ]);
         \App\Models\Categoria::create([
-            'id' => Str::uuid(),
             'name' => 'Belleza Natural',
             'estatus' => 'Activo',
         ]);
         \App\Models\Categoria::create([
-            'id' => Str::uuid(),
+            'name' => 'Medicamentos',
+            'estatus' => 'Activo',
+        ]);
+        \App\Models\Categoria::create([
             'name' => 'Cuidado Personal',
             'estatus' => 'Activo',
         ]);
         \App\Models\Categoria::create([
-            'id' => Str::uuid(),
-            'name' => 'Vitaminas',
+            'name' => 'Insumos Médicos',
             'estatus' => 'Activo',
         ]);
         \App\Models\Categoria::create([
-            'id' => Str::uuid(),
+            'name' => 'Medicamentos',
+            'estatus' => 'Activo',
+        ]);
+        \App\Models\Categoria::create([
+            'name' => 'Recetario Magistral',
+            'estatus' => 'Activo',
+        ]);
+        \App\Models\Categoria::create([
+            'name' => 'Sexualidad',
+            'estatus' => 'Activo',
+        ]);
+        \App\Models\Categoria::create([
             'name' => 'Suplementos',
             'estatus' => 'Activo',
         ]);
         \App\Models\Categoria::create([
-            'id' => Str::uuid(),
             'name' => 'Veterinaria',
             'estatus' => 'Activo',
         ]);
-
         \App\Models\Categoria::create([
-            'id' => Str::uuid(),
-            'name' => 'Bebé e Infantil',
+            'name' => 'Vitaminas',
             'estatus' => 'Activo',
         ]);
-
-        \App\Models\Categoria::create([
-            'id' => Str::uuid(),
-            'name' => 'Insumos Médicos',
-            'estatus' => 'Activo',
-        ]);
-
-
 
     }
 }

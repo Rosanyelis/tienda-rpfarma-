@@ -48,20 +48,7 @@
 </head>
 
 <body>
-    <div id="quickview-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-xl">
-            <div class="modal-content"></div>
-        </div>
-    </div>
-    <div class="window-notice" id="window-notice">
-        <div class="content text-center">
-            <h4>Sitio Web en Desarrollo</h4>
-            <img src="{{ asset('images/mantenimiento.png') }}" alt="">
-            <div class="content-buttons">
-                <a href="#" class="btn btn-primary" id="close-button">Aceptar</a>
-            </div>
-        </div>
-    </div>
+
     <div class="mobilemenu">
         <div class="mobilemenu__backdrop"></div>
         <div class="mobilemenu__body">

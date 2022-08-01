@@ -14,7 +14,11 @@ class CreateClientesTable extends Migration
     public function up()
     {
         Schema::create('clientes', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8mb4';
+            $table->collation = 'utf8mb4_unicode_ci';
+            $table->id();
+            $table->foreignId('user_id')->nullable();
             $table->string('nombre');
             $table->string('apellido');
             $table->string('rut');
@@ -22,6 +26,11 @@ class CreateClientesTable extends Migration
             $table->string('correo');
             $table->string('telefono');
             $table->timestamps();
+
+            $table->foreignId('user_id')
+                    ->constrained('users')
+                    ->onUpdate('cascade')
+                    ->onDelete('cascade');
         });
     }
 

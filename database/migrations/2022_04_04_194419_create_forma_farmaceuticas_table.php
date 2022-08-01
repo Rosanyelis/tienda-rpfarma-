@@ -14,7 +14,10 @@ class CreateFormaFarmaceuticasTable extends Migration
     public function up()
     {
         Schema::create('forma_farmaceuticas', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8mb4';
+            $table->collation = 'utf8mb4_unicode_ci';
+            $table->id();
             $table->string('name');
             $table->string('estatus');
             $table->timestamps();

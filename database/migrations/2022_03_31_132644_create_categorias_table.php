@@ -14,7 +14,10 @@ class CreateCategoriasTable extends Migration
     public function up()
     {
         Schema::create('categorias', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8mb4';
+            $table->collation = 'utf8mb4_unicode_ci';
+            $table->id();
             $table->string('name');
             $table->string('estatus');
             $table->timestamps();

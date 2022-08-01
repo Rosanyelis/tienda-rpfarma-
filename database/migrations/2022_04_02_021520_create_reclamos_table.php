@@ -14,12 +14,22 @@ class CreateReclamosTable extends Migration
     public function up()
     {
         Schema::create('reclamos', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8mb4';
+            $table->collation = 'utf8mb4_unicode_ci';
+            $table->id();
+            $table->foreignId('user_id')->nullable();
+            $table->string('codigo');
             $table->string('name');
+            $table->string('tipo');
             $table->text('comentario')->nullable();
-            $table->uuid('user_id')->nullable();
-            $table->text('respuesta')->nullable();
+            $table->string('estatus');
             $table->timestamps();
+
+            $table->foreignId('user_id')
+                    ->constrained('users')
+                    ->onUpdate('cascade')
+                    ->onDelete('cascade');
         });
     }
 

@@ -13,6 +13,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 class RecetarioMagistralController extends Controller
 {
@@ -102,6 +104,49 @@ class RecetarioMagistralController extends Controller
             $dato->cliente_id = $dataUsuario->cliente->id;
             $dato->mensaje = $request->mensaje;
             $dato->save();
+
+            # Envío de correo
+            // require base_path("vendor/autoload.php");
+            // $mail = new PHPMailer(true);
+
+            // try {
+            //     // Email server settings
+            //     $mail->SMTPDebug = 0;
+            //     $mail->isSMTP();
+            //     $mail->Host = 'mail.farmaciasrpfarma.cl';             //  smtp host
+            //     $mail->SMTPAuth = true;
+            //     $mail->Username = 'soporte@farmaciasrpfarma.cl';   //  sender username
+            //     $mail->Password = 'kaAD(yE,gynE';       // sender password
+            //     $mail->SMTPSecure = 'ssl';                  // encryption - ssl/tls
+            //     $mail->Port = 465;
+
+            //     $mail->setFrom('soporte@farmaciasrpfarma.cl', 'Soporte');
+            //     $mail->addAddress('soporte@farmaciasrpfarma.cl');
+            //     $mail->addAddress($dataUsuario->email);
+
+            //     $mail->Subject = 'Cotizador De Recetas Medicas';
+
+            //     $mensaje = 'Hola Sr(a) '.$name.':<br /><br />Tu receta magistral ha sido registrada con éxito y a la brevedad nos pondremos en contacto.<br/><br/>
+            //     Para hacer seguimiento y revisar tu solicitud haz click en el siguiente enlace e inicia sesión: <br /><br/>http://proyecto-en-desarrollo.farmaciasrpfarma.cl/';
+
+            //     $mail->Body    = $mensaje;
+            //     $mail->addAttachment($registro->imagen, 'ImagenReceta');
+
+            //     $mail->send();
+
+            //     // $mail->AltBody = plain text version of email body;
+            //     // if( !$mail->send() ) {
+            //     //     return back()->with("failed", "Email not sent.")->withErrors($mail->ErrorInfo);
+            //     // }
+            //     // else {
+            //     //     return back()->with("success", "Email has been sent.");
+            //     // }
+
+            // } catch (Exception $e) {
+            //     // return back()->with('error','Message could not be sent.');
+            // }
+
+
         }else{
             $name = $request->nombre.' '.$request->apellido;
             $rol = \App\Models\Rol::where('name', 'Cliente')->first();
@@ -152,6 +197,45 @@ class RecetarioMagistralController extends Controller
             $dato->mensaje = $request->mensaje;
             $dato->save();
 
+            // try {
+            //     // Email server settings
+            //     $mail->SMTPDebug = 0;
+            //     $mail->isSMTP();
+            //     $mail->Host = 'mail.farmaciasrpfarma.cl';             //  smtp host
+            //     $mail->SMTPAuth = true;
+            //     $mail->Username = 'soporte@farmaciasrpfarma.cl';   //  sender username
+            //     $mail->Password = 'kaAD(yE,gynE';       // sender password
+            //     $mail->SMTPSecure = 'ssl';                  // encryption - ssl/tls
+            //     $mail->Port = 465;
+
+            //     $mail->setFrom('soporte@farmaciasrpfarma.cl', 'Soporte');
+            //     $mail->addAddress('soporte@farmaciasrpfarma.cl');
+            //     $mail->addAddress($request->email);
+
+            //     $mail->Subject = 'Cotizador De Recetas Medicas';
+
+            //     $mensaje = 'Hola Sr(a) '.$name.':<br /><br />Tu receta magistral ha sido registrada con éxito y a la brevedad nos pondremos en contacto.<br/><br/>
+            //     Sus datos de acceso para su perfil son los siguientes: <br /><br />
+            //     Correo: '.$request->email.'<br /><br />
+            //     Contraseña: '.$request->password.'<br /><br />
+            //     Para hacer seguimiento y revisar tu solicitud haz click en el siguiente enlace e inicia sesión: <br /><br/>http://proyecto-en-desarrollo.farmaciasrpfarma.cl/';
+
+            //     $mail->Body    = $mensaje;
+            //     $mail->addAttachment($registro->imagen, 'ImagenReceta');
+
+            //     $mail->send();
+
+            //     // $mail->AltBody = plain text version of email body;
+            //     // if( !$mail->send() ) {
+            //     //     return back()->with("failed", "Email not sent.")->withErrors($mail->ErrorInfo);
+            //     // }
+            //     // else {
+            //     //     return back()->with("success", "Email has been sent.");
+            //     // }
+
+            // } catch (Exception $e) {
+            //     // return back()->with('error','Message could not be sent.');
+            // }
 
             event(new Registered($user));
 

@@ -6,6 +6,8 @@ use App\Models\RegistroCotizacion;
 use App\Models\UserReclamo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 class RecetasMagistralesController extends Controller
 {
@@ -94,13 +96,57 @@ class RecetasMagistralesController extends Controller
             $dato->estado = 'Cotizado';
             $dato->save();
         }
-        
+
 
         $registro = new UserReclamo();
         $registro->solicitud_id = $id;
         $registro->user_id = Auth::user()->id;
         $registro->mensaje = $request->respuesta;
         $registro->save();
+
+        // $data = RegistroCotizacion::where('id_registro', $id)->first();
+        // $correoreceptor = $data->mail;
+        // $nombreReceptor = $data->nombre;
+        # Envío de correo
+        // require base_path("vendor/autoload.php");
+        // $mail = new PHPMailer(true);
+
+        // try {
+        //     // Email server settings
+        //     $mail->SMTPDebug = 0;
+        //     $mail->isSMTP();
+        //     $mail->Host = 'mail.farmaciasrpfarma.cl';             //  smtp host
+        //     $mail->SMTPAuth = true;
+        //     $mail->Username = 'soporte@farmaciasrpfarma.cl';   //  sender username
+        //     $mail->Password = 'kaAD(yE,gynE';       // sender password
+        //     $mail->SMTPSecure = 'ssl';                  // encryption - ssl/tls
+        //     $mail->Port = 465;
+
+        //     $mail->setFrom('soporte@farmaciasrpfarma.cl', 'Soporte');
+        //     $mail->addAddress('soporte@farmaciasrpfarma.cl');
+        //     $mail->addAddress($correoreceptor);
+
+        //     $mail->Subject = 'Cotizador De Recetas Medicas';
+
+        //     $mensaje = "Hola Sr(a). ".$nombreReceptor.":<br /><br />".$request->respuesta."<br /><br />
+        //     Para hacer seguimiento y revisar tu solicitud haz click en el siguiente enlace: <br /><br />
+        //     http://proyecto-en-desarrollo.farmaciasrpfarma.cl/";
+
+        //     $mail->Body    = $mensaje;
+
+        //     $mail->send();
+
+        //     // $mail->AltBody = plain text version of email body;
+        //     // if( !$mail->send() ) {
+        //     //     return back()->with("failed", "Email not sent.")->withErrors($mail->ErrorInfo);
+        //     // }
+        //     // else {
+        //     //     return back()->with("success", "Email has been sent.");
+        //     // }
+
+        // } catch (Exception $e) {
+        //     // return back()->with('error','Message could not be sent.');
+        // }
 
         return redirect('/admin/recetas-magistrales')->with('success', 'Respuesta Enviada Exitosamente');
     }

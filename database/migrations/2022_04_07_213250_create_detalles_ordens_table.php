@@ -14,25 +14,27 @@ class CreateDetallesOrdensTable extends Migration
     public function up()
     {
         Schema::create('detalles_ordens', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->uuid('orden_id');
-            $table->uuid('producto_id');
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8mb4';
+            $table->collation = 'utf8mb4_unicode_ci';
+            $table->id();
+            $table->foreignId('orden_id');
+            $table->foreignId('producto_id');
             $table->string('sku');
             $table->integer('cantidad');
             $table->integer('precio');
             $table->timestamps();
 
-            $table->foreign('orden_id')
-                    ->references('id')
-                    ->on('orden_clientes')
+            $table->foreignId('orden_id')
+                    ->constrained('ordenes')
                     ->onUpdate('cascade')
                     ->onDelete('cascade');
+            
+            $table->foreignId('producto_id')
+                    ->constrained('productos')
+                    ->onUpdate('cascade')
+                    ->onDelete('cascade');        
 
-            $table->foreign('producto_id')
-                    ->references('id')
-                    ->on('productos')
-                    ->onUpdate('cascade')
-                    ->onDelete('cascade');
         });
     }
 
