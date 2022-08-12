@@ -73,6 +73,7 @@ Route::get('/politicas-de-privacidad-y-proteccion-de-datos', [InformacionControl
 Route::get('/informacion-reglamentaria', [InformacionController::class, 'inforeglam']);
 Route::get('/peritorio-minimo-y-carta-de-desabastecimiento', [InformacionController::class, 'peritocart']);
 Route::get('/procedimiento-de-devoluciones', [InformacionController::class, 'devoluciones']);
+Route::get('/terminos-y-condiciones-de-recetario-magistral', [InformacionController::class, 'recetario']);
 
 
 
@@ -86,11 +87,16 @@ Route::post('/libro-electronico-de-reclamos-y-sugerencias/guardar-comentario', [
 Route::group(['middleware' => ['auth']], function () {
     //Panel Cliente Usuarios
     Route::get('/mi-perfil', [ComprasController::class, 'index']);
+    # Ordenes
     Route::get('/mi-perfil/{id}/ver-orden', [ComprasController::class, 'showorden']);
+    # Reclamos
     Route::get('/mi-perfil/{id}/ver-reclamo', [ComprasController::class, 'showreclamo']);
-    Route::get('/mi-perfil/{id}/ver-solicitud', [ComprasController::class, 'showsolicitud']);
     Route::post('/mi-perfil/{id}/responder-reclamo', [ComprasController::class, 'responsereclamo']);
+    # Solicitudes
+    Route::get('/mi-perfil/{id}/ver-solicitud', [ComprasController::class, 'showsolicitud']);
     Route::post('/mi-perfil/{id}/responder-solicitud', [ComprasController::class, 'responsesolicitud']);
+    Route::get('/mi-perfil/{id}/aprobar-cotizacion-de-receta', [ComprasController::class, 'apruebocotizacion']);
+    Route::get('/mi-perfil/{id}/rechazar-cotizacion-de-receta', [ComprasController::class, 'rechazocotizacion']);
 });
 
 

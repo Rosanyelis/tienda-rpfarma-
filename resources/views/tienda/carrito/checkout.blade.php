@@ -332,6 +332,34 @@
                                             </div>
                                         </div>
                                     </li>
+                                    <li class="payment-methods__item">
+                                        <label class="payment-methods__item-header">
+                                            <span class="payment-methods__item-radio input-radio">
+                                                <span class="input-radio__body">
+                                                    <input id="tipoRecetarioMagistral" class="input-radio__input" name="checkout_payment_method" type="radio" value="Recetario Magistral" @if (old('checkout_payment_method') == 'Recetario Magistral') checked @endif/>
+                                                    <span class="input-radio__circle"></span>
+                                                </span>
+                                            </span>
+                                            <span class="payment-methods__item-title">Producto de Recetario Magistral</span>
+
+                                        </label>
+                                        <div class="payment-methods__item-container">
+                                            <div class="payment-methods__item-description text-muted">
+                                                Elegir esta opción indica que solo cancela el producto elaborado por Recetario Magistral; en caso contrario de haber más productos estos pueden no ser procesados al pagar la orden de compra.
+                                            </div>
+                                        </div>
+                                        <!-- <div class="payment-methods__item-container">
+                                            <div class="payment-methods__item-description text-muted">
+                                                <div class="form-group">
+                                                    <label>Locales </label>
+                                                    <select class="form-control" name="local" id="local">
+                                                        <option>Seleccione local...</option>
+                                                        <option value="Local Quilicura">Local Quilicura</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                    </li>
                                 </ul>
                                 @if ($errors->has('checkout_payment_method'))
                                     <div class="invalid-feedback">
@@ -488,6 +516,10 @@
                     }else{
                         completar = true;
                     }
+                }
+
+                if($("#tipoRecetarioMagistral").is(':checked')) {
+                    completar = true;
                 }
                 if(completar === true){
                     $('#formCheckout').submit();

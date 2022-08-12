@@ -46,4 +46,9 @@ class InformacionController extends Controller
         $carritoItems = \Cart::getContent();
         return view('tienda.informacion.procedimientodevo', compact('carritoItems'));
     }
+    public function recetario()
+    {
+        $carritoItems = \Cart::getContent();
+        return view('tienda.informacion.terminosycondicionesrecetario', compact('carritoItems'));
+    }
 }

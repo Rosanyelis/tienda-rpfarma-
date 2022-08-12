@@ -9,6 +9,7 @@ use App\Http\Controllers\LaboratorioController;
 use App\Http\Controllers\OrdenesController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\RecetasMagistralesController;
+use App\Http\Controllers\RecetasMagistralesDomicilioController;
 use App\Http\Controllers\ReclamosSugerenciaController;
 use App\Http\Controllers\ReportesController;
 use App\Http\Controllers\RolController;
@@ -64,7 +65,10 @@ Route::group(['middleware' => ['auth', 'checkAdmin']], function () {
     Route::get('admin/recetas-magistrales/{id}/ver-solicitud', [RecetasMagistralesController::class, 'edit'])->name('recetas.edit');
     Route::post('admin/recetas-magistrales/{id}/responder-solicitud', [RecetasMagistralesController::class, 'update'])->name('recetas.update');
 
-
+    # Recetas Magistrales a Domicilio
+    Route::get('admin/recetas-a-domicilio', [RecetasMagistralesDomicilioController::class, 'index'])->name('recetas.index');
+    Route::get('admin/recetas-a-domicilio/{id}/ver-receta', [RecetasMagistralesDomicilioController::class, 'edit'])->name('recetas.edit');
+    Route::post('admin/recetas-a-domicilio/{id}/actualizar-temperatura', [RecetasMagistralesDomicilioController::class, 'update'])->name('recetas.update');
 
     # Categorias
     Route::get('admin/configuraciones/categorias', [CategoriaController::class, 'index'])->name('categoria.index');

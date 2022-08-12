@@ -56,6 +56,8 @@ class RecetarioMagistralController extends Controller
             'email' => ['required'],
             'mensaje' => ['required'],
             'imagen' => ['required'],
+            'domicilio' => ['required'],
+            'terminos' => ['required'],
         ],
         [
             'nombre.required' => 'El campo Nombre es obligatorio',
@@ -67,6 +69,8 @@ class RecetarioMagistralController extends Controller
             'telefono.numeric' => 'El campo Teléfono debe ser sólo números, sin símbolos',
             'mensaje.required' => 'El campo Mensaje es obligatorio',
             'imagen.required' => 'El campo Receta es obligatorio',
+            'domicilio.required' => 'El campo Domicilio es obligatorio',
+            'terminos.required' => 'Debe seleccionar haber leido los términos y condiciones de Recetario  Magistral',
         ]);
 
         # Validar que usuario existe
@@ -79,6 +83,10 @@ class RecetarioMagistralController extends Controller
             $name = $dataUsuario->cliente->nombre.' '.$dataUsuario->cliente->apellido;
             $registro = new RegistroCotizacion();
             $registro->user_id = $dataUsuario->id;
+            $registro->adquiriente = $request->adquiriente;
+            $registro->mayor_edad = $request->mayorEdad;
+            $registro->terminos = $request->terminos;
+            $registro->domicilio = $request->domicilio;
             $registro->mail = $dataUsuario->email;
             $registro->nombre = $name;
             $registro->telefono = $request->telefono;
@@ -94,13 +102,16 @@ class RecetarioMagistralController extends Controller
                 $registro->imagen = $url;
             }
             $registro->direccion = $request->direccion;
+            if ($request->direccione) {
+                $registro->direcciondespacho = $request->direccione;
+            }
             $registro->precio = 0;
             $registro->estado = 'Ingresado';
             $registro->fecha_creacion = $date;
             $registro->save();
 
             $dato = new UserReclamo();
-            $dato->solicitud_id = $registro->id;
+            $dato->solicitud_id = $registro->id_registro;
             $dato->cliente_id = $dataUsuario->cliente->id;
             $dato->mensaje = $request->mensaje;
             $dato->save();
@@ -171,6 +182,10 @@ class RecetarioMagistralController extends Controller
             # Registar cotizacion
             $registro = new RegistroCotizacion();
             $registro->user_id = $user->id;
+            $registro->adquiriente = $request->adquiriente;
+            $registro->mayor_edad = $request->mayorEdad;
+            $registro->terminos = $request->terminos;
+            $registro->domicilio = $request->domicilio;
             $registro->mail = $request->email;
             $registro->nombre = $name;
             $registro->telefono = $request->telefono;
@@ -186,13 +201,16 @@ class RecetarioMagistralController extends Controller
                 $registro->imagen = $url;
             }
             $registro->direccion = $request->direccion;
+            if ($request->direccione) {
+                $registro->direcciondespacho = $request->direccione;
+            }
             $registro->precio = 0;
             $registro->estado = 'Ingresado';
             $registro->fecha_creacion = $date;
             $registro->save();
 
             $dato = new UserReclamo();
-            $dato->solicitud_id = $registro->id;
+            $dato->solicitud_id = $registro->id_registro;
             $dato->cliente_id = $record->id;
             $dato->mensaje = $request->mensaje;
             $dato->save();
@@ -245,48 +263,7 @@ class RecetarioMagistralController extends Controller
         return redirect('/recetario-magistral')->with('success', 'Receta Enviada Exitosamente!');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

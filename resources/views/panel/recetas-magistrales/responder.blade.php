@@ -6,7 +6,7 @@
             <div class="nk-block-head nk-block-head-sm">
                 <div class="nk-block-between">
                     <div class="nk-block-head-content">
-                        <h3 class="nk-block-title page-title">Ver Solicitud</h3>
+                        <h3 class="nk-block-title page-title">Ver Solicitud N° #{{ $data->id_registro }}</h3>
                     </div><!-- .nk-block-head-content -->
                     <div class="nk-block-head-content">
                         <div class="toggle-wrap nk-block-tools-toggle">
@@ -29,66 +29,93 @@
                 <div class="card card-bordered">
                     <div class="card-inner">
                         <div class="row mb-3">
-                            <div class="col-md-6 col-12">
-                                <div class="form-group mb-0">
-                                    <label class="form-label">Solicitante:</label> {{ $data->nombre }}
-                                </div>
-                                <div class="form-group mb-0">
-                                    <label class="form-label">Correo del Solicitante:</label> {{ $data->mail }}
-                                </div>
-                                <div class="form-group mb-0">
-                                    <label class="form-label">Dirección:</label> {{ $data->direccion }}
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group mb-0">
-                                    <label class="form-label">Teléfono:</label> {{ $data->telefono }}
-                                </div>
-                                <div class="form-group mb-0">
-                                    <label class="form-label">Estatus:</label> {{ $data->estado }}
-                                </div>
-                                <div class="form-group mb-0">
-                                    <label class="form-label">Precio:</label>$ {{ $data->precio }}
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <h6 class="mb-4">Recetas Adjuntas</h6>
-                            <div class="row g-gs">
-                                <div class="col-sm-6 col-lg-4 col-xxl-3">
-                                    <div class="gallery card card-bordered">
-                                        @php
-                                            $archivo = substr($data->imagen, -4);
-                                        @endphp
-                                        @switch($archivo)
-                                            @case($archivo == '.jpg')
-                                            <a class="gallery-image popup-image" href="{{asset($data->imagen)}}">
-                                                <img class="w-100 rounded-top" src="{{asset($data->imagen)}}" alt="">
-                                            </a>
-                                                @break
-                                            @case($archivo == '.png')
-                                            <a class="gallery-image popup-image" href="{{asset($data->imagen)}}">
-                                                <img class="w-100 rounded-top" src="{{asset($data->imagen)}}" alt="">
-                                            </a>
-                                                @break
-                                            @case($archivo == 'jpeg')
-                                            <a class="gallery-image popup-image" href="{{asset($data->imagen)}}">
-                                                <img class="w-100 rounded-top" src="{{asset($data->imagen)}}" alt="">
-                                            </a>
-                                                @break
-                                            @case($archivo == '.pdf')
-                                            <embed src="{{asset($data->imagen)}}" type="application/pdf" width="100%" height="400px" />
-                                                @break
-                                            @default
-                                            <a class="gallery-image popup-image" href="{{asset($data->imagen)}}">
-                                                <img class="w-100 rounded-top" src="{{asset($data->imagen)}}" alt="">
-                                            </a>
-                                        @endswitch
-
+                            <div class="col-md-8">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <strong class="form-label">Solicitante:</strong> {{ $data->nombre }}
+                                        </div>
+                                        <div class="form-group">
+                                            <strong class="form-label">Correo del Solicitante:</strong> {{ $data->mail }}
+                                        </div>
+                                        <div class="form-group">
+                                            <strong class="form-label">Dirección:</strong> {{ $data->direccion }}
+                                        </div>
+                                        <div class="form-group">
+                                            <strong class="form-label">¿Es el Adquiriente?:</strong> {{ $data->adquiriente }}
+                                        </div>
+                                        <div class="form-group">
+                                            <strong class="form-label">¿Es Mayor de Edad?:</strong> @if ($data->mayor_edad == true) Si @endif
+                                        </div>
+                                        <div class="form-group">
+                                            <strong class="form-label">¿Aceptó los términos y condiciones del Recetario Magistral?:</strong> @if ($data->terminos == 'on') Si @endif
+                                        </div>
+                                        <div class="form-group">
+                                            <strong class="form-label">¿Entrega a Domicilio?:</strong> {{ $data->domicilio }}
+                                        </div>
+                                        <div class="form-group">
+                                            <strong class="form-label">Dirección de Entrega:</strong> {{ $data->direcciondespacho }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <strong class="form-label">Fecha:</strong>
+                                            {{ \Carbon\Carbon::parse($data->fecha_creacion)->translatedFormat('d F, Y h:i A') }}
+                                        </div>
+                                        <div class="form-group">
+                                            <strong class="form-label">Tiempo de Entrega (Días):</strong> {{ $data->tiempo_despacho }}
+                                        </div>
+                                        <div class="form-group">
+                                            <strong class="form-label">Precio de Receta:</strong> $ {{ number_format($data->precio_base, 0, ",", "."); }}
+                                        </div>
+                                        <div class="form-group">
+                                            <strong class="form-label">Precio de Entrega a Domicilio:</strong> $ {{ number_format($data->precio_despacho, 0, ",", "."); }}
+                                        </div>
+                                        <div class="form-group">
+                                            <strong class="form-label">Precio de Total de Cotización:</strong> $ {{ number_format($data->precio, 0, ",", "."); }}
+                                        </div>
+                                        <div class="form-group">
+                                            <strong class="form-label">Estatus:</strong> {{ $data->estado }}
+                                        </div>
                                     </div>
                                 </div>
+
+                            </div>
+                            <div class="col-md-4">
+                                <h6 class="mb-4">Receta Adjunta</h6>
+                                <div class="gallery card card-bordered">
+                                    @php
+                                        $archivo = substr($data->imagen, -4);
+                                    @endphp
+                                    @switch($archivo)
+                                        @case($archivo == '.jpg')
+                                        <a class="gallery-image popup-image" href="{{asset($data->imagen)}}">
+                                            <img class="w-100 rounded-top" src="{{asset($data->imagen)}}" alt="">
+                                        </a>
+                                            @break
+                                        @case($archivo == '.png')
+                                        <a class="gallery-image popup-image" href="{{asset($data->imagen)}}">
+                                            <img class="w-100 rounded-top" src="{{asset($data->imagen)}}" alt="">
+                                        </a>
+                                            @break
+                                        @case($archivo == 'jpeg')
+                                        <a class="gallery-image popup-image" href="{{asset($data->imagen)}}">
+                                            <img class="w-100 rounded-top" src="{{asset($data->imagen)}}" alt="">
+                                        </a>
+                                            @break
+                                        @case($archivo == '.pdf')
+                                        <embed src="{{asset($data->imagen)}}" type="application/pdf" width="100%" height="400px" />
+                                            @break
+                                        @default
+                                        <a class="gallery-image popup-image" href="{{asset($data->imagen)}}">
+                                            <img class="w-100 rounded-top" src="{{asset($data->imagen)}}" alt="">
+                                        </a>
+                                    @endswitch
+
+                                </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
                 <div class="nk-msg mt-4">

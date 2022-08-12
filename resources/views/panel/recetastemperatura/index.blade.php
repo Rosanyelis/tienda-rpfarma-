@@ -6,7 +6,7 @@
             <div class="nk-block-head nk-block-head-sm">
                 <div class="nk-block-between">
                     <div class="nk-block-head-content">
-                        <h3 class="nk-block-title page-title">Productos</h3>
+                        <h3 class="nk-block-title page-title">Recetas Magistrales a Domicilio</h3>
                     </div><!-- .nk-block-head-content -->
                     <div class="nk-block-head-content">
                         <div class="toggle-wrap nk-block-tools-toggle">
@@ -14,10 +14,7 @@
                             <div class="toggle-expand-content" data-content="pageMenu">
                                 <ul class="nk-block-tools g-3">
                                     <li class="nk-block-tools-opt">
-                                        <a href="{{ url('admin/productos/crear-producto') }}" class="btn btn-primary">
-                                            <em class="icon ni ni-plus-medi-fill"></em>
-                                            <span>Crear Producto</span>
-                                        </a>
+
                                     </li>
                                 </ul>
                             </div>
@@ -29,11 +26,11 @@
                 <thead>
                     <tr class="nk-tb-item nk-tb-head">
                         <th width="50px" class="nk-tb-col"><span>#</span></th>
-                        <th class="nk-tb-col tb-col-sm"><span>PRODUCTO</span></th>
-                        <th class="nk-tb-col tb-col-sm">SKU</th>
-                        <th class="nk-tb-col tb-col-sm">PRECIO</th>
-                        <th class="nk-tb-col tb-col-sm">STOCK</th>
-                        <th width="100px" class="nk-tb-col tb-col-sm">ESTATUS</th>
+                        <th class="nk-tb-col tb-col-sm"><span>SOLICITANTE</span></th>
+                        <th class="nk-tb-col tb-col-sm"><span>CORREO DEL SOLICITANTE</span></th>
+                        <th class="nk-tb-col tb-col-sm"><span>PRECIO</span></th>
+                        <th class="nk-tb-col tb-col-sm"><span>FECHA</span></th>
+                        <th class="nk-tb-col tb-col-sm"><span>TEMPERATURA</span></th>
                         <th width="50px" class="nk-tb-col"></th>
                     </tr><!-- .nk-tb-item -->
                 </thead>
@@ -42,31 +39,22 @@
                     <tr class="nk-tb-item">
                         <td class="nk-tb-col">{{ $loop->iteration }}</td>
                         <td class="nk-tb-col tb-col-sm">
-                            <span class="tb-product">
-                                <img src="{{ asset($item->foto) }}" alt="{{ $item->name }}" class="thumb">
-                                <span class="title" style="white-space: pre-wrap;">{{ $item->name }}</span>
-                            </span>
+                            <span class="title">{{ $item->nombre }}</span>
                         </td>
                         <td class="nk-tb-col tb-col-sm">
-                            {{ $item->sku }}
+                            <span class="title">{{ $item->mail }}</span>
                         </td>
                         <td class="nk-tb-col tb-col-sm">
-                            $ {{ number_format($item->precio_venta, 0, ",", "."); }}
-                        </td>
-                        <td class="nk-tb-col tb-col-sm">
-                            {{ $item->stock }}
+                            <span class="title">$ {{ number_format($item->precio, 0, ",", "."); }}</span>
                         </td>
                         <td class="nk-tb-col tb-col-sm">
                             <span class="tb-product">
-                                <span class="title">
-                                    @if ($item->estatus == 'Activo')
-                                    <span class="badge badge-success">{{$item->estatus}}</span>
-                                    @else
-                                    <span class="badge badge-danger">{{$item->estatus}}</span>
-                                    @endif
+                                <span class="title">{{ \Carbon\Carbon::parse($item->fecha_creacion)->translatedFormat('d F, Y h:i A')  }}</span>
                             </span>
                         </td>
-
+                        <td class="nk-tb-col tb-col-sm">
+                            {{  $item->temperatura_entrega }}
+                        </td>
                         <td class="nk-tb-col nk-tb-col-tools">
                             <ul class="nk-tb-actions gx-1 my-n1">
                                 <li class="mr-n1">
@@ -74,18 +62,8 @@
                                         <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                         <div class="dropdown-menu dropdown-menu-right">
                                             <ul class="link-list-opt no-bdr">
-                                                <li>
-                                                    <a href="{{ url('admin/productos/'.$item->id.'/editar-producto') }}" >
-                                                        <em class="icon ni ni-edit"></em>
-                                                        <span>Editar Producto</span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <button class="btn delete-record" data-id="{{ $item->id }}">
-                                                        <em class="icon ni ni-trash"></em>
-                                                        <span>Eliminar Producto</span>
-                                                    </button>
-                                                </li>
+                                                <li><a href="{{ url('admin/recetas-a-domicilio/'.$item->id_registro.'/ver-receta') }}"
+                                                ><em class="icon ni ni-edit"></em><span>Ver Receta</span></a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -115,8 +93,7 @@
 
             $('.datatable-init tbody').on('click', '.delete-record', function(){
                 let dataid = $(this).data('id');
-                let baseUrl = '{{ url('admin/productos/') }}/' + dataid +
-                    '/eliminar-producto';
+                let baseUrl = '';
                 Swal.fire({
                     title: '¿Está Seguro de Desactivar el Registro?',
                     text: "Si tiene datos dependientes, no podrá desactivarlo!",

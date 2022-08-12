@@ -172,4 +172,34 @@ class ComprasController extends Controller
 
         return redirect('/mi-perfil/'.$id.'/ver-solicitud')->with('success', 'Respuesta Enviada Exitosamente!');
     }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function apruebocotizacion($id)
+    {
+        $registro = RegistroCotizacion::where('id_registro', $id)->first();
+        $registro->estado = 'Aprobado por Cliente';
+        $registro->save();
+
+        return redirect('/mi-perfil/'.$id.'/ver-solicitud')->with('success', 'Ha Aprobado la Cotización de la Receta Exitosamente, espere respuesta de soporte. Gracias!');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function rechazocotizacion($id)
+    {
+        $registro = RegistroCotizacion::where('id_registro', $id)->first();
+        $registro->estado = 'Rechazado por Cliente';
+        $registro->save();
+
+        return redirect('/mi-perfil/'.$id.'/ver-solicitud')->with('success', 'Ha Rechazado la Cotización de la Receta Exitosamente, espere respuesta de soporte. Gracias!');
+    }
 }

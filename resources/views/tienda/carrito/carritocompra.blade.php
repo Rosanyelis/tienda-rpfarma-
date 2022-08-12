@@ -71,7 +71,7 @@
                                 </a>
                             </td>
                             <td class="cart-table__column cart-table__column--product">
-                                <a href="#" class="cart-table__product-name">{{ $item->name }}</a>
+                                <a href="javascript:void();" class="cart-table__product-name">{{ $item->name }}</a>
                                 <ul class="cart-table__options">
                                     <li>{{$item->attributes->tipo}}</li>
                                 </ul>
@@ -93,7 +93,7 @@
                             </td>
                             <td class="cart-table__column cart-table__column--quantity" data-title="Quantity">
                                 <div class="input-number">
-                                    <input class="form-control input-number__input" type="number" name="quantity" min="1" max="5" value="{{ $item->quantity }}" />
+                                    <input class="form-control input-number__input" type="number" name="quantity" min="1" max="5" value="{{ $item->quantity }}" @if ($item->attributes->tipo == 'Producto de Recetario Magitral') readonly @endif />
                                     <div class="input-number__add"></div>
                                     <div class="input-number__sub"></div>
                                 </div>
@@ -193,6 +193,9 @@
                     break;
                     case 'Sin Información':
                     receta = 'No lleva receta';
+                    break;
+                    case 'Producto de Recetario Magitral':
+                    receta = 'Producto de Recetario Magitral';
                     break;
                     default:
                         receta = null;

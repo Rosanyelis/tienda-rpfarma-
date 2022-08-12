@@ -19,93 +19,37 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+    <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">TÉRMINOS Y CONDICIONES DEL USO DEL RECETARIO MAGISTRAL
-                        ONLINE</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <h5 class="modal-title" id="staticBackdropLabel">Por Favor Confirmar</h5>
                 </div>
-                <div class="modal-body text-justify ">
-                    <h6><strong>1. De las características del servicio</strong></h6>
-                    <p>Rp Farma cuenta con el servicio de Recetario Magistral On Line, en el cual el paciente (usuario
-                        registrado), puede cotizar, comprar y dispensar sus recetas magistrales de forma remota.
-                        Las condiciones particulares de cada preparado magistral serán objeto de revisión por parte del
-                        Director Técnico de Rp Farma al momento de comunicar la intención de cotizar, las cuales quedan
-                        reflejadas en este documento.
-                    </p>
-                    <h6><strong>2. Respecto del uso del servicio</strong></h6>
-                    <p>
-                        Rp Farma, solo podrá aceptar a pacientes o adquirentes mayores de 18 años, que acepten las
-                        condiciones del servicio. Toda información entregada por el usuario se entiende fidedigna y correcta
-                        para los procesos posteriores a la cotización de la receta magistral.
-                        Al aceptar los Términos y Condiciones del sitio www.farmaciasrpfarma.cl se entiende que estas
-                        condiciones del servicio podrían tener actualizaciones periódicas.
-                    </p>
-                    <h6><strong>3. Preparados bajo venta de recetas médica controladas</strong></h6>
-                    <p>
-                        El paciente debe enviar el archivo de su receta para análisis, revisión y autorización, para poder
-                        ser cotizada. Si el preparado contiene algún medicamento que es sujeto de control legal, este
-                        documento debe ser visado por la Dirección Técnica.
-                        En caso positivo, el paciente o adquiriente debe llevar este documento a la sucursal de Rp Farma que
-                        está legalmente habilitada para su dispensación.
-                        En caso negativo, el paciente será notificado en su apartado de cliente registrado y las razones de
-                        tal determinación.
-                    </p>
-                    <h6><strong>4. Precio y forma de pago</strong></h6>
-                    <p>
-                        Rp Farma, una vez recepcionada la solicitud de cotización, tendrá un plazo máximo de 48 horas para
-                        dar respuesta al paciente, solo en días hábiles, enviará la cotización por el preparado magistral el
-                        cual tendrá una validez de una semana.
-                        El sitio proveerá el mecanismo de pago electrónico, para cancelar con tarjeta de crédito, débito.
-                        Estos medios de pagos podrían variar en la medida de las mejoras tecnológicas de los proveedores de
-                        este servicio y siempre estarán sujetas a los contratos entre las entidades financieras y sus
-                        clientes.
-                    </p>
-                    <h6><strong>5. Consentimiento de la compra</strong></h6>
-                    <p>
-                        Farmacias Rp Farma, ofrece el servicio de recetas magistrales indicando los términos y condiciones
-                        para que el paciente o adquiriente pueda utilizar nuestros servicios de forma informada. Una vez
-                        aceptado el precio de la transacción, con toda la información del proceso, plazos mediante un
-                        contacto en su apartado de usuario y/o mail, se acepta el pago del mismo, se procederá a la
-                        elaboración de su preparado, del cual no podrá retractarse.
-                    </p>
-                    <h6><strong>6. Entrega o retiro de los preparados magistrales</strong></h6>
-                    <p>
-                        Rp Farma informará al usuario del tiempo de elaboración y fecha de retiro, la cual no deberá ser
-                        superior a las 48 horas desde su pago.
-                        Según el tipo de preparado, con las consideraciones legales correspondientes, se coordinará el
-                        despacho a su domicilio, en el caso de los medicamentos que no requieren control legal o de saldos.
-                        Para las recetas que requieran de control, estas serán enviadas o despachadas desde el local de
-                        farmacia coordinado previamente, lo cual será debidamente informado en su apartado de usuario y/o
-                        por mail.
-                        A destacar, los preparados magistrales cuentan con 40 días de vigencia para su utilización, lo que
-                        obliga a Rp Farma a disponer para destrucción a aquellos preparados que se encuentren para despacho
-                        por mas de 3 días desde la fecha del contacto con el adquiriente o paciente. Es decir, en resguardo
-                        de la salud del paciente, estos productos no serán entregados si estos plazos no son respetados.
-                    </p>
-                    <h6><strong>7. Retracto legal</strong></h6>
-                    <p>
-                        Dada la naturaleza del servicio de elaboración de recetas magistrales, no operará el retracto por
-                        parte del usuario.
-                    </p>
-                    <h6><strong>8. Cambio o devoluciones</strong></h6>
-                    <p>
-                        Si el producto, presentara fallas o defectos de origen, estas serán reembolsados al paciente hasta
-                        después de 7 días de efectuado el pago. Si estos daños son atribuibles al mal uso o transporte del
-                        paciente esto, no dará derecho a esta garantía.
-                    </p>
-                    <h6><strong>9. Privacidad</strong></h6>
-                    <p>
-                        Este servicio, como todos los datos entregados a Rp Farma están sujetos a las políticas de
-                        privacidad del sitio.
-                    </p>
+                <div class="modal-body container text-justify">
+                    <p >Nota: antes de efectuar el proceso de registro de su receta magistral debe indicar lo siguiente:</p>
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox mb-3">
+                            <input type="checkbox" class="custom-control-input" value="Si" id="mayorEdad">
+                            <label class="custom-control-label" for="mayorEdad">Soy Mayor de Edad</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-check-label" for="defaultCheck1">
+                            ¿Eres el adquiriente del producto?
+                        </label><br>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="adquirientev" id="inlineRadio1" value="Si">
+                            <label class="form-check-label" for="inlineRadio1">Si</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="adquirientev" id="inlineRadio2" value="No">
+                            <label class="form-check-label" for="inlineRadio2">No</label>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id="entiendo">Entiendo</button>
                 </div>
             </div>
         </div>
@@ -115,8 +59,7 @@
             <div class="card flex-grow-1 mb-0">
                 <div class="card-body">
                     <h3 class="card-title text-center">Sube tu receta</h3>
-                    <form class="row" action="{{ url('/guardar-receta') }}" method="POST"
-                        enctype="multipart/form-data">
+                    <form class="row" action="{{ url('/guardar-receta') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="col-md-6">
                             <div class="row">
@@ -200,7 +143,35 @@
                                         @endif
                                     </div>
                                 @endif
-
+                                <div class="form-group col-md-12">
+                                    <label class="form-check-label @error('direccione') is-invalid @enderror" for="defaultCheck1">
+                                        ¿Deseas entrega a domicilio?
+                                    </label><br>
+                                    <div class="form-check form-check-inline ">
+                                        <input class="form-check-input " type="radio" name="domicilio" id="domicilioSi" value="Si">
+                                        <label class="form-check-label" for="domicilioSi">Si</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="domicilio" id="domicilioNo" value="No">
+                                        <label class="form-check-label" for="domicilioNo">No</label>
+                                    </div>
+                                    @if ($errors->has('domicilio'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('domicilio') }}
+                                        </div>
+                                    @endif
+                                </div>
+                                <div id="direccionEntrega" class="form-group col-md-12">
+                                    <label for="checkout-direccione">Dirección de entrega</label>
+                                    <input type="text" class="form-control @error('direccione') is-invalid @enderror"
+                                        name="direccione" id="checkout-direccione" placeholder="direccione"
+                                        value="{{ old('direccione') }}" />
+                                    @if ($errors->has('direccione'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('direccione') }}
+                                        </div>
+                                    @endif
+                                </div>
                                 <div class="form-group col-md-12">
                                     <small>
                                         <strong>Nota:</strong> Si ya posee un usuario solo coloque su correo electrónico
@@ -228,7 +199,7 @@
                                         El formato de imagen debe estar en: GIF, PNG , JPG, JPEG o PDF. <br>
                                     </p>
                                     <input type="file" class="form-control @error('imagen') is-invalid @enderror"
-                                        name="imagen" id="checkout-last-name" accept="" />
+                                        name="imagen" id="checkout-file" accept="" />
                                     @if ($errors->has('imagen'))
                                         <div class="invalid-feedback">
                                             {{ $errors->first('imagen') }}
@@ -250,7 +221,26 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-12">
+                        <div class="form-group col-md-12 mb-2">
+                            <div class="form-check">
+                                <input class="form-check-input @error('terminos') is-invalid @enderror" type="checkbox" name="terminos" id="defaultCheck1">
+                                <label class="form-check-label" for="defaultCheck1">
+                                    He leído y acepto los
+                                    <a target="_blank"
+                                        href="{{ url('/terminos-y-condiciones-de-recetario-magistral') }}">términos y
+                                        condiciones</a> del recetario magistral
+                                </label>
+                                @if ($errors->has('terminos'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('terminos') }}
+                                    </div>
+                                @endif
+                            </div>
+
+                        </div>
+                        <div class="col-md-12 mt-4">
+                            <input type="hidden" name="adquiriente" id="valAdquiriente" value="">
+                            <input type="hidden" name="mayorEdad" id="valMayorEdad" value="">
                             <button class="btn btn-primary btn-block">ENVIAR COTIZACIÓN</button>
                         </div>
                     </form>
@@ -275,13 +265,39 @@
                     toast.addEventListener('mouseleave', Swal.resumeTimer)
                 }
             });
+            $('#staticBackdrop').modal('show');
 
-            $('#exampleModal').modal('show');
+            $('#entiendo').on('click', function() {
+                let mayorEdad = false;
+                if( $('#mayorEdad').is(':checked') ){
+                    mayorEdad = true;
+                }
+                let adquiriente = $('input[name=adquirientev]').val();
+                console.log(adquiriente);
+                if (mayorEdad == false) {
+                    Toast.fire({
+                        icon: 'error',
+                        title: 'Debe ser mayor Edad para solicitar una receta magistral'
+                    });
+                }else{
+                    $('#valAdquiriente').val(adquiriente);
+                    $('#valMayorEdad').val(mayorEdad);
+                    $('#staticBackdrop').modal('hide');
+                }
+            });
+
+
+            $('#direccionEntrega').hide();
+
+            $('#domicilioSi').on('click', function() {
+                $('#direccionEntrega').show();
+            });
+
+            $('#domicilioNo').on('click', function() {
+                $('#direccionEntrega').hide();
+            });
+
+
         })(jQuery);
-        // let close_button = document.getElementById('close-button');
-        //     close_button.addEventListener("click", function(e) {
-        //     e.preventDefault();
-        //     document.getElementById("window-notice").style.display = "none";
-        // });
     </script>
 @endsection

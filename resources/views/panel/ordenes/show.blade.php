@@ -94,9 +94,9 @@
                                         <tr>
                                             <td>{{$loop->iteration}}</td>
                                             <td>{{ $item->producto->name }}</td>
-                                            <td>$ {{ $item->precio }}</td>
+                                            <td>$ {{ number_format($item->precio, 0, ",", "."); }}</td>
                                             <td>{{ $item->cantidad }}</td>
-                                            <td>$ {{ $item->precio*$item->cantidad }}</td>
+                                            <td>$ {{ number_format($item->precio*$item->cantidad, 0, ",", "."); }}</td>
                                         </tr>
                                         @endforeach
                                     </tbody>
@@ -104,17 +104,17 @@
                                         <tr>
                                             <td colspan="2"></td>
                                             <td colspan="2">Subtotal</td>
-                                            <td>$ {{ $data->subtotal }}</td>
+                                            <td>$ {{ number_format($data->subtotal, 0, ",", "."); }}</td>
                                         </tr>
                                         <tr>
                                             <td colspan="2"></td>
                                             <td colspan="2">Envío</td>
-                                            <td>$ {{ $data->envio }}</td>
+                                            <td>$ {{ number_format($data->envio, 0, ",", "."); }}</td>
                                         </tr>
                                         <tr>
                                             <td colspan="2"></td>
                                             <td colspan="2">Total Pagado</td>
-                                            <td>$ {{ $data->monto }}</td>
+                                            <td>$ {{ number_format($data->monto, 0, ",", "."); }}</td>
                                         </tr>
                                     </tfoot>
                                 </table>

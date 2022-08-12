@@ -12,6 +12,7 @@ use App\Models\DetallesOrden;
 use App\Models\OrdenCliente;
 use App\Models\OrdenReceta;
 use App\Models\Producto;
+use App\Models\RegistroCotizacion;
 use App\Models\User;
 use Darryldecode\Cart\Cart;
 use Illuminate\Auth\Events\Registered;
@@ -34,25 +35,48 @@ class CarritoController extends Controller
 
     public function addToCart(Request $request)
     {
-        if ($request->quantity) {
-            $cantidad = $request->quantity;
-        }else{
-            $cantidad = 1;
-        }
-        $producto = Producto::where('id', $request->id)->first();
-        $precio = number_format($producto->precio_venta, 2, ",", "");
+        if ($request->id) {
+            if ($request->quantity) {
+                $cantidad = $request->quantity;
+            }else{
+                $cantidad = 1;
+            }
+            $producto = Producto::where('id', $request->id)->first();
+            $precio = number_format($producto->precio_venta, 2, ",", "");
 
-        \Cart::add(array(
-            'id' => $producto->id,
-            'price' => $precio,
-            'quantity' => $cantidad,
-            'name' => $producto->name,
-            'attributes' => array(
-                'foto' => $producto->foto,
-                'tipo' => $producto->ficha->condicionventa->name,
-                'receta' => null,
-            )
-        ));
+            \Cart::add(array(
+                'id' => $producto->id,
+                'price' => $precio,
+                'quantity' => $cantidad,
+                'name' => $producto->name,
+                'attributes' => array(
+                    'foto' => $producto->foto,
+                    'tipo' => $producto->ficha->condicionventa->name,
+                    'receta' => null,
+                )
+            ));
+        }elseif ($request->id_registro) {
+            if ($request->quantity) {
+                $cantidad = $request->quantity;
+            }else{
+                $cantidad = 1;
+            }
+            $producto = RegistroCotizacion::where('id_registro', $request->id_registro)->first();
+            $precio = number_format($producto->precio, 2, ",", "");
+
+            \Cart::add(array(
+                'id' => $producto->id_registro,
+                'price' => $precio,
+                'quantity' => $cantidad,
+                'name' => 'Receta Magistral',
+                'attributes' => array(
+                    'foto' => $producto->imagen,
+                    'tipo' => 'Producto de Recetario Magitral',
+                    'receta' => null,
+                )
+            ));
+        }
+
 
         return redirect($request->url)->with('success', 'Producto Añadido a Carrito Exitosamente!');
     }
@@ -84,24 +108,46 @@ class CarritoController extends Controller
             /** Procesa los productos seleccionados por el cliente */
             $data = json_decode($request->productos, True);
             foreach ($data as $item) {
-                $id = $item['id'];
-                $cant = $item['quantity'];
-                $producto = Producto::where('id', $id)->first();
-                $precio = number_format($producto->precio_venta, 0, ",", "");
+                if ($item['receta'] == 'Producto de Recetario Magitral') {
+                    $id = $item['id'];
+                    $cant = $item['quantity'];
+                    $producto = RegistroCotizacion::where('id_registro', $id)->first();
+                    $precio = number_format($producto->precio, 2, ",", "");
 
-                \Cart::remove($id);
+                    \Cart::remove($id);
 
-                \Cart::add(array(
-                    'id' => $producto->id,
-                    'price' => $precio,
-                    'quantity' => $cant,
-                    'name' => $producto->name,
-                    'attributes' => array(
-                        'foto' => $producto->foto,
-                        'tipo' => $producto->ficha->condicionventa->name,
-                        'receta' => $arrayImg,
-                    )
-                ));
+                    \Cart::add(array(
+                        'id' => $producto->id_registro,
+                        'price' => $precio,
+                        'quantity' => $cant,
+                        'name' => 'Receta Magistral',
+                        'attributes' => array(
+                            'foto' => $producto->imagen,
+                            'tipo' => 'Producto de Recetario Magitral',
+                            'receta' => null,
+                        )
+                    ));
+                }else{
+                    $id = $item['id'];
+                    $cant = $item['quantity'];
+                    $producto = Producto::where('id', $id)->first();
+                    $precio = number_format($producto->precio_venta, 0, ",", "");
+
+                    \Cart::remove($id);
+
+                    \Cart::add(array(
+                        'id' => $producto->id,
+                        'price' => $precio,
+                        'quantity' => $cant,
+                        'name' => $producto->name,
+                        'attributes' => array(
+                            'foto' => $producto->foto,
+                            'tipo' => $producto->ficha->condicionventa->name,
+                            'receta' => $arrayImg,
+                        )
+                    ));
+                }
+
             }
 
 
@@ -268,58 +314,77 @@ class CarritoController extends Controller
                 $request->session()->regenerate();
             }
 
-            $nro_orden = rand(5, 15);
-            $cliente = Cliente::where('id', Auth::user()->cliente->id)->first();
+            if ($request->checkout_payment_method == 'Recetario Magistral') {
+                $carritoItems = \Cart::getContent();
+                foreach ($carritoItems as $item) {
+                    $registro = RegistroCotizacion::where('id_registro', $item->id)->first();
+                    $registro->estado = 'Pagado por Cliente';
+                    $registro->save();
+                }
 
-            $record = new OrdenCliente();
-            $record->cliente_id = $cliente->id;
-            $record->nro_orden = $nro_orden;
-            $record->subtotal = $request->subtotal;
-            $record->envio = $request->envio;
-            $record->monto = $request->monto;
-            $record->tipo_recepcion = $request->checkout_payment_method;
-            $record->local = $request->local;
-            $record->comuna = $request->comuna;
-            $record->nombre_receptor = $request->nombre_receptor;
-            $record->correo_receptor = $request->correo_receptor;
-            $record->telefono_receptor = $request->telefono_receptor;
-            $record->direccion_pedido = $request->direccion_recepcion;
-            $record->estatus = 'Por Confirmar';
-            $record->save();
+            }else{
+                $nro_orden = rand(5, 15);
+                $cliente = Cliente::where('id', Auth::user()->cliente->id)->first();
 
-            $idOrden = $record->id;
-            $carritoItems = \Cart::getContent();
+                $record = new OrdenCliente();
+                $record->cliente_id = $cliente->id;
+                $record->nro_orden = $nro_orden;
+                $record->subtotal = $request->subtotal;
+                $record->envio = $request->envio;
+                $record->monto = $request->monto;
+                $record->tipo_recepcion = $request->checkout_payment_method;
+                if ($request->local == 'Seleccione local...') {
+                    $record->local = null;
+                }else{
+                    $record->local = $request->local;
+                }
+                if ($request->comuna == 'Seleccione Comuna...') {
+                    $record->comuna = null;
+                }else{
+                    $record->comuna = $request->comuna;
+                }
+                $record->nombre_receptor = $request->nombre_receptor;
+                $record->correo_receptor = $request->correo_receptor;
+                $record->telefono_receptor = $request->telefono_receptor;
+                $record->direccion_pedido = $request->direccion_recepcion;
+                $record->estatus = 'Por Confirmar';
+                $record->save();
 
-            foreach ($carritoItems as $item) {
+                $idOrden = $record->id;
+                $carritoItems = \Cart::getContent();
 
-                $productos = Producto::where('id', $item->id)->first();
+                foreach ($carritoItems as $item) {
 
-                $data = new DetallesOrden();
-                $data->orden_id = $idOrden;
-                $data->producto_id = $productos->id;
-                $data->sku = $productos->sku;
-                $data->cantidad = $item->quantity;
-                $data->precio = $item->price;
-                $data->save();
+                    $productos = Producto::where('id', $item->id)->first();
 
-                foreach ($item->attributes->receta as $item => $value) {
-                    $ver = OrdenReceta::where('url_receta', $value)->count();
-                    if ($ver>0) {
-                        $registro =  OrdenReceta::where('url_receta', $value)->first();
-                        $registro->orden_id = $idOrden;
-                        $registro->save();
+                    $data = new DetallesOrden();
+                    $data->orden_id = $idOrden;
+                    $data->producto_id = $productos->id;
+                    $data->sku = $productos->sku;
+                    $data->cantidad = $item->quantity;
+                    $data->precio = $item->price;
+                    $data->save();
+
+                    foreach ($item->attributes->receta as $item => $value) {
+                        $ver = OrdenReceta::where('url_receta', $value)->count();
+                        if ($ver>0) {
+                            $registro =  OrdenReceta::where('url_receta', $value)->first();
+                            $registro->orden_id = $idOrden;
+                            $registro->save();
+                        }
                     }
                 }
+
+                $cliente = Cliente::where('id', $cliente->id)->first();
+                $orden = OrdenCliente::where('id', $idOrden)->first();
+                $detalles = DetallesOrden::where('orden_id', $idOrden)->get();
+
+                $email = $cliente->user->email;
+                // Envío de correo
+                // $mailable = new OrdenGenerada($orden);
+                // Mail::to($email)->send($mailable);
             }
 
-            $cliente = Cliente::where('id', $cliente->id)->first();
-            $orden = OrdenCliente::where('id', $idOrden)->first();
-            $detalles = DetallesOrden::where('orden_id', $idOrden)->get();
-
-            $email = $cliente->user->email;
-            // Envío de correo
-            $mailable = new OrdenGenerada($orden);
-            Mail::to($email)->send($mailable);
 
         }
 

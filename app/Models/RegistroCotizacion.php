@@ -18,9 +18,9 @@ class RegistroCotizacion extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'id_registro', 'mail', 'nombre', 'telefono', 'mensaje', 'imagen', 'precio', 'precio_base', 'precio_despacho', 'tiempo_despacho', 'estado',
+        'id_registro', 'mail', 'adquiriente', 'mayor_edad', 'terminos', 'domicilio', 'nombre', 'telefono', 'mensaje', 'imagen', 'precio', 'precio_base', 'precio_despacho', 'tiempo_despacho', 'estado',
         'direccion', 'rpfarma_sucursal', 'asociado_sucursal', 'comunadespacho', 'direcciondespacho',
-        'referencia', 'fecha_creacion',
+        'referencia', 'temperatura_entrega', 'fecha_creacion',
     ];
 
     /**

@@ -26,28 +26,95 @@
                     <h4 class="card-title">Solicitud Nro. #{{ $data->id_registro }}</h4>
                     <div class="row">
                         <div class="col-md-8">
-                            <div class="form-group">
-                                <strong class="form-label">Cliente:</strong> {{ $data->nombre }}
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <strong class="form-label">Cliente:</strong> {{ $data->nombre }}
+                                    </div>
+                                    <div class="form-group">
+                                        <strong class="form-label">Dirección:</strong> {{ $data->direccion }}
+                                    </div>
+                                    <div class="form-group">
+                                        <strong class="form-label">Teléfono:</strong> {{ $data->telefono }}
+                                    </div>
+                                    <div class="form-group">
+                                        <strong class="form-label">¿Soy el Adquiriente?:</strong> {{ $data->adquiriente }}
+                                    </div>
+                                    <div class="form-group">
+                                        <strong class="form-label">¿Soy el Mayor de Edad?:</strong> @if ($data->mayor_edad == true) Si @endif
+                                    </div>
+                                    <div class="form-group">
+                                        <strong class="form-label">¿Aceptó los términos y condiciones del Recetario Magistral?:</strong> @if ($data->terminos == 'on') Si @endif
+                                    </div>
+                                    <div class="form-group">
+                                        <strong class="form-label">¿Entrega a Domicilio?:</strong> {{ $data->domicilio }}
+                                    </div>
+                                    <div class="form-group">
+                                        <strong class="form-label">Dirección de Entrega:</strong> {{ $data->direcciondespacho }}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <strong class="form-label">Fecha:</strong>
+                                        {{ \Carbon\Carbon::parse($data->fecha_creacion)->translatedFormat('d F, Y h:i A') }}
+                                    </div>
+
+                                    <div class="form-group">
+                                        <strong class="form-label">Tiempo de Entrega (Días):</strong> {{ $data->tiempo_despacho }}
+                                    </div>
+                                    <div class="form-group">
+                                        <strong class="form-label">Precio de Receta:</strong> $ {{ $data->precio_base }}
+                                    </div>
+                                    <div class="form-group">
+                                        <strong class="form-label">Precio de Entrega a Domicilio:</strong> $ {{ $data->precio_despacho }}
+                                    </div>
+                                    <div class="form-group">
+                                        <strong class="form-label">Precio de Total de Cotización:</strong> $ {{ $data->precio }}
+                                    </div>
+                                    <div class="form-group">
+                                        <strong class="form-label">Estatus:</strong> {{ $data->estado }}
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <strong class="form-label">Dirección:</strong> {{ $data->direccion }}
-                            </div>
-                            <div class="form-group">
-                                <strong class="form-label">Teléfono:</strong> {{ $data->telefono }}
-                            </div>
+
                         </div>
                         <div class="col-md-4">
-                            <div class="form-group">
-                                <strong class="form-label">Fecha:</strong>
-                                {{ \Carbon\Carbon::parse($data->fecha_creacion)->translatedFormat('d F, Y h:i A') }}
-                            </div>
-                            <div class="form-group">
-                                <strong class="form-label">Precio de Cotización:</strong> $ {{ $data->precio }}
-                            </div>
-                            <div class="form-group">
-                                <strong class="form-label">Estatus:</strong> {{ $data->estado }}
-                            </div>
+                            @php
+                                $archivo = substr($data->imagen, -4);
+                            @endphp
+                            @switch($archivo)
+                                @case($archivo == '.jpg')
+                                    <img class="w-100 rounded-top" src="{{asset($data->imagen)}}" alt="receta">
+                                    @break
+                                @case($archivo == '.png')
+                                    <img class="w-100 rounded-top" src="{{asset($data->imagen)}}" alt="receta">
+                                    @break
+                                @case($archivo == 'jpeg')
+                                    <img class="w-100 rounded-top" src="{{asset($data->imagen)}}" alt="receta">
+                                    @break
+                                @case($archivo == '.pdf')
+                                <embed src="{{asset($data->imagen)}}" type="application/pdf" width="100%" height="400px" />
+                                    @break
+                                @default
+                                    <img class="w-100 rounded-top" src="{{asset($data->imagen)}}" alt="receta">
+                            @endswitch
                         </div>
+                        @if ($data->estado == 'Cotizado')
+                            <div class="col-md-12 text-right mt-4">
+                                <a href="{{ url('/mi-perfil/'.$data->id_registro.'/rechazar-cotizacion-de-receta') }}" class="btn btn-secondary mr-3">Rechazar Cotización</a>
+                                <a href="{{ url('/mi-perfil/'.$data->id_registro.'/aprobar-cotizacion-de-receta') }}" class="btn btn-primary">Aprobar</a>
+                            </div>
+                        @endif
+                        @if ($data->estado == 'Aprobado por Cliente')
+                            <div class="col-md-12 text-right mt-4">
+                                <form action="{{ url('/productos/anadir-producto-al-carrito') }}" method="POST" >
+                                    @csrf
+                                    <input type="hidden" value="{{ $data->id_registro }}" name="id_registro">
+                                    <input type="hidden" value="/mi-perfil/{{ $data->id_registro }}/ver-solicitud" name="url">
+                                    <button type="submit" class="btn btn-primary product-card__addtocart">Añadir al Carrito</button>
+                                </form>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
