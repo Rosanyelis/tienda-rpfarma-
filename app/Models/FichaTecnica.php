@@ -23,6 +23,7 @@ class FichaTecnica extends Model
         'laboratorio_id',
         'forma_farmaceutica_id',
         'principio_activo',
+        'bioequivalente',
         'condiciones_almacenamiento',
         'registro_sanitario',
         'dosis_farmaceutica',

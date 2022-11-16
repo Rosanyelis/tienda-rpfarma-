@@ -68,6 +68,23 @@
                             <a href="{{ url('/')}}" class="mobile-links__item-link">Inicio</a>
                         </div>
                     </li>
+                    <li class="mobile-links__item" data-collapse-item>
+                        <div class="mobile-links__item-title">
+                            <a href="{{ url('quienes-somos') }}" class="mobile-links__item-link">Quiénes Somos</a>
+                        </div>
+                    </li>
+                    <li class="mobile-links__item" data-collapse-item>
+                        <div class="mobile-links__item-title">
+                            <a href="{{ url('/')}}" class="mobile-links__item-link">
+                                <span style="color:red;text-transform: uppercase;">Recetario Magistral</span>
+                            </a>
+                        </div>
+                    </li>
+                    <li class="mobile-links__item" data-collapse-item>
+                        <div class="mobile-links__item-title">
+                            <a href="{{ url('contactenos') }}" class="mobile-links__item-link">Contáctenos</a>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </div>

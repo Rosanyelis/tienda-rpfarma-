@@ -19,41 +19,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
-        aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Por Favor Confirmar</h5>
-                </div>
-                <div class="modal-body container text-justify">
-                    <p >Nota: antes de efectuar el proceso de registro de su receta magistral debe indicar lo siguiente:</p>
-                    <div class="form-group">
-                        <div class="custom-control custom-checkbox mb-3">
-                            <input type="checkbox" class="custom-control-input" value="Si" id="mayorEdad">
-                            <label class="custom-control-label" for="mayorEdad">Soy Mayor de Edad</label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-check-label" for="defaultCheck1">
-                            ¿Eres el adquiriente del producto?
-                        </label><br>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="adquirientev" id="inlineRadio1" value="Si">
-                            <label class="form-check-label" for="inlineRadio1">Si</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="adquirientev" id="inlineRadio2" value="No">
-                            <label class="form-check-label" for="inlineRadio2">No</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="entiendo">Entiendo</button>
-                </div>
-            </div>
-        </div>
-    </div>
+
     <div class="block">
         <div class="container">
             <div class="card flex-grow-1 mb-0">
@@ -61,6 +27,41 @@
                     <h3 class="card-title text-center">Sube tu receta</h3>
                     <form class="row" action="{{ url('/guardar-receta') }}" method="POST" enctype="multipart/form-data">
                         @csrf
+                        <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
+                            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="staticBackdropLabel">Por Favor Confirmar</h5>
+                                    </div>
+                                    <div class="modal-body container text-justify">
+                                        <p >Nota: antes de efectuar el proceso de registro de su receta magistral debe indicar lo siguiente:</p>
+                                        <div class="form-group">
+                                            <div class="custom-control custom-checkbox mb-3">
+                                                <input type="checkbox" class="custom-control-input" name="mayor_edad" value="Si" id="mayorEdad">
+                                                <label class="custom-control-label" for="mayorEdad">Soy Mayor de Edad</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-check-label" for="defaultCheck1">
+                                                ¿Es usted el titular de esta receta?
+                                            </label><br>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="adquirientev" id="inlineRadio1" value="Si">
+                                                <label class="form-check-label" for="inlineRadio1">Si</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="adquirientev" id="inlineRadio2" value="No">
+                                                <label class="form-check-label" for="inlineRadio2">No</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" id="entiendo">Entiendo</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="col-md-6">
                             <div class="row">
                                 <div class="form-group col-md-6">
@@ -148,11 +149,11 @@
                                         ¿Deseas entrega a domicilio?
                                     </label><br>
                                     <div class="form-check form-check-inline ">
-                                        <input class="form-check-input " type="radio" name="domicilio" id="domicilioSi" value="Si">
+                                        <input class="form-check-input " type="radio" name="domicilio" @if (old('domicilio') == 'Si') checked @endif id="domicilioSi" value="Si">
                                         <label class="form-check-label" for="domicilioSi">Si</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="domicilio" id="domicilioNo" value="No">
+                                        <input class="form-check-input" type="radio" name="domicilio" @if (old('domicilio') == 'No') checked @endif id="domicilioNo" value="No">
                                         <label class="form-check-label" for="domicilioNo">No</label>
                                     </div>
                                     @if ($errors->has('domicilio'))
@@ -239,8 +240,8 @@
 
                         </div>
                         <div class="col-md-12 mt-4">
-                            <input type="hidden" name="adquiriente" id="valAdquiriente" value="">
-                            <input type="hidden" name="mayorEdad" id="valMayorEdad" value="">
+                            <input type="hidden" name="adquiriente" id="valAdquiriente" value="{{ old('adquirientev') }}">
+                            <input type="hidden" name="mayorEdad" id="valMayorEdad" value="{{ old('mayor_edad') }}">
                             <button class="btn btn-primary btn-block">ENVIAR COTIZACIÓN</button>
                         </div>
                     </form>
@@ -265,7 +266,12 @@
                     toast.addEventListener('mouseleave', Swal.resumeTimer)
                 }
             });
-            $('#staticBackdrop').modal('show');
+            @if(old('mayor_edad') && old('adquirientev'))
+                $('#staticBackdrop').modal('hide');
+            @else
+                $('#staticBackdrop').modal('show');
+            @endif
+
 
             $('#entiendo').on('click', function() {
                 let mayorEdad = false;
@@ -297,6 +303,9 @@
                 $('#direccionEntrega').hide();
             });
 
+            if ($('#domicilioSi').is(':checked')) {
+                $('#direccionEntrega').show();
+            }
 
         })(jQuery);
     </script>

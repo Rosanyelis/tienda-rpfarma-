@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Tienda;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Libs\Flow\FlowApi;
+use App\Libs\Flow\Payments;
 use App\Mail\OrdenGenerada;
 use App\Models\Carrito;
 use App\Models\Categoria;
@@ -192,6 +194,7 @@ class CarritoController extends Controller
     public function addShop(Request $request)
     {
         // dd(\Cart::getContent());
+
         if ($request->cuenta == '1') {
             $request->validate([
                 'nombre' => ['required'],
@@ -288,10 +291,48 @@ class CarritoController extends Controller
             $orden = OrdenCliente::where('id', $idOrden)->first();
             $detalles = DetallesOrden::where('orden_id', $idOrden)->first();
 
-            $email = $cliente->user->email;
+            # Procesar pago con Flow
+                //Para datos opcionales campo "optional" prepara un arreglo JSON
+                $optional = array(
+                    "rut" => $cliente->rut,
+                    "cliente" => $cliente->nombre.' '.$cliente->apellido,
+                    "nro_orden"  => $idOrden
+                );
+                $optional = json_encode($optional);
+
+                //Prepara el arreglo de datos
+                $params = array(
+                    "commerceOrder" => rand(11000000000,2000000000),
+                    "subject" => "Compra en Farmacia",
+                    "currency" => "CLP",
+                    "amount" => $request->monto,
+                    "email" => Auth::user()->email,
+                    "paymentMethod" => 9,
+                    "urlConfirmation" => "https://tienda-rpfarma-.dev/compra-confirmada",
+                    "urlReturn" => "https://tienda-rpfarma-.dev/resultado-compra",
+                    "optional" => $optional
+                );
+
+                // procesa los parametros de compra
+                try {
+                    //Define el metodo a usar
+                    $serviceName = "payment/create";
+                    // Instancia la clase FlowApi
+                    $flowApi = new FlowApi;
+                    // Ejecuta el servicio
+                    $response = $flowApi->send($serviceName, $params,"POST");
+                    //Prepara url para redireccionar el browser del pagador
+                    $redirect = $response["url"] . "?token=" . $response["token"];
+                    // realiza una redireccion a la url generada por la api en laravel
+                    return redirect($redirect);
+
+                } catch (Exception $e) {
+                    echo $e->getCode() . " - " . $e->getMessage();
+                }
+            // $email = $cliente->user->email;
             // Envío de correo
-            $mailable = new OrdenGenerada($orden, $detalles);
-            Mail::to($email)->send($mailable);
+            // $mailable = new OrdenGenerada($orden, $detalles);
+            // Mail::to($email)->send($mailable);
 
         }else{
             if ($request->users === null) {
@@ -375,24 +416,130 @@ class CarritoController extends Controller
                     }
                 }
 
-                $cliente = Cliente::where('id', $cliente->id)->first();
-                $orden = OrdenCliente::where('id', $idOrden)->first();
-                $detalles = DetallesOrden::where('orden_id', $idOrden)->get();
+
+                # Procesar pago con Flow
+                //Para datos opcionales campo "optional" prepara un arreglo JSON
+                $optional = array(
+                    "rut" => $cliente->rut,
+                    "cliente" => $cliente->nombre.' '.$cliente->apellido,
+                    "nro_orden"  => $idOrden
+                );
+                $optional = json_encode($optional);
+
+                //Prepara el arreglo de datos
+                $params = array(
+                    "commerceOrder" => rand(11000000000,2000000000),
+                    "subject" => "Compra en Farmacia",
+                    "currency" => "CLP",
+                    "amount" => $request->monto,
+                    "email" => Auth::user()->email,
+                    "paymentMethod" => 9,
+                    "urlConfirmation" => "https://tienda-rpfarma-.dev/compra-confirmada",
+                    "urlReturn" => "https://tienda-rpfarma-.dev/resultado-compra",
+                    "optional" => $optional
+                );
+
+                // procesa los parametros de compra
+                try {
+                    //Define el metodo a usar
+                    $serviceName = "payment/create";
+                    // Instancia la clase FlowApi
+                    $flowApi = new FlowApi;
+                    // Ejecuta el servicio
+                    $response = $flowApi->send($serviceName, $params,"POST");
+                    //Prepara url para redireccionar el browser del pagador
+                    $redirect = $response["url"] . "?token=" . $response["token"];
+                    // realiza una redireccion a la url generada por la api en laravel
+                    return redirect($redirect);
+
+                } catch (Exception $e) {
+                    echo $e->getCode() . " - " . $e->getMessage();
+                }
 
                 $email = $cliente->user->email;
                 // Envío de correo
                 // $mailable = new OrdenGenerada($orden);
                 // Mail::to($email)->send($mailable);
             }
-
-
         }
 
+    }
+
+    public function confirmacion(Request $request){
+        /**
+         * Pagina del comercio para recibir la confirmación del pago
+         * Flow notifica al comercio del pago efectuado
+         */
+        try {
+            if(!isset($request->token)) {
+                throw new Exception("No se recibio el token", 1);
+            }
+            $params = array(
+                "token" => $request->token
+            );
+            $serviceName = "payment/getStatus";
+            $flowApi = new FlowApi();
+            $response = $flowApi->send($serviceName, $params, "GET");
+
+            //Actualiza los datos en su sistema
+            // dd($response['flowOrder']);
+
+        } catch (Exception $e) {
+            echo "Error: " . $e->getCode() . " - " . $e->getMessage();
+        }
+    }
+
+    public function resultado(Request $request)
+    {
+        /**
+         * Pagina del comercio para redireccion del pagador
+         * A esta página Flow redirecciona al pagador pasando vía POST
+         * el token de la transacción. En esta página el comercio puede
+         * mostrar su propio comprobante de pago
+         */
+        try {
+            //Recibe el token enviado por Flow
+            if(!isset($request->token)) {
+                throw new Exception("No se recibio el token", 1);
+            }
+            $params = array(
+                "token" => $request->token
+            );
+            //Indica el servicio a utilizar
+            $serviceName = "payment/getStatus";
+            $flowApi = new FlowApi();
+            $response = $flowApi->send($serviceName, $params, "GET");
+
+            $floworden = $response['flowOrder'];
+            $ordencomercio =$response['commerceOrder'];
+            $fecha = $response['requestDate'];
+            $asunto = $response['subject'];
+            $medio_pago = $response['paymentData']['media'];
+            $idOrden = $response['optional']['nro_orden'];
+            if ($response['status'] == 2) {
+                $estado = 'Pagado';
+            }
 
 
-        \Cart::clear();
+            $record = OrdenCliente::where('id', $idOrden)->first();
+            $record->nro_ordenflow = $floworden;
+            $record->orden_comerce = $ordencomercio;
+            $record->fecha_flow = $fecha;
+            $record->metodo_pago = $medio_pago;
+            $record->estatus_flow = $estado;
+            $record->asunto = $asunto;
+            $record->estatus = $estado;
+            $record->metodo_pago = $medio_pago;
+            $record->save();
 
-        return redirect('/')->with('success', 'Orden Efectuada Exitosamente');
+            \Cart::clear();
+
+            return redirect('/')->with('success', 'Orden Pagada Exitosamente');
+
+        } catch (Exception $e) {
+            echo "Error: " . $e->getCode() . " - " . $e->getMessage();
+        }
+
     }
 
 }

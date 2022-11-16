@@ -9,6 +9,12 @@
                         <div class="owl-carousel">
                             <div class="block-slideshow__slide">
                                 <div class="block-slideshow__slide-image block-slideshow__slide-image--desktop"
+                                    style="background-image: url('{{asset('dist/images/slides/banner-web.png')}}'); "></div>
+                                <div class="block-slideshow__slide-image block-slideshow__slide-image--mobile"
+                                    style="background-image: url('{{asset('dist/images/slides/banner-web.png')}}')"></div>
+                            </div>
+                            <div class="block-slideshow__slide">
+                                <div class="block-slideshow__slide-image block-slideshow__slide-image--desktop"
                                     style="background-image: url('{{asset('dist/images/slides/Banner-3.jpg')}}'); "></div>
                                 <div class="block-slideshow__slide-image block-slideshow__slide-image--mobile"
                                     style="background-image: url('{{asset('dist/images/slides/Banner-3.jpg')}}')"></div>

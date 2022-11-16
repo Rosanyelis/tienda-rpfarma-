@@ -72,7 +72,10 @@
                             </div>
                             <div class="product__prices">$ {{ number_format($producto->precio_venta, 0, ",", "."); }}</div>
                             <!-- .product__options -->
-                            <a class="mt-1 mb-1" href="{{ url('/productos/'.$producto->ficha->principio_activo.'/productos-bioequivalentes') }}">Este Producto tiene Bioequivalentes</a>
+                            @if ($producto->ficha->bioequivalente == 'Tiene bioequivalente')
+                                <a class="mt-1 mb-1" href="{{ url('/productos/'.$producto->ficha->principio_activo.'/productos-bioequivalentes') }}">Este Producto tiene Bioequivalentes</a>
+                            @endif
+
                             <form class="product__options mt-3" action="{{ url('/productos/anadir-producto-al-carrito') }}" method="POST">
                                 @csrf
                                 <div class="form-group product__option">

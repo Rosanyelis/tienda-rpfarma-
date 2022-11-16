@@ -1,6 +1,6 @@
-<header class="site__header d-lg-none">
-    <div class="mobile-header mobile-header--sticky mobile-header--stuck">
-        <div class="mobile-header__panel">
+<header class="site__header d-lg-none" >
+    <div class="mobile-header mobile-header--sticky mobile-header--stuck" >
+        <div class="mobile-header__panel" style="background:#000 !important;color:#fff !important">
             <div class="container">
                 <div class="mobile-header__body">
                     <button class="mobile-header__menu-button">
@@ -12,14 +12,15 @@
                         <img src="{{ asset('images/logo-RpFARMA.png') }}"  width="196px"  alt="Logo RPFarma">
                     </a>
                     <div class="mobile-header__search">
-                        <form class="mobile-header__search-form" action="#"><input
-                                class="mobile-header__search-input" name="search"
-                                placeholder="Search over 10,000 products" aria-label="Site search" type="text"
-                                autocomplete="off"> <button
-                                class="mobile-header__search-button mobile-header__search-button--submit"
-                                type="submit"><svg width="20px" height="20px">
+                        <form class="mobile-header__search-form" method="GET" action="{{ url('/productos') }}">
+                            @csrf
+                            <input class="mobile-header__search-input" name="name" placeholder="Buscar productos" aria-label="Site search" type="text" autocomplete="off" style="color:#000">
+                            <button class="mobile-header__search-button mobile-header__search-button--submit" type="submit">
+                                <svg width="20px" height="20px">
                                     <use xlink:href="{{ asset('dist/images/sprite.svg#search-20')}}"></use>
-                                </svg></button> <button
+                                </svg>
+                            </button>
+                            <button
                                 class="mobile-header__search-button mobile-header__search-button--close"
                                 type="button"><svg width="20px" height="20px">
                                     <use xlink:href="{{ asset('dist/images/sprite.svg#cross-20')}}"></use>

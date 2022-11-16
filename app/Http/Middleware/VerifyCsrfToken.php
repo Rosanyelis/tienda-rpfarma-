@@ -12,6 +12,7 @@ class VerifyCsrfToken extends Middleware
      * @var array<int, string>
      */
     protected $except = [
-        //
+        'https://tienda-rpfarma-.dev/compra-confirmada',
+        'https://tienda-rpfarma-.dev/resultado-compra'
     ];
 }

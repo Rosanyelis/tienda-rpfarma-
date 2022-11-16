@@ -212,7 +212,23 @@
                                         </div>
                                     </div>
                                 </div>
-
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="bioequivalente">¿Tiene Bioequivalente?</label>
+                                        <div class="form-control-wrap">
+                                            <select class="form-control form-select @error('bioequivalente') error @enderror" name="bioequivalente" data-placeholder="Seleccione una opción">
+                                                <option label="empty" value=""></option>
+                                                <option value="Tiene bioequivalente" @if ( 'Tiene bioequivalente' == $data->ficha->bioequivalente) selected @endif>Tiene bioequivalente</option>
+                                                <option value="No tiene bioequivalente" @if ( 'No tiene bioequivalente' == $data->ficha->bioequivalente) selected @endif>No tiene bioequivalente</option>
+                                            </select>
+                                            @if ($errors->has('bioequivalente'))
+                                                <span id="fv-full-name-error" class="invalid">
+                                                    {{ $errors->first('bioequivalente') }}
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label class="form-label" for="subcategoria_id">Subcategorías</label>

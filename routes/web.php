@@ -55,6 +55,9 @@ Route::post('/productos/completar-compra', [CarritoController::class, 'addShop']
 Route::post('/productos/remover-producto-del-carrito', [CarritoController::class, 'removeCart']);
 Route::get('/productos/{id}/remover-producto-ajax', [CarritoController::class, 'removeCartAjax']);
 Route::post('/productos/remover-todos-los-producto-del-carrito', [CarritoController::class, 'clearAllCart']);
+
+Route::post('/compra-confirmada', [CarritoController::class, 'confirmacion']);
+Route::post('/resultado-compra', [CarritoController::class, 'resultado']);
 // Route::get('/productos/carrito-de-compra/{id}/checkout', [ProductosController::class, 'show']);
 
 // Recetario Magistral
