@@ -18,7 +18,7 @@ class CreateProductosTable extends Migration
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_unicode_ci';
             $table->id();
-            $table->foreignId('categoria_id')->nullable();
+            $table->usingnedBigInteger('categoria_id')->nullable();
             $table->foreignId('condicion_venta_id')->nullable();
             $table->foreignId('forma_farmaceutica_id')->nullable();
             $table->foreignId('tipo_administracion_id')->nullable();
@@ -36,7 +36,7 @@ class CreateProductosTable extends Migration
             $table->text('advertencias')->nullable();
             $table->text('condiciones_almacenamiento')->nullable();
             $table->string('estatus');
-            
+
             $table->timestamps();
 
             $table->foreignId('categoria_id')
